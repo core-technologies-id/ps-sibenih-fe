@@ -9,8 +9,11 @@
 
 <body>
     <!-- Body Inner -->
+
     <div class="body-inner">
+        @include('components.header')
         @yield('content')
+        @include('components.footer')
     </div>
     <a id="scrollTop"><i class="icon-chevron-up"></i><i class="icon-chevron-up"></i></a>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
