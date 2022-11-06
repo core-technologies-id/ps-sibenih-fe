@@ -47,7 +47,7 @@
                              <li><a href="{{ route('root') }}">Home</a></li>
                              <li class="dropdown"><a href="#">BPSBTPH SUMSEL</a>
                                  <ul class="dropdown-menu">
-                                     <li><a href="#">Prosedur Pelayanan</a></li>
+                                     <li><a href="{{ route('BpsbtphSumsel.ProsedurPelayanan') }}">Prosedur Pelayanan</a></li>
                                      <li><a href="#">Info Umum</a></li>
                                      <li><a href="#">Roadmap UPTD BPSB TPH</a></li>
                                      <li><a href="#">Informasi Layanan</a></li>

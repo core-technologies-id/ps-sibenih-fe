@@ -22,3 +22,6 @@ Route::get('/info-perbenihan/laporan-penyaluran-benih', function() {
 Route::get('/info-perbenihan/laporan-produksi-benih', function() {
     return view('pages.info_perbenihan.lap_produksi_benih');
 })->name('InfoPerbenihan.LapProduksiBenih');
+Route::get('/bpsbtph-sumsel/prosedur-pelayanan', function() {
+    return view('pages.bpsbtph_sumsel.prosedur_pelayanan');
+})->name('BpsbtphSumsel.ProsedurPelayanan');
