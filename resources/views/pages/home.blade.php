@@ -42,7 +42,7 @@
         <div class="container">
             <div class="heading-text heading-section text-center m-b-40" data-animate="fadeInUp">
                 <h2>Selamat Datang di Halaman Si-Benih</h2>
-                <span class="lead">Create amam ipsum dolor sit amet, Beautiful nature, and rare feathers!.</span>
+                <!-- <span class="lead">Create amam ipsum dolor sit amet, Beautiful nature, and rare feathers!.</span> -->
             </div>
             <div class="row" data-animate="fadeInUp">
                 <div class="col-lg-12">
@@ -56,8 +56,7 @@
         <div class="container">
             <div class="heading-text heading-section text-center">
                 <h2>LAYANAN KAMI</h2>
-                <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                </p>
+                <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
             </div>
             <div class="row">
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="0">
@@ -66,8 +65,7 @@
                             <a href="#"><i class="fa fa-landmark"></i></a>
                         </div>
                         <h3>BPSBTH SUMSEL</h3>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
                 </div>
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="200">
@@ -76,8 +74,7 @@
                             <a href="#"><i class="fa fa-info-circle"></i></a>
                         </div>
                         <h3>Informasi</h3>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
                 </div>
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="400">
@@ -86,8 +83,7 @@
                             <a href="#"><i class="fa fa-link"></i></a>
                         </div>
                         <h3>Link Terkait</h3>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
                 </div>
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="600">
@@ -96,8 +92,7 @@
                             <a href="#"><i class="fas fa-download"></i></a>
                         </div>
                         <h3>Download</h3>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
                 </div>
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="800">
@@ -106,8 +101,7 @@
                             <a href="#"><i class="fa fa-database"></i></a>
                         </div>
                         <h3>Database</h3>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
                 </div>
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="1000">
@@ -117,9 +111,8 @@
                                 <i class="fa fa-images"></i>
                             </a>
                         </div>
-                        <h3>Galeria</h3>
-                        <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.
-                        </p>
+                        <h3>Galeri</h3>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
                 </div>
             </div>
@@ -284,9 +277,9 @@
         <div class="container">
             <div class="heading-text heading-section">
                 <h2>GALERI FOTO KEGIATAN</h2>
-                <span class="lead">Lorem ipsum dolor sit amet, coper suscipit lobortis nisl ut aliquip ex ea commodo
+                <!-- <span class="lead">Lorem ipsum dolor sit amet, coper suscipit lobortis nisl ut aliquip ex ea commodo
     consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
-    consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span>
+    consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
             </div>
         </div>
         <div class="portfolio">
