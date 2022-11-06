@@ -60,7 +60,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-4" data-animate="fadeInUp" data-animate-delay="0">
-                    <div class="icon-box effect medium border small">
+                    <div class="icon-box effect medium border small d-flex align-items-center">
                         <div class="icon">
                             <a href="#"><i class="fa fa-landmark"></i></a>
                         </div>

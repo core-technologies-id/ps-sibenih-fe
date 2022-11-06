@@ -19,3 +19,6 @@ Route::post('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPe
 Route::get('/info-perbenihan/laporan-penyaluran-benih', function() {
     return view('pages.info_perbenihan.lap_penyaluran_benih');
 })->name('InfoPerbenihan.LapPenyaluranBenih');
+Route::get('/info-perbenihan/laporan-produksi-benih', function() {
+    return view('pages.info_perbenihan.lap_produksi_benih');
+})->name('InfoPerbenihan.LapProduksiBenih');

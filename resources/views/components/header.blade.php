@@ -70,7 +70,7 @@
                                  <ul class="dropdown-menu">
                                      <li><a href="{{ route('InfoPerbenihan.KetersediaanBenih') }}">Ketersediaan Benih</a></li>
                                      <li><a href="{{ route('InfoPerbenihan.LapPenyaluranBenih') }}">Laporan Penyaluran Benih</a></li>
-                                     <li class="d-none"><a href="#">Laporan Produksi Benih</a></li>
+                                     <li><a href="{{ route('InfoPerbenihan.LapProduksiBenih') }}">Laporan Produksi Benih</a></li>
                                  </ul>
                              </li>
                              <li class="dropdown"><a href="#">GALERI</a>
