@@ -44,7 +44,7 @@
                  <div class="container">
                      <nav>
                          <ul>
-                             <li><a href="#">Home</a></li>
+                             <li><a href="{{ route('root') }}">Home</a></li>
                              <li class="dropdown"><a href="#">BPSBTPH SUMSEL</a>
                                  <ul class="dropdown-menu">
                                      <li><a href="#">Prosedur Pelayanan</a></li>
@@ -69,8 +69,8 @@
                              <li class="dropdown"><a href="#">INFO PERBENIHAN</a>
                                  <ul class="dropdown-menu">
                                      <li><a href="{{ route('InfoPerbenihan.KetersediaanBenih') }}">Ketersediaan Benih</a></li>
-                                     <li><a href="#">Laporan Penyaluran Benih</a></li>
-                                     <li><a href="#">Laporan Produksi Benih</a></li>
+                                     <li><a href="{{ route('InfoPerbenihan.LapPenyaluranBenih') }}">Laporan Penyaluran Benih</a></li>
+                                     <li class="d-none"><a href="#">Laporan Produksi Benih</a></li>
                                  </ul>
                              </li>
                              <li class="dropdown"><a href="#">GALERI</a>
