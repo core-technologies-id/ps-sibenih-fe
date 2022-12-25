@@ -31,3 +31,6 @@ Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'index'
 Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
+// Penyebaran Varietas
+
+
