@@ -82,11 +82,36 @@
                              <li><a href="#">LINK</a></li>
                              <li><a href="#">DOWNLOAD</a></li>
                              <li><a href="#">DATABASE</a></li>
+                             @guest
+                                <li><a href="{{ url('login') }}">LOGIN</a></li>
+                             @endguest
+
+                             @auth
+                                @if (auth()->user()->nama_pimpinan)
+                                    <li>
+                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->nama_pimpinan }}?rounded=true?background=random" alt="profile" class="rounded-circle"
+                                            width="30" height="30" />
+                                    </li>
+                                @else
+                                    <li>
+                                        <img src="https://ui-avatars.com/api/?name=Null" alt="profile" class="rounded-circle" width="30" height="30" />
+                                    </li>
+                                @endif
+                                <li>
+                                    <span>
+                                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm d-inline">
+                                                Logout
+                                            </button>
+                                        </form>
+                                    </span>
+                                </li>
+                            @endauth
                          </ul>
                      </nav>
                  </div>
              </div>
-
          </div>
      </div>
  </header>

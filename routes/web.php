@@ -25,3 +25,9 @@ Route::get('/info-perbenihan/laporan-produksi-benih', function() {
 Route::get('/bpsbtph-sumsel/prosedur-pelayanan', function() {
     return view('pages.bpsbtph_sumsel.prosedur_pelayanan');
 })->name('BpsbtphSumsel.ProsedurPelayanan');
+
+// Auth
+Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'index'])->middleware('guest');
+Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('login');
+Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
