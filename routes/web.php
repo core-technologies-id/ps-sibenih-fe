@@ -32,5 +32,10 @@ Route::get('/download', [\App\Http\Controllers\DownloadController::class, 'index
 Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+// Penyebaran Varietas
+Route::resource('penyebaran_varietas', \App\Http\Controllers\Sibenih\PenyebaranVarietasController::class)->middleware('auth');
+
 Route::get('/registrasi', [\App\Http\Controllers\RegistrasiController::class, 'index'])->name('registrasi')->middleware('guest');
 Route::post('/registrasi/process', [\App\Http\Controllers\RegistrasiController::class, 'process'])->name('registrasi.process')->middleware('guest');
+

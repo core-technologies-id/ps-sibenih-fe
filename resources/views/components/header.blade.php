@@ -19,7 +19,7 @@
              <div class="header-extras">
                  <ul>
                      <li>
-                         <a id="btn-search" href="#"> <i class="icon-search"></i></a>
+                         <a id="btn-search" href="#"> <i class="icon-search d-none"></i></a>
                      </li>
                      <li class="d-none">
                          <div class="p-dropdown">
@@ -45,52 +45,54 @@
                      <nav>
                          <ul>
                              <li><a href="{{ route('root') }}">Home</a></li>
-                             <li class="dropdown"><a href="#">BPSBTPH SUMSEL</a>
-                                 <ul class="dropdown-menu">
-                                     <li><a href="{{ route('BpsbtphSumsel.ProsedurPelayanan') }}">Prosedur Pelayanan</a></li>
-                                     <li><a href="#">Info Umum</a></li>
-                                     <li><a href="#">Roadmap UPTD BPSB TPH</a></li>
-                                     <li><a href="#">Informasi Layanan</a></li>
-                                 </ul>
-                             </li>
-                             <li class="dropdown"><a href="#">INFO UPDATE</a>
-                                 <ul class="dropdown-menu">
-                                     <li><a href="#">Berita Pertanian Nasional</a></li>
-                                     <li><a href="#">Berita Pertanian Sumsel</a></li>
-                                     <li><a href="#">Opini Pertanian</a></li>
-                                     <li><a href="#">Esai Pertanian</a></li>
-                                     <li><a href="#">Berita Pertanian Sumsel</a></li>
-                                     <li><a href="#">Artikel</a></li>
-                                     <li><a href="#">Berita Foto</a></li>
-                                     <li><a href="#">Profile Petani</a></li>
-                                     <li><a href="#">Banner Info</a></li>
-                                 </ul>
-                             </li>
-                             <li class="dropdown"><a href="#">INFO PERBENIHAN</a>
-                                 <ul class="dropdown-menu">
-                                     <li><a href="{{ route('InfoPerbenihan.KetersediaanBenih') }}">Ketersediaan Benih</a></li>
-                                     <li><a href="{{ route('InfoPerbenihan.LapPenyaluranBenih') }}">Laporan Penyaluran Benih</a></li>
-                                     <li><a href="{{ route('InfoPerbenihan.LapProduksiBenih') }}">Laporan Produksi Benih</a></li>
-                                 </ul>
-                             </li>
-                             <li class="dropdown"><a href="#">GALERI</a>
-                                 <ul class="dropdown-menu">
-                                     <li><a href="#">Foto Kegiatan</a></li>
-                                     <li><a href="#">Video Kegiatan</a></li>
-                                 </ul>
-                             </li>
-                             <li><a href="#">LINK</a></li>
-                             <li><a href="/download">DOWNLOAD</a></li>
-                             <li><a href="#">DATABASE</a></li>
-                             @guest
-                                <li><a href="{{ url('login') }}">LOGIN</a></li>
-                             @endguest
+                                <li class="dropdown"><a href="#">BPSBTPH SUMSEL</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('BpsbtphSumsel.ProsedurPelayanan') }}">Prosedur Pelayanan</a></li>
+                                        <li><a href="#">Info Umum</a></li>
+                                        <li><a href="#">Roadmap UPTD BPSB TPH</a></li>
+                                        <li><a href="#">Informasi Layanan</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">INFO UPDATE</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Berita Pertanian Nasional</a></li>
+                                        <li><a href="#">Berita Pertanian Sumsel</a></li>
+                                        <li><a href="#">Opini Pertanian</a></li>
+                                        <li><a href="#">Esai Pertanian</a></li>
+                                        <li><a href="#">Berita Pertanian Sumsel</a></li>
+                                        <li><a href="#">Artikel</a></li>
+                                        <li><a href="#">Berita Foto</a></li>
+                                        <li><a href="#">Profile Petani</a></li>
+                                        <li><a href="#">Banner Info</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">INFO PERBENIHAN</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ route('InfoPerbenihan.KetersediaanBenih') }}">Ketersediaan Benih</a></li>
+                                        <li><a href="{{ route('InfoPerbenihan.LapPenyaluranBenih') }}">Laporan Penyaluran Benih</a></li>
+                                        <li><a href="{{ route('InfoPerbenihan.LapProduksiBenih') }}">Laporan Produksi Benih</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">GALERI</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Foto Kegiatan</a></li>
+                                        <li><a href="#">Video Kegiatan</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#" class="d-none">LINK</a></li>
+                                <li><a href="#">DOWNLOAD</a></li>
+                                <li><a href="#" class="d-none">DATABASE</a></li>
 
-                             @auth
+                                @guest
+                                    <li><a href="{{ url('login') }}">LOGIN</a></li>
+                                @endguest
+                            
+                            @auth
+                                <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li>
                                 @if (auth()->user()->nama_pimpinan)
                                     <li>
-                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->nama_pimpinan }}?rounded=true?background=random" alt="profile" class="rounded-circle"
-                                            width="30" height="30" />
+                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->nama_pimpinan }}?rounded=true?background=random"
+                                            alt="profile" class="rounded-circle" width="30" height="30" />
                                     </li>
                                 @else
                                     <li>
@@ -98,14 +100,14 @@
                                     </li>
                                 @endif
                                 <li>
-                                    <span>
+                                    <a class="text-decoration-none">
                                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm">
                                                 Logout
                                             </button>
                                         </form>
-                                    </span>
+                                    </a>
                                 </li>
                             @endauth
                          </ul>
