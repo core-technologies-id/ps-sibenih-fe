@@ -45,7 +45,6 @@
                      <nav>
                          <ul>
                              <li><a href="{{ route('root') }}">Home</a></li>
-                             
                                 <li class="dropdown"><a href="#">BPSBTPH SUMSEL</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="{{ route('BpsbtphSumsel.ProsedurPelayanan') }}">Prosedur Pelayanan</a></li>

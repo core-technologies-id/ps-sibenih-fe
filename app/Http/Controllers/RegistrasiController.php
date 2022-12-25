@@ -85,7 +85,6 @@ class RegistrasiController extends Controller
             'created_at' => now()
         ]);
 
-        // return redirect('/login')->with('flash_success', 'Registrasi Berhasil!');
-        return back()->with('flash_success', 'Registrasi Berhasil!');
+        return redirect('/login')->with('success', 'Registrasi Berhasil!');
     }
 }
