@@ -16,12 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('root');
 Route::get('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPerbenihan\KetersediaanBenihController::class, 'index'])->name('InfoPerbenihan.KetersediaanBenih');
 Route::post('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPerbenihan\KetersediaanBenihController::class, 'search'])->name('InfoPerbenihan.KetersediaanBenih.search');
-Route::get('/info-perbenihan/laporan-penyaluran-benih', function() {
+Route::get('/info-perbenihan/laporan-penyaluran-benih', function () {
     return view('pages.info_perbenihan.lap_penyaluran_benih');
 })->name('InfoPerbenihan.LapPenyaluranBenih');
-Route::get('/info-perbenihan/laporan-produksi-benih', function() {
+Route::get('/info-perbenihan/laporan-produksi-benih', function () {
     return view('pages.info_perbenihan.lap_produksi_benih');
 })->name('InfoPerbenihan.LapProduksiBenih');
-Route::get('/bpsbtph-sumsel/prosedur-pelayanan', function() {
+Route::get('/bpsbtph-sumsel/prosedur-pelayanan', function () {
     return view('pages.bpsbtph_sumsel.prosedur_pelayanan');
 })->name('BpsbtphSumsel.ProsedurPelayanan');
+
+Route::get('/registrasi', [\App\Http\Controllers\RegistrasiController::class, 'index'])->name('registrasi')->middleware('guest');
+Route::post('/registrasi/process', [\App\Http\Controllers\RegistrasiController::class, 'process'])->name('registrasi.process')->middleware('guest');
