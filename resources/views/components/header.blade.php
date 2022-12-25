@@ -80,7 +80,7 @@
                                  </ul>
                              </li>
                              <li><a href="#">LINK</a></li>
-                             <li><a href="#">DOWNLOAD</a></li>
+                             <li><a href="/download">DOWNLOAD</a></li>
                              <li><a href="#">DATABASE</a></li>
                              @guest
                                 <li><a href="{{ url('login') }}">LOGIN</a></li>
