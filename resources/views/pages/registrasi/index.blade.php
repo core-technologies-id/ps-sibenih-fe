@@ -2,7 +2,25 @@
 @section('style')
 @endsection
 @section('content')
-    <section class="fullscreen" data-bg-parallax="http://localhost:8000/assets/images/bg-login.jpg">
+    <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
+        <div class="container">
+            <div class="page-title">
+                <h1>Registrasi</h1>
+            </div>
+            <div class="breadcrumb">
+                <ul>
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">Registrasi</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
         <div class="container">
             @include('components.message')
             <form class="form card card-custom" action="/registrasi/process" method="POST" enctype="multipart/form-data">

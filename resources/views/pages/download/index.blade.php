@@ -36,7 +36,7 @@
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No</th>
                                     <th>Nama File</th>
                                     <th>Download</th>
@@ -47,7 +47,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $file->name }}</td>
-                                        <td>
+                                        <td class="text-center">
                                             <a href="{{ $file->url }}" target="_blank" class="btn btn-success"><i
                                                     class="fa fa-download" aria-hidden="true"></i></a>
                                         </td>
