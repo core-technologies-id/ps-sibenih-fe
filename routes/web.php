@@ -26,12 +26,11 @@ Route::get('/bpsbtph-sumsel/prosedur-pelayanan', function () {
     return view('pages.bpsbtph_sumsel.prosedur_pelayanan');
 })->name('BpsbtphSumsel.ProsedurPelayanan');
 
-
-Route::get('/registrasi', [\App\Http\Controllers\RegistrasiController::class, 'index'])->name('registrasi')->middleware('guest');
-Route::post('/registrasi/process', [\App\Http\Controllers\RegistrasiController::class, 'process'])->name('registrasi.process')->middleware('guest');
+Route::get('/download', [\App\Http\Controllers\DownloadController::class, 'index'])->name('download');
 
 // Auth
 Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'index'])->middleware('guest');
 Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('login');
 Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-
+Route::get('/registrasi', [\App\Http\Controllers\RegistrasiController::class, 'index'])->name('registrasi')->middleware('guest');
+Route::post('/registrasi/process', [\App\Http\Controllers\RegistrasiController::class, 'process'])->name('registrasi.process')->middleware('guest');

@@ -5,6 +5,11 @@
     <section class="fullscreen" data-bg-parallax="http://localhost:8000/assets/images/bg-login.jpg">
         <div class="container">
             <div class="row">
+                @if (session('success'))
+                    <div class="alert alert-success mb-3 col-lg-12" role="alert">
+                        <h3 class="fw-bold">{{ session('success') }}</h3>
+                    </div>
+                @endif
                 <div class="col-lg-6 center p-50 b-r-6">
                     <div class="card border-0 shadow-inner">
                         <h3 class="text-center mt-3">Login Sibenih!</h3>
@@ -13,7 +18,8 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label class="form-label" for="nama_pimpinan">Username :</label>
-                                    <input type="text" class="form-control {{ $errors->has('nama_pimpinan') ? 'is-invalid' : '' }}" 
+                                    <input type="text"
+                                        class="form-control {{ $errors->has('nama_pimpinan') ? 'is-invalid' : '' }}"
                                         placeholder="Username" name="nama_pimpinan" id="nama_pimpinan">
                                     @error('nama_pimpinan')
                                         <small class="text-danger"> {{ $message }} </small>
@@ -21,11 +27,12 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="password">Password :</label>
-                                    <input type="password" class="form-control" placeholder="Password" name="password" id="password">
+                                    <input type="password" class="form-control" placeholder="Password" name="password"
+                                        id="password">
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success">Login</button>
-                                    <a href="#" class="btn">Registrasi</a></p>
+                                    <a href="/registrasi" class="btn">Registrasi</a></p>
                                 </div>
                             </form>
                         </div>
@@ -36,4 +43,3 @@
         </div>
     </section>
 @endsection
-        
