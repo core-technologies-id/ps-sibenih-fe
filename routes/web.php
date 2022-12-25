@@ -36,5 +36,6 @@ Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'authe
 Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 // Penyebaran Varietas
+Route::resource('penyebaran_varietas', \App\Http\Controllers\Sibenih\PenyebaranVarietasController::class)->middleware('auth');
 
 

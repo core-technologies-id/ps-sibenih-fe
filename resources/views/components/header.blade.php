@@ -19,7 +19,7 @@
              <div class="header-extras">
                  <ul>
                      <li>
-                         <a id="btn-search" href="#"> <i class="icon-search"></i></a>
+                         <a id="btn-search" href="#"> <i class="icon-search d-none"></i></a>
                      </li>
                      <li class="d-none">
                          <div class="p-dropdown">
@@ -45,7 +45,7 @@
                      <nav>
                          <ul>
                              <li><a href="{{ route('root') }}">Home</a></li>
-                             @guest
+                             
                                 <li class="dropdown"><a href="#">BPSBTPH SUMSEL</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="{{ route('BpsbtphSumsel.ProsedurPelayanan') }}">Prosedur Pelayanan</a></li>
@@ -80,14 +80,16 @@
                                         <li><a href="#">Video Kegiatan</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">LINK</a></li>
+                                <li><a href="#" class="d-none">LINK</a></li>
                                 <li><a href="#">DOWNLOAD</a></li>
-                                <li><a href="#">DATABASE</a></li>
-                                <li><a href="{{ url('login') }}">LOGIN</a></li>
-                             @endguest
+                                <li><a href="#" class="d-none">DATABASE</a></li>
+
+                                @guest
+                                    <li><a href="{{ url('login') }}">LOGIN</a></li>
+                                @endguest
                             
                             @auth
-                                <li><a href="#">PENYEBARAN VARIETAS</a></li>
+                                <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li>
                                 @if (auth()->user()->nama_pimpinan)
                                     <li>
                                         <img src="https://ui-avatars.com/api/?name={{ auth()->user()->nama_pimpinan }}?rounded=true?background=random"

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('kabupaten_id', 100);
             $table->bigInteger('varietas_id');
             $table->integer('year');
-            $table->string('month', 5);
+            $table->string('month', 255);
             $table->decimal('value', 22, 4);
             $table->softDeletes();
             $table->timestamps();
