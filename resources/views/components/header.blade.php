@@ -80,7 +80,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="#" class="d-none">LINK</a></li>
-                                <li><a href="#">DOWNLOAD</a></li>
+                                <li><a href="{{ route('download') }}">DOWNLOAD</a></li>
                                 <li><a href="#" class="d-none">DATABASE</a></li>
 
                                 @guest
@@ -89,9 +89,9 @@
                             
                             @auth
                                 <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li>
-                                @if (auth()->user()->nama_pimpinan)
+                                @if (auth()->user()->username)
                                     <li>
-                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->nama_pimpinan }}?rounded=true?background=random"
+                                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->username }}?rounded=true?background=random"
                                             alt="profile" class="rounded-circle" width="30" height="30" />
                                     </li>
                                 @else
