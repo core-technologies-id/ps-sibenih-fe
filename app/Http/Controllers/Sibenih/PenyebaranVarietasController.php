@@ -21,7 +21,7 @@ class PenyebaranVarietasController extends Controller
      */
     public function index()
     {
-        $varietas = DB::table('sibenih_mas_varietas')->select(DB::raw('count(*) as id, nama'))->groupBy('nama')->orderBy('nama', 'ASC')->get();
+        $varietas = sibenih_mas_varietas::orderBy('nama', 'ASC')->get();
         $kabupatens = sibenih_mas_kabupaten::all();
         return view('pages.sibenih.penyebaranVarietas.form', compact('varietas', 'kabupatens'));
     }
