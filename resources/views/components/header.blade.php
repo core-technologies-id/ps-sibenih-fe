@@ -88,7 +88,7 @@
                                 @endguest
                             
                             @auth
-                                <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li>
+                                {{-- <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li> --}}
                                 @if (auth()->user()->username)
                                     <li>
                                         <img src="https://ui-avatars.com/api/?name={{ auth()->user()->username }}?rounded=true?background=random"
