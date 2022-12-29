@@ -40,7 +40,7 @@ class RegistrasiController extends Controller
             'nomor_tiket' => 'required|string|unique:sibenih_produsen,nomor_tiket',
             'nama_pt' => 'required|string|unique:sibenih_produsen,nama_pt',
             'tahun_usaha' => 'required|string',
-            'npwp' => 'required|string',
+            'npwp' => 'nullable|string',
             'nama_pimpinan' => 'required|string',
             'nik_pimpinan' => 'required|string',
             'alamat_usaha' => 'required|string',
