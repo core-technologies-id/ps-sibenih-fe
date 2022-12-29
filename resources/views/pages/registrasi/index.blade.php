@@ -176,42 +176,6 @@
                         </div>
 
                         <div class="col-lg-6 mt-5">
-                            <label>Upload Logo Perusahaan (.jpeg/jpg/png)</label>
-                            <input type="file"
-                                class="form-control {{ $errors->has('logo_usaha_file') ? 'is-invalid' : '' }}"
-                                id="logo_usaha_file" name="logo_usaha_file" placeholder="Upload logo perusahaan"
-                                value="">
-                            @error('logo_usaha_file')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror
-                        </div>
-
-                        @if (isset($data->logo_usaha))
-                            <div class="col-lg-6 mt-5 d-flex flex-column">
-                                <label for="image">Gambar Logo Perusahaan</label>
-                                <img width="100%" src="{{ $data->logo_usaha }}" alt="{{ $data->nama_pt }}">
-                            </div>
-                        @endif
-
-                        <div class="col-lg-6 mt-5">
-                            <label>Upload Foto Pimpinan (.jpeg/jpg/png)</label>
-                            <input type="file"
-                                class="form-control {{ $errors->has('logo_usaha_file') ? 'is-invalid' : '' }}"
-                                id="logo_usaha_file" name="foto_pimpinan_file" placeholder="Upload foto pimpinan"
-                                value="">
-                            @error('foto_pimpinan_file')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror
-                        </div>
-
-                        @if (isset($data->foto_pimpinan))
-                            <div class="col-lg-6 mt-5 d-flex flex-column">
-                                <label for="image">Gambar Foto Pimpinan</label>
-                                <img width="100%" src="{{ $data->foto_pimpinan }}" alt="{{ $data->nama_pimpinan }}">
-                            </div>
-                        @endif
-
-                        <div class="col-lg-6 mt-5">
                             <label>Upload Foto KTP (.jpeg/jpg/png)</label>
                             <input type="file"
                                 class="form-control {{ $errors->has('logo_usaha_file') ? 'is-invalid' : '' }}"

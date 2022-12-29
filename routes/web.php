@@ -39,3 +39,8 @@ Route::resource('penyebaran_varietas', \App\Http\Controllers\Sibenih\PenyebaranV
 Route::get('/registrasi', [\App\Http\Controllers\RegistrasiController::class, 'index'])->name('registrasi')->middleware('guest');
 Route::post('/registrasi/process', [\App\Http\Controllers\RegistrasiController::class, 'process'])->name('registrasi.process')->middleware('guest');
 
+Route::get('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'index'])->name('stokBenih')->middleware('auth');
+Route::post('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'proccess'])->name('stokBenih.proccess')->middleware('auth');
+
+Route::get('/varietas/get_data', [\App\Http\Controllers\Sibenih\VarietasController::class, 'get_data'])->name('varietas.get_data')->middleware('auth');
+Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenController::class, 'get_data'])->name('produsen.get_data');
