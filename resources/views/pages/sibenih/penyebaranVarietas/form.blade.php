@@ -2,7 +2,7 @@
 @section('style')
 @endsection
 @section('content')
-    <div id="slider" class="inspiro-slider dots-creative" data-height-xs="360" data-fade="true">
+    <div id="slider" class="inspiro-slider dots-creative d-none" data-height-xs="360" data-fade="true">
         <div class="slide kenburns" data-bg-image="http://localhost:8000/assets/images/bg-login.jpg">
             <div class="bg-overlay"></div>
             <div class="container">
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="container mt-4">
+    <div class="container mt-4 d-none">
         <div class="row justify-content-center">
             <div class="content col-lg-9">
                 @include('components.message')

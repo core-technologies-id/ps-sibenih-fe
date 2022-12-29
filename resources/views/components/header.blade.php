@@ -90,13 +90,13 @@
                              <li><a href="#" class="d-none">LINK</a></li>
                              <li><a href="{{ route('download') }}">DOWNLOAD</a></li>
                              <li><a href="#" class="d-none">DATABASE</a></li>
-
+                             
                              @guest
                                  <li><a href="{{ url('login') }}">LOGIN</a></li>
                              @endguest
 
                              @auth
-                                 <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li>
+                                 {{-- <li><a href="{{ route('penyebaran_varietas.index') }}">PENYEBARAN VARIETAS</a></li> --}}
                                  @if (auth()->user()->username)
                                      <li>
                                          <img src="https://ui-avatars.com/api/?name={{ auth()->user()->username }}?rounded=true?background=random"
