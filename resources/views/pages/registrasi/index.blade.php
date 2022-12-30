@@ -65,7 +65,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-lg-6 mt-5">
+                        <div class="col-lg-6 mt-5 d-none">
                             <label for="npwp">NPWP:</label>
                             <input type="text" class="form-control {{ $errors->has('npwp') ? 'is-invalid' : '' }}"
                                 id="npwp" name="npwp" placeholder="nomor npwp" />
