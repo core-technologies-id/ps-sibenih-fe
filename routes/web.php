@@ -36,9 +36,14 @@ Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logo
 // Penyebaran Varietas
 Route::resource('penyebaran_varietas', \App\Http\Controllers\Sibenih\PenyebaranVarietasController::class)->middleware('auth');
 
+// registrasi
 Route::get('/registrasi', [\App\Http\Controllers\RegistrasiController::class, 'index'])->name('registrasi')->middleware('guest');
 Route::post('/registrasi/process', [\App\Http\Controllers\RegistrasiController::class, 'process'])->name('registrasi.process')->middleware('guest');
 
+// Export data petani registrasi
+Route::get('/registrasi/export', [\App\Http\Controllers\RegistrasiController::class, 'export'])->name('registrasi.export')->middleware('guest');
+
+// stok beni
 Route::get('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'index'])->name('stokBenih')->middleware('auth');
 Route::post('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'proccess'])->name('stokBenih.proccess')->middleware('auth');
 
