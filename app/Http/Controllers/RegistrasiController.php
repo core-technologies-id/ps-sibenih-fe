@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Produsen;
-use App\Models\sibenih_mas_kabupaten;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\sibenih_mas_kabupaten;
 use Illuminate\Support\Facades\Validator;
 
 class RegistrasiController extends Controller
@@ -34,24 +36,33 @@ class RegistrasiController extends Controller
         return view('pages.registrasi.index', compact('kabs', 'nomer_tiket'));
     }
 
+    public function export()
+    {
+        
+        $data = User::where('status_usaha', '=', null)->orderBy('id', 'DESC')->first();
+        $pdf = PDF::loadView('pages.registrasi.form_register_petani', compact('data'));
+        return $pdf->stream("form_register_petani " . date('d-m-Y') . '.pdf');
+    }
+
     public function process(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nomor_tiket' => 'required|string|unique:sibenih_produsen,nomor_tiket',
-            'nama_pt' => 'required|string|unique:sibenih_produsen,nama_pt',
-            'tahun_usaha' => 'required|string',
+            'is_petani' => 'required|string',
+            'nomor_tiket' => 'required|string|unique:sibenih_produsen,nomor_tiket', 
+            'nama_pt' => 'required|string|unique:sibenih_produsen,nama_pt', //Kelompok Tani / Perusahaan
+            'tahun_usaha' => 'nullable|string',
             'npwp' => 'nullable|string',
-            'nama_pimpinan' => 'required|string',
-            'nik_pimpinan' => 'required|string',
-            'alamat_usaha' => 'required|string',
-            'kota' => 'required|string',
-            'hp' => 'required|string|unique:sibenih_produsen,hp',
-            'email' => 'required|string',
-            'status_usaha' => 'required|string',
-            'bentuk_usaha' => 'required|string',
+            'nama_pimpinan' => 'required|string', //Nama Petani / Pimpinan
+            'nik_pimpinan' => 'nullable|string',
+            'alamat_usaha' => 'required|string', //Alamat
+            'kota' => 'nullable|string',
+            'hp' => 'required|numeric|unique:sibenih_produsen,hp', //Nomor HP
+            'email' => 'required|string', //Alamat email
+            'status_usaha' => 'nullable|string',
+            'bentuk_usaha' => 'nullable|string',
             'logo_usaha' => 'nullable|string',
             'foto_pimpinan' => 'nullable|string',
-            'foto_ktp' => 'nullable|string',
+            'foto_ktp' => 'nullable|file|max:2048', // Upload foto KTP
             'username' => 'required|string|unique:sibenih_produsen,username',
             'password' => 'required|string',
             'password_conf' => 'required|same:password',
@@ -65,26 +76,27 @@ class RegistrasiController extends Controller
         }
 
         Produsen::insert([
+            'is_petani' => $request->is_petani,
             'nama_pt' => $request->nama_pt,
             'nomor_tiket' => $request->nomor_tiket,
-            'tahun_usaha' => $request->tahun_usaha,
-            'npwp' => $request->npwp,
             'nama_pimpinan' => $request->nama_pimpinan,
-            'nik_pimpinan' => $request->nik_pimpinan,
             'alamat_usaha' => $request->alamat_usaha,
-            'kota' => $request->kota,
             'hp' => $request->hp,
             'email' => $request->email,
-            'status_usaha' => $request->status_usaha,
-            'bentuk_usaha' => $request->bentuk_usaha,
-            'logo_usaha' => $request->logo_usaha,
-            'foto_pimpinan' => $request->foto_pimpinan,
             'foto_ktp' => $request->foto_ktp,
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'created_at' => now()
+            // 'tahun_usaha' => $request->tahun_usaha,
+            // 'npwp' => $request->npwp,
+            // 'nik_pimpinan' => $request->nik_pimpinan,
+            // 'kota' => $request->kota,
+            // 'status_usaha' => $request->status_usaha,
+            // 'bentuk_usaha' => $request->bentuk_usaha,
+            // 'logo_usaha' => $request->logo_usaha,
+            // 'foto_pimpinan' => $request->foto_pimpinan,
         ]);
 
-        return redirect('/login')->with('success', 'Registrasi Berhasil!');
+        return redirect('login')->with('success', 'Registrasi Berhasil!');
     }
 }

@@ -92,7 +92,7 @@
                              <li><a href="#" class="d-none">DATABASE</a></li>
                              
                              @guest
-                                 <li><a href="{{ url('login') }}">LOGIN</a></li>
+                                 <li><a href="{{ url('registrasi') }}">REGISTRASI</a></li>
                              @endguest
 
                              @auth

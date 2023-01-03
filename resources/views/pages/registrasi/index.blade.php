@@ -48,43 +48,43 @@
                         </div>
 
                         <div class="col-lg-6 mt-5 mt-lg-0">
-                            <label for="nama_pt">Nama Perusahaan:</label>
+                            <label for="nama_pt">Kelompok Tani / Perusahaan :</label>
                             <input type="text" class="form-control {{ $errors->has('nama_pt') ? 'is-invalid' : '' }}"
-                                id="nama_pt" name="nama_pt" placeholder="Nama perusahaan" />
+                                id="nama_pt" name="nama_pt" placeholder="Kelompok Tani / Perusahaan" / value="{{ @old('nama_pt') }}">
                             @error('nama_pt')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
 
-                        <div class="col-lg-6 mt-5">
+                        {{-- <div class="col-lg-6 mt-5 d-none">
                             <label for="tahun_usaha">Tahun Usaha:</label>
                             <input type="number" class="form-control {{ $errors->has('tahun_usaha') ? 'is-invalid' : '' }}"
                                 id="tahun_usaha" name="tahun_usaha" placeholder="Tahun usaha" />
                             @error('tahun_usaha')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
-                        </div>
+                        </div> --}}
 
-                        <div class="col-lg-6 mt-5 d-none">
+                        {{-- <div class="col-lg-6 mt-5 d-none">
                             <label for="npwp">NPWP:</label>
                             <input type="text" class="form-control {{ $errors->has('npwp') ? 'is-invalid' : '' }}"
                                 id="npwp" name="npwp" placeholder="nomor npwp" />
                             @error('npwp')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="col-lg-6 mt-5">
-                            <label for="nama_pimpinan">Nama Pimpinan:</label>
+                            <label for="nama_pimpinan">Nama Petani / Pimpinan :</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('nama_pimpinan') ? 'is-invalid' : '' }}"
-                                id="nama_pimpinan" name="nama_pimpinan" placeholder="Nama pimpinan" />
+                                id="nama_pimpinan" name="nama_pimpinan" placeholder="Nama Petani / Pimpinan" value="{{ @old('nama_pimpinan') }}"/>
                             @error('nama_pimpinan')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
 
-                        <div class="col-lg-6 mt-5">
+                        {{-- <div class="col-lg-6 mt-5 d-none">
                             <label for="nik_pimpinan">NIK Pimpinan:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('nik_pimpinan') ? 'is-invalid' : '' }}"
@@ -92,19 +92,19 @@
                             @error('nik_pimpinan')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="col-lg-6 mt-5">
-                            <label for="alamat_usaha">Alamat Perusahaan:</label>
+                            <label for="alamat_usaha">Alamat :</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('alamat_usaha') ? 'is-invalid' : '' }}"
-                                id="alamat_usaha" name="alamat_usaha" placeholder="Alamat perusahaan" />
+                                id="alamat_usaha" name="alamat_usaha" placeholder="Alamat" value="{{ @old('alamat_usaha') }}"/>
                             @error('alamat_usaha')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
 
-                        <div class="col-lg-6 mt-5">
+                        {{-- <div class="col-lg-6 mt-5 d-none">
                             <label for="kota">Kabupaten/Kota Letak Tanah:</label>
                             <select class="form-control form-control {{ $errors->has('kota') ? 'is-invalid' : '' }}"
                                 id="kota" name="kota">
@@ -118,27 +118,27 @@
                             @error('kota')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="col-lg-6 mt-5">
-                            <label for="hp">No. Telepon / HP Perusahaan:</label>
+                            <label for="hp">Nomor HP :</label>
                             <input type="text" class="form-control {{ $errors->has('hp') ? 'is-invalid' : '' }}"
-                                id="hp" name="hp" placeholder="Nomor telepon / hp perusahaan" />
+                                id="hp" name="hp" placeholder="Nomor HP" value="{{ @old('hp') }}"/>
                             @error('hp')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
 
                         <div class="col-lg-6 mt-5">
-                            <label for="email">Email Perusahaan:</label>
+                            <label for="email">Alamat email :</label>
                             <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                                id="email" name="email" placeholder="Email perusahaan" />
+                                id="email" name="email" placeholder="Alamat email" value="{{ @old('email') }}"/>
                             @error('email')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
 
-                        <div class="col-lg-6 mt-5">
+                        {{-- <div class="col-lg-6 mt-5 d-none">
                             <label for="status_usaha">Status Usaha:</label>
                             <select
                                 class="form-control form-control {{ $errors->has('status_usaha') ? 'is-invalid' : '' }}"
@@ -152,9 +152,9 @@
                             @error('status_usaha')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
-                        </div>
+                        </div> --}}
 
-                        <div class="col-lg-6 mt-5">
+                        {{-- <div class="col-lg-6 mt-5 d-none">
                             <label for="bentuk_usaha">Bentuk Usaha:</label>
                             <select
                                 class="form-control form-control {{ $errors->has('bentuk_usaha') ? 'is-invalid' : '' }}"
@@ -173,14 +173,29 @@
                             @error('bentuk_usaha')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
+                        </div> --}}
+
+                        <div class="col-lg-6 mt-5">
+                            <label for="is_petani">Petani :</label>
+                            <select
+                                class="form-control form-control {{ $errors->has('is_petani') ? 'is-invalid' : '' }}"
+                                id="is_petani" name="is_petani"
+                                value="{{ @old('is_petani') ? @old('is_petani') : (isset($data->is_petani) ? $data->is_petani : @old('is_petani')) }}">
+                                <option value="" selected disabled>-- Keterangan --</option>
+                                <option value="iya">Iya</option>
+                                <option value="tidak">Tidak</option>
+                            </select>
+                            @error('is_petani')
+                                <small class="text-danger"> {{ $message }} </small>
+                            @enderror
                         </div>
 
                         <div class="col-lg-6 mt-5">
-                            <label>Upload Foto KTP (.jpeg/jpg/png)</label>
+                            <label for="foto_ktp">Upload Foto KTP (.jpeg/jpg/png)</label>
                             <input type="file"
-                                class="form-control {{ $errors->has('logo_usaha_file') ? 'is-invalid' : '' }}"
-                                id="logo_usaha_file" name="foto_ktp_file" placeholder="Upload foto KTP" value="">
-                            @error('foto_ktp_file')
+                                class="form-control {{ $errors->has('foto_ktp') ? 'is-invalid' : '' }}"
+                                id="logo_usaha_file" name="foto_ktp" placeholder="Upload foto KTP" value="">
+                            @error('foto_ktp')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
@@ -211,7 +226,7 @@
                             <label for="password">Password:</label>
                             <input type="password"
                                 class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" id="password"
-                                name="password" placeholder="Name" />
+                                name="password" placeholder="Input Password" />
                             @error('password')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
@@ -220,17 +235,18 @@
                             <label for="password_conf">Password Confirmation:</label>
                             <input type="password"
                                 class="form-control {{ $errors->has('password_conf') ? 'is-invalid' : '' }}"
-                                id="password_conf" name="password_conf" placeholder="Name">
+                                id="password_conf" name="password_conf" placeholder="Confirm Password">
                             @error('password_conf')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
-
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <span>Sudah mendaftar?</span> <a href="{{ url('login') }}">Login disini!</a>
+                        </div>
                         <div class="col-lg-8 d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary me-2">Submit</button>
                             <button type="reset" class="btn btn-secondary">Cancel</button>
