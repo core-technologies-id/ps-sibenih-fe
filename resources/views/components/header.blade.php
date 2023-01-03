@@ -4,7 +4,7 @@
          <div class="container">
 
              <a href="#" id="logo">
-                 <img src="http://localhost:8000/assets/images/logo/logo.png" alt=""
+                 <img src="/assets/images/logo/logo.png" alt=""
                      {{ auth() ? 'width = 190' : '' }} style="height: 65px" />
              </a>
 
@@ -90,7 +90,7 @@
                              <li><a href="#" class="d-none">LINK</a></li>
                              <li><a href="{{ route('download') }}">DOWNLOAD</a></li>
                              <li><a href="#" class="d-none">DATABASE</a></li>
-                             
+
                              @guest
                                  <li><a href="{{ url('registrasi') }}">REGISTRASI</a></li>
                              @endguest
