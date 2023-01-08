@@ -81,7 +81,12 @@
                                  </ul>
                              </li>
                              <li><a href="{{ route('stokBenih') }}">STOKBENIH</a></li>
-                             <li><a href="{{ route('tanampangan') }}">TANAMPANGAN</a></li>
+                             <li class="dropdown"><a href="#">TANAMPANGAN</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('tanampangan.index') }}">DAFTAR PERMOHONAN</a></li>
+                                    <li><a href="{{ route('tanampangan.create') }}">PERMOHONAN</a></li>
+                                </ul>
+                            </li>
                              <li class="dropdown d-none"><a href="#">GALERI</a>
                                  <ul class="dropdown-menu d-none">
                                      <li><a href="#">Foto Kegiatan</a></li>

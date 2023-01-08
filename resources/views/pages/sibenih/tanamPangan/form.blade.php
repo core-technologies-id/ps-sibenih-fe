@@ -7,7 +7,7 @@
     <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
         <div class="container">
             <div class="page-title">
-                <h1>Form Permohonan Tanampangan</h1>
+                <h1>Permohonan Sertifikasi Benih Tanaman Pangan</h1>
             </div>
             <div class="breadcrumb">
                 <ul>
@@ -15,7 +15,7 @@
                         <a href="#">Home</a>
                     </li>
                     <li class="active">
-                        <a href="#">Tanampangan</a>
+                        <a href="#">Permohonan</a>
                     </li>
                 </ul>
             </div>
@@ -24,17 +24,22 @@
 
     <section>
         <div class="container">
-            @if (session('flash_success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('flash_success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-            @endif
+            <div class="col-md-6 mb-3">
+                @if (session('flash_success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('flash_success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                @endif
+            </div>
 
-            
-
-            <form class="form card card-custom" action="/tanampangan" method="POST" enctype="multipart/form-data">
+            <form class="form card card-custom" action="{{ isset($id) ? route('tanampangan.update', ['tanampangan' => $id]) : route('tanampangan.store') }}" 
+                    method="POST" enctype="multipart/form-data">
                 @csrf
+                @if (isset($id))
+                    @method('PUT')
+                @endif
+
                 <div class="card-header">
                     <div class="card-title">
                         <span class="card-icon">
@@ -48,23 +53,30 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Input Tanampangan</h4>
+                            <h4>Input Form Tanampangan</h4>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <label for="s1_nomer_antrian">Nomor Antrian :</label>
                             <div class="input-group">
                                 <input name="s1_nomer_antrian" id="s1_nomer_antrian" type="text" class="form-control"
                                     value="{{ isset($data['s1_nomer_antrian']) ? $data['s1_nomer_antrian'] : $nomer_antrian }}" readonly />
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
+                            <label for="nomor_surat">Nomor Surat :</label>
+                            <div class="input-group">
+                                <input name="nomor_surat" id="nomor_surat" type="text" class="form-control"
+                                    value="{{ isset($data['nomor_surat']) ? $data['nomor_surat'] : old('nomor_surat') }}" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <label for="s1_nomor_lapangan">Nomor Lapangan :</label>
                             <div class="input-group">
                                 <input name="s1_nomor_lapangan" id="s1_nomor_lapangan" type="text" class="form-control"
                                     value="{{ isset($data['s1_nomor_lapangan']) ? $data['s1_nomor_lapangan'] : old('s1_nomor_lapangan') }}" />
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <label for="s1_block">Blok :</label>
                             <div class="input-group">
                                 <input name="s1_block" id="s1_block" type="text" class="form-control"
@@ -78,7 +90,9 @@
                                 value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id')) }}">
                                 <option value="">-- Pilih Komoditas --</option>
                                 @foreach ($komoditas as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}"
+                                        {{ option_selected(@old('s1_komoditas_id'), $data->s1_komoditas_id ?? null, $item->id) }}
+                                        >{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -89,7 +103,9 @@
                                 value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}">
                                 <option value="">-- Pilih Perusahaan --</option>
                                 @foreach ($produsens as $prod)
-                                    <option value="{{ $prod->id }}">{{ $prod->nama_pt }}</option>
+                                    <option value="{{ $prod->id }}"
+                                        {{ option_selected(@old('s1_produsen_id'), $data->s1_produsen_id ?? null, $prod->id) }}
+                                        >{{ $prod->nama_pt }}</option>
                                 @endforeach
                             </select>
                             @error('s1_produsen_id')
@@ -111,33 +127,33 @@
                     <div class="row mb-3">
                         <div class="col-lg-3 mt-3">
                             <label>Nama Pimpinan: <span class="text-danger">*</span></label>
-                            <input name="Judul" id="nama_pimpinan" type="text" class="form-control"
-                                value="{{ isset($data['Judul']) ? $data['Judul'] : old('Judul') }}" readonly disabled />
+                            <input id="nama_pimpinan" type="text" class="form-control"
+                                value="{{ isset($data['Judul']) ? $data['Judul'] : '' }}" readonly />
                         </div>
                         <div class="col-lg-3 mt-3">
                             <label>Alamat Lengkap: <span class="text-danger">*</span></label>
-                            <input name="Judul" id="alamat_lengkap" type="text" class="form-control"
-                                value="{{ isset($data['Judul']) ? $data['Judul'] : old('Judul') }}" readonly disabled />
+                            <input id="alamat_lengkap" type="text" class="form-control"
+                                value="{{ isset($data['Judul']) ? $data['Judul'] : '' }}" readonly />
                         </div>
                         <div class="col-lg-3 mt-3">
                             <label>Desa: <span class="text-danger">*</span></label>
-                            <input name="Judul" id="desa" type="text" class="form-control"
-                                value="{{ isset($data['Judul']) ? $data['Judul'] : old('Judul') }}" readonly disabled />
+                            <input id="desa" type="text" class="form-control"
+                                value="{{ isset($data['Judul']) ? $data['Judul'] : '' }}" readonly />
                         </div>
                         <div class="col-lg-3 mt-3">
                             <label>Kabupaten: <span class="text-danger">*</span></label>
-                            <input name="Judul" id="kabupaten" type="text" class="form-control"
-                                value="{{ isset($data['Judul']) ? $data['Judul'] : old('Judul') }}" readonly disabled />
+                            <input id="kabupaten" type="text" class="form-control"
+                                value="{{ isset($data['Judul']) ? $data['Judul'] : '' }}" readonly />
                         </div>
                         <div class="col-lg-4 mt-3">
                             <label>Kecamatan: <span class="text-danger">*</span></label>
-                            <input name="Judul" id="kecamatan" type="text" class="form-control"
-                                value="{{ isset($data['Judul']) ? $data['Judul'] : old('Judul') }}" readonly disabled />
+                            <input id="kecamatan" type="text" class="form-control"
+                                value="{{ isset($data['Judul']) ? $data['Judul'] : '' }}" readonly />
                         </div>
                         <div class="col-lg-4 mt-3">
                             <label>Luas Pertanaman: <span class="text-danger">*</span></label>
-                            <input name="Judul" id="luas_pertanaman" type="text" class="form-control"
-                                value="{{ isset($data['Judul']) ? $data['Judul'] : old('Judul') }}" readonly disabled />
+                            <input id="luas_pertanaman" type="text" class="form-control"
+                                value="{{ isset($data['Judul']) ? $data['Judul'] : '' }}" readonly />
                         </div>
                         <div class="col-lg-4 mt-3">
                             <label for="s1_musim_tanam">Musim Tanam Pangan :</label>
@@ -160,12 +176,12 @@
                         <div class="col-lg-3 mt-3">
                             <label for="s2_tgl_tebar">Tanggal Tebar: </label>
                             <input type="date" class="form-control" id="s2_tgl_tebar" name="s2_tgl_tebar"
-                                value="{{ isset($data['s2_tgl_tebar']) ? \Carbon\Carbon::parse($data['s2_tgl_tebar'])->format('m/d/Y') : old('s2_tgl_tebar') }}" />
+                                value="{{ isset($data['s2_tgl_tebar']) ? $data['s2_tgl_tebar'] : old('s2_tgl_tebar') }}" />
                         </div>
                         <div class="col-lg-3 mt-3">
                             <label for="s2_tgl_tanam">Tanggal Tanam: </label>
                             <input type="date" class="form-control" id="s2_tgl_tanam" name="s2_tgl_tanam"
-                                value="{{ isset($data['s2_tgl_tanam']) ? \Carbon\Carbon::parse($data['s2_tgl_tanam'])->format('m/d/Y') : old('s2_tgl_tanam') }}" />
+                                value="{{ isset($data['s2_tgl_tanam']) ? $data['s2_tgl_tanam'] : old('s2_tgl_tanam') }}" />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -190,12 +206,12 @@
                         <div class="col-lg-4">
                             <label for="s2_tgl_panen">Tanggal Panen :</label>
                             <input type="date" class="form-control" id="s2_tgl_panen" name="s2_tgl_panen"
-                                value="{{ isset($data['s2_tgl_panen']) ? \Carbon\Carbon::parse($data['s2_tgl_panen'])->format('m/d/Y') : old('s2_tgl_panen') }}" />
+                                value="{{ isset($data['s2_tgl_panen']) ? $data['s2_tgl_panen'] : old('s2_tgl_panen') }}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Benih Asal</h4>
+                            <h4>Asal Benih</h4>
                         </div>
                         <div class="col-lg-4">
                             <label for="s3_produsen_id">Produsen: </label>
@@ -204,7 +220,9 @@
                                 value="{{ @old('s3_produsen_id') ? @old('s3_produsen_id') : (isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id')) }}">
                                 <option value="">-- Pilih Perusahaan --</option>
                                 @foreach ($produsens as $prod)
-                                    <option value="{{ $prod->id }}">{{ $prod->nama_pt }}</option>
+                                    <option value="{{ $prod->id }}"
+                                        {{ option_selected(@old('s3_produsen_id'), $data->s3_produsen_id ?? null, $prod->id) }}
+                                        >{{ $prod->nama_pt }}</option>
                                 @endforeach
                             </select>
                             @error('s1_produsen_id')
@@ -218,7 +236,9 @@
                                 value="{{ @old('s3_kelas_benih_id') ? @old('s3_kelas_benih_id') : (isset($data->s3_kelas_benih_id) ? $data->s3_kelas_benih_id : @old('s3_kelas_benih_id')) }}">
                                 <option value="">-- Pilih Kelas Benih --</option>
                                 @foreach ($kelas_benih as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}"
+                                        {{ option_selected(@old('s3_kelas_benih_id'), $data->s3_kelas_benih_id ?? null, $item->id) }}
+                                        >{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -261,12 +281,14 @@
                                 value="{{ @old('s2_kelas_benih_id') ? @old('s2_kelas_benih_id') : (isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : @old('s2_kelas_benih_id')) }}">
                                 <option value="">-- Pilih Kelas Benih --</option>
                                 @foreach ($kelas_benih as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}"
+                                        {{ option_selected(@old('s2_kelas_benih_id'), $data->s2_kelas_benih_id ?? null, $item->id) }}
+                                        >{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3 d-none">
                         <div class="col-lg-12 mb-3 mt-4">
                             <h4>Tanggal Pemeriksaan: </h4>
                         </div>
@@ -291,7 +313,7 @@
                                 value="{{ isset($data['s2_tgl_masak']) ? \Carbon\Carbon::parse($data['s2_tgl_masak'])->format('m/d/Y') : old('s2_tgl_masak') }}" />
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-3 d-none">
                         <div class="col-lg-12 mb-3 mt-4">
                             <h4>Lampiran: </h4>
                         </div>
@@ -324,7 +346,7 @@
                             src="{{ $data->s6_surat_pengantar }}" @endif />
                             <input type="file" class="form-control" id="imageFile5" onchange="tampilImage5()" name="s6_surat_pengantar">
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row mb-3">
                         <div class="col-lg-12 mb-3 mt-4">
                             <h4>Keterangan: </h4>
@@ -332,14 +354,16 @@
                         <div class="col-lg-5">
                             <h5>Pemeriksaan Lapangan (Tidak Lulus / Lulus)</h5>
                             <label class="p-switch p-switch-xl">
-                                <input type="checkbox" name="s7_pemeriksaan_lapangan" value="1" id="s7_pemeriksaan_lapangan">
+                                <input type="checkbox" name="s7_pemeriksaan_lapangan" value="1" id="s7_pemeriksaan_lapangan"
+                                    {{ radio_selected(@old('s7_pemeriksaan_lapangan'), $data->s7_pemeriksaan_lapangan ?? null, '1') }} />
                                 <span class="p-switch-style"></span>
                             </label>
                         </div>
                         <div class="col-lg-5">
                             <h5>Disertifikasi (Tidak / Ya)</h5>
                             <label class="p-switch p-switch-xl">
-                                <input type="checkbox" name="s7_disertifikasi" value="1" id="s7_disertifikasi">
+                                <input type="checkbox" name="s7_disertifikasi" value="1" id="s7_disertifikasi"
+                                    {{ radio_selected(@old('s7_disertifikasi'), $data->s7_disertifikasi ?? null, '1') }} />
                                 <span class="p-switch-style"></span>
                             </label>
                         </div>
@@ -361,6 +385,8 @@
 @section('script')
     <script src="{{ asset('assets/plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
     <script>
+        const isUpdate = {{ isset($id) ? 'true' : 'false' }};
+
         function produsenHelper(value) {
             const nama_pimpinan = $('#nama_pimpinan');
             $.ajax({
@@ -377,21 +403,26 @@
             const inp = $('#s1_produsen_alamat_id');
             inp.prop("disabled", true);
             $.ajax({
-                url: "{{ route('produsen_alamat.get_produsen') }}?datatable=false&id=" + value,
+                url: "{{ route('produsen_alamat.get_produsen') }}?id=" + value,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    let targetValue =
-                        {{ isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id') ?? 'null' }}
-                    inp.empty()
+                    let targetValue = {{ isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id') ?? 'null' }}
+                    inp.empty();
                     inp.append(new Option('-- Pilih Alamat Produsen --', ''))
-                    {
+                    if (isUpdate) {
+                        data.forEach((el) => {
+                            if (el.id === targetValue) {
+                                inp.append(new Option(el.s1_alamat_lengkap, el.id, true, true))
+                            } else {
+                                inp.append(new Option(el.s1_alamat_lengkap, el.id))
+                            }
+                        });
+                    } else {
                         data.forEach(el => inp.append(new Option(el.s1_alamat_lengkap, el.id)))
                     }
                     inp.prop("disabled", false);
-
                     alamatProdusenHelper(data[0].id)
-                    // console.log(data[0].id);
                 }
             })
         }
@@ -403,7 +434,7 @@
             const kecamatan = $('#kecamatan');
             const luas_pertanaman = $('#luas_pertanaman');
             $.ajax({
-                url: "{{ route('produsen_alamat.data_alamat') }}?datatable=false&id=" + value,
+                url: "/produsen_alamat/data_alamat?id=" + value,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -412,8 +443,9 @@
                     kabupaten.val(data.kabupaten);
                     kecamatan.val(data.kecamatan);
                     luas_pertanaman.val(data.s2_luas_tanah);
+                    console.log(data);
                 }
-            })
+            });
         }
 
         $('#s1_produsen_id').on('change', function(e) {
@@ -437,9 +469,18 @@
                         {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }}
                     inp.empty()
                     inp.append(new Option('-- Pilih Varietas --', ''))
-                    {
+                    if (isUpdate) {
+                        data.forEach((el) => {
+                            if (el.id === targetValue) {
+                                inp.append(new Option(el.nama, el.id, true, true))
+                            } else {
+                                inp.append(new Option(el.nama, el.id))
+                            }
+                        });
+                    } else {
                         data.forEach(el => inp.append(new Option(el.nama, el.id)))
                     }
+
                     inp.prop("disabled", false);
                 }
             })
@@ -448,6 +489,41 @@
         $('#s1_komoditas_id').on('change', function(e) {
             komoditasHelper(e.target.value)
         });
+
+        const inp = $('#s2_varietas_id')
+        inp.prop("disabled", true);
+        $.ajax({
+            url: "{{ route('varietas.get_data') }}?komoditas={{ isset($data->s1_komoditas_id) }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                inp.empty()
+                inp.append(new Option('-- Pilih Varietas --', ''))
+                data.forEach((el) => {
+                    if (el.id === {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }}) 
+                    {
+                        inp.append(new Option(el.nama, el.id, true, true))
+                    } else {
+                        inp.append(new Option(el.nama, el.id))
+                    }
+                })
+                inp.prop("disabled", false);
+            }
+        });
+
+        function initEdit() {
+            const produsenValue = $('#s1_produsen_id').val()
+            const komValue = $('#s1_komoditas_id').val()
+            const almValue = $('#s1_produsen_alamat_id').val()
+            produsenHelper(produsenValue)
+            produsenAlmHelper(produsenValue)
+            komoditasHelper(komValue)
+            alamatProdusenHelper(almValue)
+        }
+
+        if (isUpdate) {
+            initEdit()
+        }
 
         function tampilImage() {
             const image = document.querySelector('#imageFile');

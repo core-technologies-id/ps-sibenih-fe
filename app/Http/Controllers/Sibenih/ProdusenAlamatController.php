@@ -35,13 +35,13 @@ class ProdusenAlamatController extends Controller
         if (isset($request->id)) {
             $data = new ProdusenAlamat();
             $data = $data->join('sibenih_mas_kabupaten as kabupaten', 'kabupaten.id', '=', 'sibenih_mas_produsen_alamat.s2_kabupaten_id')
-                ->join('sisaras_kecamatan as kecamatan', 'kecamatan.idkecamatan', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
-                ->select(
-                    'sibenih_mas_produsen_alamat.*',
-                    'kabupaten.nama as kabupaten',
-                    'kecamatan.kecamatan as kecamatan',
-                )
-                ->get();
+            ->join('sisaras_kecamatan as kecamatan', 'kecamatan.idkecamatan', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
+            ->select(
+                'sibenih_mas_produsen_alamat.id as id',
+                'sibenih_mas_produsen_alamat.*',
+                'kabupaten.nama as kabupaten',
+                'kecamatan.kecamatan as kecamatan',
+            )->get();
             $data = $data->where('id', $request->id)->first();
             if ($data) {
                 return response()->json($data, 200);
@@ -51,5 +51,5 @@ class ProdusenAlamatController extends Controller
             $data = new ProdusenAlamat();
             return response()->json($data->get(), 200);
         }
-    }   
+    }
 }

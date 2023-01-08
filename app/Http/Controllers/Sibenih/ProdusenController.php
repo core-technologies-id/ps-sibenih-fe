@@ -17,7 +17,12 @@ class ProdusenController extends Controller
                 return response()->json($data, 200);
             }
             return response()->json([], 200);
-        } else {
+            
+        } else if (isset($request->datatable) && $request->datatable === 'false' && isset($request->id)) {
+            $query = Produsen::where('id', $request->id)->get();
+            return response()->json($query, 200);
+        }
+        else {
             $data = new Produsen();
             return response()->json($data->get(), 200);
         }

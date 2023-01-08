@@ -48,8 +48,9 @@ Route::get('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::cla
 Route::post('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'proccess'])->name('stokBenih.proccess')->middleware('auth');
 
 // tanampangan
-Route::get('/tanampangan', [\App\Http\Controllers\Sibenih\TanamPanganController::class, 'index'])->name('tanampangan')->middleware('auth');
-Route::post('/tanampangan', [\App\Http\Controllers\Sibenih\TanamPanganController::class, 'proccess'])->name('tanampangan.proccess')->middleware('auth');
+Route::resource('tanampangan', \App\Http\Controllers\Sibenih\TanamPanganController::class)->middleware('auth');
+Route::get('/tanampangan/daftar_permohonan/print/{id}', [\App\Http\Controllers\Sibenih\TanamPanganController::class, 'export'])->name('tanampangan.daftar_permohonan.print')->middleware('auth');
+
 
 Route::get('/varietas/get_data', [\App\Http\Controllers\Sibenih\VarietasController::class, 'get_data'])->name('varietas.get_data')->middleware('auth');
 Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenController::class, 'get_data'])->name('produsen.get_data');
