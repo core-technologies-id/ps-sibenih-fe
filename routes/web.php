@@ -47,5 +47,12 @@ Route::get('/registrasi/export', [\App\Http\Controllers\RegistrasiController::cl
 Route::get('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'index'])->name('stokBenih')->middleware('auth');
 Route::post('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'proccess'])->name('stokBenih.proccess')->middleware('auth');
 
+// tanampangan
+Route::resource('tanampangan', \App\Http\Controllers\Sibenih\TanamPanganController::class)->middleware('auth');
+Route::get('/tanampangan/daftar_permohonan/print/{id}', [\App\Http\Controllers\Sibenih\TanamPanganController::class, 'export'])->name('tanampangan.daftar_permohonan.print')->middleware('auth');
+
+
 Route::get('/varietas/get_data', [\App\Http\Controllers\Sibenih\VarietasController::class, 'get_data'])->name('varietas.get_data')->middleware('auth');
 Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenController::class, 'get_data'])->name('produsen.get_data');
+Route::get('/produsen_alamat/get_produsen', [\App\Http\Controllers\Sibenih\ProdusenAlamatController::class, 'get_produsen'])->name('produsen_alamat.get_produsen');
+Route::get('/produsen_alamat/data_alamat', [\App\Http\Controllers\Sibenih\ProdusenAlamatController::class, 'data_alamat'])->name('produsen_alamat.data_alamat');
