@@ -347,7 +347,7 @@
                             <input type="file" class="form-control" id="imageFile5" onchange="tampilImage5()" name="s6_surat_pengantar">
                         </div>
                     </div> --}}
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3 d-none">
                         <div class="col-lg-12 mb-3 mt-4">
                             <h4>Keterangan: </h4>
                         </div>
@@ -367,7 +367,7 @@
                                 <span class="p-switch-style"></span>
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="card-footer">
                     <div class="row">
