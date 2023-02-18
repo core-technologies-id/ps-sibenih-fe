@@ -36,7 +36,9 @@ class TanamPanganController extends Controller
             'var.nama as var_nama_varietas',
             'prodAlm.s2_luas_tanah as luas_pertanaman',
             'user.name as admin_name'
-        )->get();
+        )
+            ->where('sibenih_tanam_pangan.s1_produsen_id', \Auth::user()->id)
+            ->get();
 
         return view('pages.sibenih.tanamPangan.daftar_permohonan', compact('tanamPangan'));
     }
@@ -48,13 +50,6 @@ class TanamPanganController extends Controller
      */
     public function create()
     {
-        $kabupatens = Kabupaten::all();
-        $varietas = Varietas::all();
-        $kelas_benih = KelasBenih::all();
-        $komoditas = Komoditas::all();
-        $produsens = Produsen::all();
-        $produsenAlamat = ProdusenAlamat::all();
-
         $tanampangan = TanamPangan::all()->count();
         $depan = 'BTP';
 
@@ -72,14 +67,11 @@ class TanamPanganController extends Controller
             $nomer_antrian = $depan . '001';
         }
 
+        $userId = \Auth::user()->id;
+
         return view('pages.sibenih.tanamPangan.form', [
-            'kabupatens' => $kabupatens,
-            'varietas' => $varietas,
-            'kelas_benih' => $kelas_benih,
-            'komoditas' => $komoditas,
-            'produsens' => $produsens,
-            'produsenAlamat' => $produsenAlamat,
             'nomer_antrian' => $nomer_antrian,
+            'userId' => $userId
         ]);
     }
 
@@ -92,12 +84,11 @@ class TanamPanganController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "nomor_surat" => 'string|max:255|nullable',
-            "status" => "string",
-            "nomor_antrian" => "string|max:255",
+            "s1_nomor_antrian" => 'string|max:255|required',
+            "s1_nomor_surat" => "string|max:255",
             "s1_nomor_lapangan" => "max:255",
-            "s1_nomer_antrian" => "required",
             "s1_block" => "required",
+            "s1_luas_tanah" => 'required',
             "s1_musim_tanam" => "required",
             "s1_komoditas_id" => "required",
             "s1_produsen_id" => "required",
@@ -111,6 +102,7 @@ class TanamPanganController extends Controller
             "s3_no_label_sumber" => "required",
             "s3_jml_benih" => "required",
             "s2_kelas_benih_id" => "required",
+            "status" => "string",
         ]);
 
         if ($validator->fails()) {
@@ -224,11 +216,11 @@ class TanamPanganController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "nomor_surat" => 'string|max:255|nullable',
+            "s1_nomor_antrian" => 'string|max:255|nullable',
             "status" => "string",
             "nomor_antrian" => "string|max:255",
             "s1_nomor_lapangan" => "max:255",
-            "s1_nomer_antrian" => "required",
+            "s1_nomor_antrian" => "required",
             "s1_block" => "required",
             "s1_musim_tanam" => "required",
             "s1_komoditas_id" => "required",

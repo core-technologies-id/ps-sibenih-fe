@@ -105,7 +105,7 @@
         </div>
         <div class="title">
             <h3>PERMOHONAN SERTIFIKASI BENIH TANAMAN PANGAN</h3>
-            <div style="line-height: 10px">No. {{ $data->nomor_surat ?? '-' }} /SBTP/XI/{{ date('Y') }}</div>
+            <div style="line-height: 10px">No. {{ $data->s1_nomor_antrian ?? '-' }} /SBTP/XI/{{ date('Y') }}</div>
         </div>
 
         <div class="table">
@@ -167,7 +167,7 @@
                     </tr>
                     <tr>
                         <td>Desa</td>
-                        <td class="samping">: 
+                        <td class="samping">:
                             <span>{{ $produsenAlamat->s2_desa ?? '-' }}</span>
                         </td>
                         <td>Kota/Kabupaten</td>
