@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('style')
 @endsection
-    <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-switch/bootstrap-switch.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-switch/bootstrap-switch.css') }}">
 
 @section('content')
     <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
@@ -28,13 +28,15 @@
                 @if (session('flash_success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('flash_success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     </div>
                 @endif
             </div>
 
-            <form class="form card card-custom" action="{{ isset($id) ? route('tanampangan.update', ['tanampangan' => $id]) : route('tanampangan.store') }}"
-                    method="POST" enctype="multipart/form-data">
+            <form class="form card card-custom"
+                action="{{ isset($id) ? route('tanampangan.update', ['tanampangan' => $id]) : route('tanampangan.store') }}"
+                method="POST" enctype="multipart/form-data">
                 @csrf
                 @if (isset($id))
                     @method('PUT')
@@ -58,29 +60,27 @@
                         <div class="col-lg-12">
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s1_nomor_antrian">Nomor Antrian: <span
-                                            class="text-danger">*</span></label>
+                                    <label for="s1_nomor_antrian">Nomor Antrian: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input name="s1_nomor_antrian" id="s1_nomor_antrian" type="text"
-                                               class="form-control"
-                                               value="{{ isset($data['s1_nomor_antrian']) ? $data['s1_nomor_antrian'] : $nomer_antrian }}"
-                                               readonly />
+                                            class="form-control"
+                                            value="{{ isset($data['s1_nomor_antrian']) ? $data['s1_nomor_antrian'] : $nomer_antrian }}"
+                                            readonly />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="s1_nomor_surat">Nomor Surat: </label>
                                     <div class="input-group">
-                                        <input name="s1_nomor_surat" id="s1_nomor_surat"
-                                               type="text" class="form-control"
-                                               value="{{ isset($data['s1_nomor_surat']) ? $data['s1_nomor_surat'] : old('s1_nomor_surat') }}" />
+                                        <input name="s1_nomor_surat" id="s1_nomor_surat" type="text" class="form-control"
+                                            value="{{ isset($data['s1_nomor_surat']) ? $data['s1_nomor_surat'] : old('s1_nomor_surat') }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="s1_nomor_lapangan">Nomor Lapangan: </label>
                                     <div class="input-group">
-                                        <input name="s1_nomor_lapangan" id="s1_nomor_lapangan"
-                                               type="text" class="form-control"
-                                               value="{{ isset($data['s1_nomor_lapangan']) ? $data['s1_nomor_lapangan'] : old('s1_nomor_lapangan') }}" />
+                                        <input name="s1_nomor_lapangan" id="s1_nomor_lapangan" type="text"
+                                            class="form-control"
+                                            value="{{ isset($data['s1_nomor_lapangan']) ? $data['s1_nomor_lapangan'] : old('s1_nomor_lapangan') }}" />
                                     </div>
                                 </div>
                             </div>
@@ -88,52 +88,44 @@
                                 <div class="col-lg-6">
                                     <label for="s1_block">Blok: <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input name="s1_block" id="s1_block" type="text"
-                                               class="form-control"
-                                               value="{{ isset($data['s1_block']) ? $data['s1_block'] : old('s1_block') }}" />
+                                        <input name="s1_block" id="s1_block" type="text" class="form-control"
+                                            value="{{ isset($data['s1_block']) ? $data['s1_block'] : old('s1_block') }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="s1_komoditas_id">Komoditas: <span
-                                            class="text-danger">*</span></label>
-                                    <select
-                                        class="form-control {{ $errors->has('s1_komoditas_id') ? 'is-invalid' : '' }}"
+                                    <label for="s1_komoditas_id">Komoditas: <span class="text-danger">*</span></label>
+                                    <select class="form-control {{ $errors->has('s1_komoditas_id') ? 'is-invalid' : '' }}"
                                         id="s1_komoditas_id" name="s1_komoditas_id"
                                         value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id')) }}">
 
                                     </select>
                                     @error('s1_komoditas_id')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s1_produsen_id">Produsen: <span
-                                            class="text-danger">*</span></label>
-                                    <select
-                                        class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
+                                    <label for="s1_produsen_id">Produsen: <span class="text-danger">*</span></label>
+                                    <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
                                         id="s1_produsen_id" name="s1_produsen_id"
-                                        value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}" disabled>
+                                        value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}"
+                                        disabled>
 
                                     </select>
                                     @error('s1_produsen_id')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
                                     <label>Nama Pimpinan: <span class="text-danger">*</span></label>
-                                    <input name="Judul" id="nama_pimpinan" type="text"
-                                           class="form-control"
-                                           disabled />
+                                    <input name="Judul" id="nama_pimpinan" type="text" class="form-control" disabled />
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-3 mb-3">
                                     <label>Alamat Lengkap Usaha: <span class="text-danger">*</span></label>
-                                    <input id="alamat_lengkap_usaha" type="text"
-                                           class="form-control"
-                                           disabled />
+                                    <input id="alamat_lengkap_usaha" type="text" class="form-control" disabled />
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label for="s1_produsen_alamat_id">Alamat Lengkap Produks: <span
@@ -141,17 +133,17 @@
                                     <select
                                         class="form-control {{ $errors->has('s1_produsen_alamat_id') ? 'is-invalid' : '' }} varietas"
                                         id="s1_produsen_alamat_id" name="s1_produsen_alamat_id"
-                                        value="{{ @old('s1_produsen_alamat_id') ? @old('s1_produsen_alamat_id') : (isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id')) }}" disabled>
+                                        value="{{ @old('s1_produsen_alamat_id') ? @old('s1_produsen_alamat_id') : (isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id')) }}"
+                                        disabled>
 
                                     </select>
                                     @error('s1_produsen_alamat_id')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="s1_musim_tanam">Musim Tanam Pangan :</label>
-                                    <select
-                                        class="form-control {{ $errors->has('s1_musim_tanam') ? 'is-invalid' : '' }}"
+                                    <select class="form-control {{ $errors->has('s1_musim_tanam') ? 'is-invalid' : '' }}"
                                         id="s1_musim_tanam" name="s1_musim_tanam"
                                         value="{{ @old('s1_musim_tanam') ? @old('s1_musim_tanam') : (isset($data->s1_musim_tanam) ? $data->s1_musim_tanam : @old('s1_musim_tanam')) }}">
 
@@ -163,48 +155,41 @@
                                             April - September</option>
                                     </select>
                                     @error('s1_musim_tanam')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label>Desa: </label>
-                                    <input id="desa" type="text" class="form-control"
-                                           disabled />
+                                    <input id="desa" type="text" class="form-control" disabled />
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label>Kabupaten: </label>
-                                    <input id="kabupaten" type="text"
-                                           class="form-control"
-                                           disabled />
+                                    <input id="kabupaten" type="text" class="form-control" disabled />
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label>Kecamatan: </label>
-                                    <input id="kecamatan" type="text"
-                                           class="form-control"
-                                           disabled />
+                                    <input id="kecamatan" type="text" class="form-control" disabled />
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label>Luas Pertanaman: <span class="text-danger">*</span></label>
-                                    <input id="s1_luas_tanah" name="s1_luas_tanah" type="number" class="form-control {{ $errors->has('s1_luas_tanah') ? 'is-invalid' : '' }}"
-                                           value="{{ @old('s1_luas_tanah') ? @old('s1_luas_tanah') : (isset($data->s1_luas_tanah) ? $data->s1_luas_tanah : @old('s1_luas_tanah')) }}"
-                                    />
+                                    <input id="s1_luas_tanah" name="s1_luas_tanah" type="number"
+                                        class="form-control {{ $errors->has('s1_luas_tanah') ? 'is-invalid' : '' }}"
+                                        value="{{ @old('s1_luas_tanah') ? @old('s1_luas_tanah') : (isset($data->s1_luas_tanah) ? $data->s1_luas_tanah : @old('s1_luas_tanah')) }}" />
                                     @error('s1_luas_tanah')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-3">
                                     <label for="s2_tgl_tebar">Tanggal Tebar: </label>
-                                    <input type="date" class="form-control" id="s2_tgl_tebar"
-                                           name="s2_tgl_tebar"
-                                           value="{{ isset($data['s2_tgl_tebar']) ? \Carbon\Carbon::parse($data['s2_tgl_tebar'])->format('m/d/Y') : old('s2_tgl_tebar') }}" />
+                                    <input type="date" class="form-control" id="s2_tgl_tebar" name="s2_tgl_tebar"
+                                        value="{{ isset($data['s2_tgl_tebar']) ? \Carbon\Carbon::parse($data['s2_tgl_tebar'])->format('m/d/Y') : old('s2_tgl_tebar') }}" />
                                 </div>
                                 <div class="col-lg-3">
                                     <label for="s2_tgl_tanam">Tanggal Tanam: </label>
-                                    <input type="date" class="form-control" id="s2_tgl_tanam"
-                                           name="s2_tgl_tanam"
-                                           value="{{ isset($data['s2_tgl_tanam']) ? \Carbon\Carbon::parse($data['s2_tgl_tanam'])->format('m/d/Y') : old('s2_tgl_tanam') }}" />
+                                    <input type="date" class="form-control" id="s2_tgl_tanam" name="s2_tgl_tanam"
+                                        value="{{ isset($data['s2_tgl_tanam']) ? \Carbon\Carbon::parse($data['s2_tgl_tanam'])->format('m/d/Y') : old('s2_tgl_tanam') }}" />
                                 </div>
                             </div>
                         </div>
@@ -217,34 +202,31 @@
                         <div class="col-lg-12">
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s2_varietas_id">Varietas: <span
-                                            class="text-danger">*</span></label>
+                                    <label for="s2_varietas_id">Varietas: <span class="text-danger">*</span></label>
                                     <select
                                         class="form-control {{ $errors->has('s2_varietas_id') ? 'is-invalid' : '' }} varietas"
                                         id="s2_varietas_id" name="s2_varietas_id"
                                         value="{{ @old('s2_varietas_id') ? @old('s2_varietas_id') : (isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id')) }}"
-                                        disabled
-                                    >
+                                        disabled>
 
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="s2_jenis_tanaman">Jenis Tanaman: <span
                                             class="text-danger">*</span></label>
-                                    <input name="s2_jenis_tanaman" id="s2_jenis_tanaman"
-                                           type="text" class="form-control {{ $errors->has('s2_jenis_tanaman') ? 'is-invalid' : '' }}"
-                                           value="{{ isset($data['s2_jenis_tanaman']) ? $data['s2_jenis_tanaman'] : old('s2_jenis_tanaman') }}" />
+                                    <input name="s2_jenis_tanaman" id="s2_jenis_tanaman" type="text"
+                                        class="form-control {{ $errors->has('s2_jenis_tanaman') ? 'is-invalid' : '' }}"
+                                        value="{{ isset($data['s2_jenis_tanaman']) ? $data['s2_jenis_tanaman'] : old('s2_jenis_tanaman') }}" />
                                     @error('s2_jenis_tanaman')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
                                     <label for="s2_tgl_panen">Tanggal Panen: </label>
-                                    <input type="date" class="form-control" id="s2_tgl_panen"
-                                           name="s2_tgl_panen"
-                                           value="{{ isset($data['s2_tgl_panen']) ? \Carbon\Carbon::parse($data['s2_tgl_panen'])->format('m/d/Y') : old('s2_tgl_panen') }}" />
+                                    <input type="date" class="form-control" id="s2_tgl_panen" name="s2_tgl_panen"
+                                        value="{{ isset($data['s2_tgl_panen']) ? \Carbon\Carbon::parse($data['s2_tgl_panen'])->format('m/d/Y') : old('s2_tgl_panen') }}" />
                                 </div>
                             </div>
                         </div>
@@ -256,16 +238,14 @@
                         <div class="col-lg-12">
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s3_produsen_id">Produsen: <span
-                                            class="text-danger">*</span></label>
-                                    <select
-                                        class="form-control {{ $errors->has('s3_produsen_id') ? 'is-invalid' : '' }}"
+                                    <label for="s3_produsen_id">Produsen: <span class="text-danger">*</span></label>
+                                    <select class="form-control {{ $errors->has('s3_produsen_id') ? 'is-invalid' : '' }}"
                                         id="s3_produsen_id" name="s3_produsen_id"
                                         value="{{ @old('s3_produsen_id') ? @old('s3_produsen_id') : (isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id')) }}">
 
                                     </select>
                                     @error('s3_produsen_id')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
@@ -277,7 +257,7 @@
                                         value="{{ @old('s3_kelas_benih_id') ? @old('s3_kelas_benih_id') : (isset($data->s3_kelas_benih_id) ? $data->s3_kelas_benih_id : @old('s3_kelas_benih_id')) }}">
                                     </select>
                                     @error('s3_kelas_benih_id')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
@@ -286,19 +266,19 @@
                                     <label for="s3_no_kel_benih">No Kelas Benih: <span
                                             class="text-danger">*</span></label>
                                     <input name="s3_no_kel_benih" id="s3_no_kel_benih" type="text"
-                                           class="form-control"
-                                           value="{{ isset($data['s3_no_kel_benih']) ? $data['s3_no_kel_benih'] : old('s3_no_kel_benih') }}" />
+                                        class="form-control"
+                                        value="{{ isset($data['s3_no_kel_benih']) ? $data['s3_no_kel_benih'] : old('s3_no_kel_benih') }}" />
                                     @error('s3_no_kel_benih')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="s3_no_label_sumber">No. Seri Label Benih: </label>
-                                    <input name="s3_no_label_sumber" id="s3_no_label_sumber"
-                                           type="text" class="form-control"
-                                           value="{{ isset($data['s3_no_label_sumber']) ? $data['s3_no_label_sumber'] : old('s3_no_label_sumber') }}" />
+                                    <input name="s3_no_label_sumber" id="s3_no_label_sumber" type="text"
+                                        class="form-control"
+                                        value="{{ isset($data['s3_no_label_sumber']) ? $data['s3_no_label_sumber'] : old('s3_no_label_sumber') }}" />
                                     @error('s3_no_label_sumber')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
@@ -308,16 +288,16 @@
                                             class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input name="s3_jml_benih" id="s3_jml_benih" type="number"
-                                               class="form-control {{ $errors->has('s3_jml_benih') ? 'is-invalid' : '' }}"
-                                               value="{{ isset($data['s3_jml_benih']) ? $data['s3_jml_benih'] : old('s3_jml_benih') }}" />
+                                            class="form-control {{ $errors->has('s3_jml_benih') ? 'is-invalid' : '' }}"
+                                            value="{{ isset($data['s3_jml_benih']) ? $data['s3_jml_benih'] : old('s3_jml_benih') }}" />
                                         <div class="input-group-append">
-                                                            <span class="input-group-text">
-                                                                KG
-                                                            </span>
+                                            <span class="input-group-text">
+                                                KG
+                                            </span>
                                         </div>
                                     </div>
                                     @error('s3_jml_benih')
-                                    <small class="text-danger"> {{ $message }} </small>
+                                        <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
@@ -328,16 +308,14 @@
                             <h4>Kelas Benih Yang Dihasilkan : </h4>
                         </div>
                         <div class="col-lg-6">
-                            <label for="s2_kelas_benih_id">Kelas Benih: <span
-                                    class="text-danger">*</span></label>
-                            <select
-                                class="form-control {{ $errors->has('s2_kelas_benih_id') ? 'is-invalid' : '' }}"
+                            <label for="s2_kelas_benih_id">Kelas Benih: <span class="text-danger">*</span></label>
+                            <select class="form-control {{ $errors->has('s2_kelas_benih_id') ? 'is-invalid' : '' }}"
                                 id="s2_kelas_benih_id" name="s2_kelas_benih_id"
                                 value="{{ @old('s2_kelas_benih_id') ? @old('s2_kelas_benih_id') : (isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : @old('s2_kelas_benih_id')) }}">
 
                             </select>
                             @error('s2_kelas_benih_id')
-                            <small class="text-danger"> {{ $message }} </small>
+                                <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
                     </div>
@@ -372,7 +350,7 @@
             })
         }
 
-        function varietasHelper (value) {
+        function varietasHelper(value) {
             $.ajax({
                 url: "/master/varietas?where=id=" + value,
                 type: 'GET',
@@ -386,7 +364,7 @@
             });
         }
 
-        function komoditasHelper (value) {
+        function komoditasHelper(value) {
             $.ajax({
                 url: "/master/komoditas?where=id=" + value,
                 type: 'GET',
@@ -396,7 +374,8 @@
                     data.results.forEach((el) => {
                         $('#s1_komoditas_id').append(new Option(el.text, el.id, true, true))
                     })
-                    const varValue = {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : (@old('s2_varietas_id') ?? 'null') }};
+                    const varValue =
+                        {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }};
                     varietasHelper(varValue)
                 }
             });
@@ -423,7 +402,7 @@
             });
         }
 
-        function produsenHelper (value, id = '') {
+        function produsenHelper(value, id = '') {
             $.ajax({
                 url: "/master/produsen?where=id=" + value,
                 type: 'GET',
@@ -446,7 +425,7 @@
             });
         }
 
-        function kelasBenihHelper (value, id = '') {
+        function kelasBenihHelper(value, id = '') {
             $.ajax({
                 url: "/master/kelas?where=id=" + value,
                 type: 'GET',
@@ -461,12 +440,18 @@
         }
 
         function initEdit() {
-            const produsenValue = {{ isset($data->s1_produsen_id) ? $data->s1_produsen_id : (@old('s1_produsen_id') ?? 'null') }};
-            const produsenValue3 = {{ isset($data->s3_produsen_id) ? $data->s3_produsen_id : (@old('s3_produsen_id') ?? 'null') }};
-            const produsenAlamat = {{ isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : (@old('s1_produsen_alamat_id') ?? 'null') }};
-            const komValue = {{ isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : (@old('s1_komoditas_id') ?? 'null') }};
-            const kelasBenihValue3 = {{ isset($data->s3_kelas_benih_id) ? $data->s3_kelas_benih_id : (@old('s3_kelas_benih_id') ?? 'null') }};
-            const kelasBenihValue2 = {{ isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : (@old('s2_kelas_benih_id') ?? 'null') }};
+            const produsenValue =
+                {{ isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id') ?? 'null' }};
+            const produsenValue3 =
+                {{ isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id') ?? 'null' }};
+            const produsenAlamat =
+                {{ isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id') ?? 'null' }};
+            const komValue =
+                {{ isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id') ?? 'null' }};
+            const kelasBenihValue3 =
+                {{ isset($data->s3_kelas_benih_id) ? $data->s3_kelas_benih_id : @old('s3_kelas_benih_id') ?? 'null' }};
+            const kelasBenihValue2 =
+                {{ isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : @old('s2_kelas_benih_id') ?? 'null' }};
             produsenHelper(produsenValue, 's1_produsen_id')
             produsenHelper(produsenValue3, 's3_produsen_id')
             produsenAlamatHelper(produsenAlamat, produsenValue)
@@ -489,7 +474,7 @@
                 allowClear: true,
                 ajax: {
                     url: '/master/komoditas',
-                    data: function (params) {
+                    data: function(params) {
                         const query = {
                             idField: 'id',
                             displayField: 'nama'
@@ -504,14 +489,14 @@
                     }
                 }
             })
-            $('#s1_komoditas_id').on('select2:clear', function () {
+            $('#s1_komoditas_id').on('select2:clear', function() {
                 setTimeout(() => {
                     $('#s2_varietas_id').prop("disabled", true);
                 }, 100)
                 $('#s2_varietas_id').val('');
                 $('#s2_varietas_id').trigger('change');
             })
-            $('#s1_komoditas_id').on('change', function () {
+            $('#s1_komoditas_id').on('change', function() {
                 komoditas_id = $('#s1_komoditas_id').val() * 1
                 $('#s2_varietas_id').prop("disabled", false);
             })
@@ -523,14 +508,15 @@
                 allowClear: true,
                 ajax: {
                     url: '/master/varietas',
-                    data: function (params) {
+                    data: function(params) {
                         const query = {
                             idField: 'id',
                             displayField: 'nama'
                         }
 
                         if (params.term) {
-                            query.where = `komoditas_id=${komoditas_id} and nama LIKE '%${params.term}%'`
+                            query.where =
+                                `komoditas_id=${komoditas_id} and nama LIKE '%${params.term}%'`
                         } else {
                             query.where = `komoditas_id=${komoditas_id}`
                         }
@@ -569,7 +555,7 @@
                 allowClear: true,
                 ajax: {
                     url: '/master/produsen',
-                    data: function (params) {
+                    data: function(params) {
                         const query = {
                             idField: 'id',
                             displayField: 'nama_pt'
@@ -590,7 +576,7 @@
                 allowClear: true,
                 ajax: {
                     url: '/master/kelas',
-                    data: function (params) {
+                    data: function(params) {
                         const query = {
                             idField: 'id',
                             displayField: 'nama'
@@ -611,7 +597,7 @@
                 allowClear: true,
                 ajax: {
                     url: '/master/kelas',
-                    data: function (params) {
+                    data: function(params) {
                         const query = {
                             idField: 'id',
                             displayField: 'nama'
@@ -626,7 +612,7 @@
                     }
                 }
             })
-            $('#s1_produsen_id').on('select2:clear', function () {
+            $('#s1_produsen_id').on('select2:clear', function() {
                 setTimeout(() => {
                     $('#s1_produsen_alamat_id').prop("disabled", true);
                 }, 100)
@@ -636,7 +622,7 @@
                 $('#kecamatan').val('');
                 $('#desa').val('');
             })
-            $('#s1_produsen_id').on('change', function () {
+            $('#s1_produsen_id').on('change', function() {
                 produsen_id = $('#s1_produsen_id').val() * 1
                 $('#s1_produsen_alamat_id').prop("disabled", false);
                 produsenGetDetail(produsen_id)
@@ -650,14 +636,15 @@
                 allowClear: true,
                 ajax: {
                     url: '/master/produsen-alamat',
-                    data: function (params) {
+                    data: function(params) {
                         const query = {
                             idField: 'id',
                             displayField: 's1_alamat_lengkap'
                         }
 
                         if (params.term) {
-                            query.where = `s1_produsen_id=${produsen_id} and s1_alamat_lengkap LIKE '%${params.term}%'`
+                            query.where =
+                                `s1_produsen_id=${produsen_id} and s1_alamat_lengkap LIKE '%${params.term}%'`
                         } else {
                             query.where = `s1_produsen_id=${produsen_id}`
                         }
@@ -665,12 +652,12 @@
                         // Query parameters will be ?search=[term]&page=[page]
                         return query;
                     },
-                    success: function (data) {
+                    success: function(data) {
                         produsen_alamat_temp = data.results
                     }
                 }
             })
-            $('#s1_produsen_alamat_id').on('change', function () {
+            $('#s1_produsen_alamat_id').on('change', function() {
                 const val = $('#s1_produsen_alamat_id').val() * 1
                 produsen_alamat_temp.forEach((dt) => {
                     if (dt.id === val) {

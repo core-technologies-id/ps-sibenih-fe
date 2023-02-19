@@ -51,6 +51,10 @@ Route::post('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::cl
 Route::resource('tanampangan', \App\Http\Controllers\Sibenih\TanamPanganController::class)->middleware('auth');
 Route::get('/tanampangan/daftar_permohonan/print/{id}', [\App\Http\Controllers\Sibenih\TanamPanganController::class, 'export'])->name('tanampangan.daftar_permohonan.print')->middleware('auth');
 
+// daftar alamat
+Route::get('/master/kecamatan/get_data', [\App\Http\Controllers\Sibenih\KecamatanController::class, 'get_data'])->name('master.kecamatan.get_data')->middleware('auth');
+Route::resource('daftaralamat', \App\Http\Controllers\Sibenih\DaftarAlamatController::class)->middleware('auth');
+
 
 Route::get('/varietas/get_data', [\App\Http\Controllers\Sibenih\VarietasController::class, 'get_data'])->name('varietas.get_data')->middleware('auth');
 Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenControllerBak::class, 'get_data'])->name('produsen.get_data');
