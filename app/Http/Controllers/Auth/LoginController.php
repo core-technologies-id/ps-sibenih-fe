@@ -25,6 +25,8 @@ class LoginController extends Controller
             $request->session()->regenerate();
             return redirect()->route('root');
         }
+
+        return back()->with('error', 'Login Gagal');
     }
 
     public function logout(Request $request)

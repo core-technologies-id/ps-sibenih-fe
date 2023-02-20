@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row justify-content-between mb-3">
                 <div class="col-lg-6">
-                    <h4>DAFTAR PERMOHONAN</h4>
+                    <h4>DAFTAR ALAMAT</h4>
                 </div>
                 <div class="col-md-2">
                     <a href="{{ route('daftaralamat.create') }}" class="btn btn-primary d-block"><i
@@ -74,7 +74,7 @@
                                     <td>{{ $item->s2_desa }}</td>
                                     <td>{{ $item->kecamatan }}</td>
                                     <td>{{ $item->kabupaten }}</td>
-                                    <td>{{ isset($item->admin_name) ? $item->admin_name : '-'  }}</td>
+                                    <td>{{ isset($item->admin_name) ? $item->admin_name : '-' }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a href="{{ route('daftaralamat.edit', $item->id) }}" class="btn btn-warning"><i

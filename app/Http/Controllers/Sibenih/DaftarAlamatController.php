@@ -85,7 +85,7 @@ class DaftarAlamatController extends Controller
                 'kabupaten.nama as kabupaten',
                 'kecamatan.kecamatan as kecamatan',
             )
-            ->where('sibenih_tanam_pangan.s1_produsen_id', auth()->user()->id)
+            ->where('sibenih_mas_produsen_alamat.admin_id', auth()->user()->id)
             ->get();
         return view('pages.sibenih.daftarAlamat.view', [
             'daftarAlamats' => $daftarAlamats
