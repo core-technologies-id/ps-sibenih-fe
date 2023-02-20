@@ -135,7 +135,6 @@
                                         id="s1_produsen_alamat_id" name="s1_produsen_alamat_id"
                                         value="{{ @old('s1_produsen_alamat_id') ? @old('s1_produsen_alamat_id') : (isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id')) }}"
                                         disabled>
-
                                     </select>
                                     @error('s1_produsen_alamat_id')
                                         <small class="text-danger"> {{ $message }} </small>
