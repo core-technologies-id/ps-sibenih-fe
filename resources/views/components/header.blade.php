@@ -4,8 +4,8 @@
          <div class="container">
 
              <a href="#" id="logo">
-                 <img src="/assets/images/logo/logo.png" alt=""
-                     {{ auth() ? 'width = 190' : '' }} style="height: 65px" />
+                 <img src="/assets/images/logo/logo.png" alt="" {{ auth() ? 'width = 190' : '' }}
+                     style="height: 65px" />
              </a>
 
 
@@ -81,13 +81,14 @@
                                  </ul>
                              </li>
                              <li><a href="{{ route('stokBenih') }}">STOKBENIH</a></li>
+                             <li><a href="{{ route('pohonInduk') }}">POHON INDUK</a></li>
                              <li class="dropdown"><a href="#">TANAMPANGAN</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ route('tanampangan.index') }}">DAFTAR PERMOHONAN</a></li>
-                                    <li><a href="{{ route('daftaralamat.index') }}">DAFTAR ALAMAT</a></li>
-                                    <li><a href="{{ route('tanampangan.create') }}">PERMOHONAN</a></li>
-                                </ul>
-                            </li>
+                                 <ul class="dropdown-menu">
+                                     <li><a href="{{ route('tanampangan.index') }}">DAFTAR PERMOHONAN</a></li>
+                                     <li><a href="{{ route('daftaralamat.index') }}">DAFTAR ALAMAT</a></li>
+                                     <li><a href="{{ route('tanampangan.create') }}">PERMOHONAN</a></li>
+                                 </ul>
+                             </li>
                              <li class="dropdown d-none"><a href="#">GALERI</a>
                                  <ul class="dropdown-menu d-none">
                                      <li><a href="#">Foto Kegiatan</a></li>

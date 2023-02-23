@@ -55,6 +55,9 @@ Route::get('/tanampangan/daftar_permohonan/print/{id}', [\App\Http\Controllers\S
 Route::get('/master/kecamatan/get_data', [\App\Http\Controllers\Sibenih\KecamatanController::class, 'get_data'])->name('master.kecamatan.get_data')->middleware('auth');
 Route::resource('daftaralamat', \App\Http\Controllers\Sibenih\DaftarAlamatController::class)->middleware('auth');
 
+// pohon induk
+Route::get('/pohoninduk', [\App\Http\Controllers\Sibenih\PohonIndukController::class, 'index'])->name('pohonInduk');
+
 
 Route::get('/varietas/get_data', [\App\Http\Controllers\Sibenih\VarietasController::class, 'get_data'])->name('varietas.get_data')->middleware('auth');
 Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenControllerBak::class, 'get_data'])->name('produsen.get_data');
