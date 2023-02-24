@@ -71,7 +71,7 @@
                                 <tr>
                                     <th>{{ $no++ }}</th>
                                     <td>{{ $item->produsen_nama_pt }}</td>
-                                    <td>{{ $item->s2_desa }}</td>
+                                    <td>{{ $item->desa }}</td>
                                     <td>{{ $item->kecamatan }}</td>
                                     <td>{{ $item->kabupaten }}</td>
                                     <td>{{ isset($item->admin_name) ? $item->admin_name : '-' }}</td>

@@ -74,19 +74,19 @@ class DaftarAlamatController extends Controller
 
     public function index()
     {
-        $daftarAlamats = ProdusenAlamat::join('sibenih_mas_kabupaten as kabupaten', 'kabupaten.id', '=', 'sibenih_mas_produsen_alamat.s2_kabupaten_id')
-            ->join('sisaras_kecamatan as kecamatan', 'kecamatan.idkecamatan', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
+        $daftarAlamats = ProdusenAlamat::join('master_regencies as kabupaten', 'kabupaten.id', '=', 'sibenih_mas_produsen_alamat.s2_kabupaten_id')
+            ->join('master_districts as kecamatan', 'kecamatan.id', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
+            ->join('master_villages as desa', 'desa.id', '=', 'sibenih_mas_produsen_alamat.s2_desa_id')
             ->join('sibenih_produsen as produsen', 'produsen.id', '=', 'sibenih_mas_produsen_alamat.s1_produsen_id')
             ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_mas_produsen_alamat.admin_id')
             ->select(
                 'sibenih_mas_produsen_alamat.*',
                 'produsen.nama_pt as produsen_nama_pt',
                 'user.name as admin_name',
-                'kabupaten.nama as kabupaten',
-                'kecamatan.kecamatan as kecamatan',
-            )
-            ->where('sibenih_mas_produsen_alamat.admin_id', auth()->user()->id)
-            ->get();
+                'kabupaten.name as kabupaten',
+                'kecamatan.name as kecamatan',
+                'desa.name as desa',
+            )->get();
         return view('pages.sibenih.daftarAlamat.view', [
             'daftarAlamats' => $daftarAlamats
         ]);
@@ -116,10 +116,9 @@ class DaftarAlamatController extends Controller
         $validator = Validator::make($request->all(), [
             's1_produsen_id' => 'required',
             's1_alamat_lengkap' => 'required',
-            's2_desa' => 'required',
+            's2_desa_id' => 'required',
             's2_kecamatan_id' => 'required',
             's2_kabupaten_id' => 'required',
-            's2_luas_tanah' => 'required'
         ]);
 
         $input = Arr::except($request->all(), [
@@ -162,11 +161,18 @@ class DaftarAlamatController extends Controller
         $kecamatans = $this->modelKecamatan->get();
         $kabupatens = $this->modelKabupaten->get();
         $data = $this->mainModel
-            ->join('sibenih_produsen as produsen', 'produsen.id', '=', 'sibenih_mas_produsen_alamat.s1_produsen_id')
             ->select(
                 'sibenih_mas_produsen_alamat.*',
                 'produsen.nama_pt as produsen_nama_pt',
-            )->where('sibenih_mas_produsen_alamat.id', $id)->first();
+                'kabupaten.name as kabupaten',
+                'kecamatan.name as kecamatan',
+                'desa.name as desa'
+            )
+            ->join('sibenih_produsen as produsen', 'produsen.id', '=', 'sibenih_mas_produsen_alamat.s1_produsen_id')
+            ->join('master_regencies as kabupaten', 'kabupaten.id', '=', 'sibenih_mas_produsen_alamat.s2_kabupaten_id')
+            ->join('master_districts as kecamatan', 'kecamatan.id', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
+            ->join('master_villages as desa', 'desa.id', '=', 'sibenih_mas_produsen_alamat.s2_desa_id')
+            ->where('sibenih_mas_produsen_alamat.id', $id)->first();
 
         return view('pages.sibenih.daftarAlamat.form', compact('produsens', 'kecamatans', 'kabupatens'))->withId($id)->withData($data);
     }
@@ -183,10 +189,9 @@ class DaftarAlamatController extends Controller
         $validator = Validator::make($request->all(), [
             's1_produsen_id' => 'required',
             's1_alamat_lengkap' => 'required',
-            's2_desa' => 'required',
+            's2_desa_id' => 'required',
             's2_kecamatan_id' => 'required',
             's2_kabupaten_id' => 'required',
-            's2_luas_tanah' => 'required'
         ]);
 
         $input = Arr::except($request->all(), [

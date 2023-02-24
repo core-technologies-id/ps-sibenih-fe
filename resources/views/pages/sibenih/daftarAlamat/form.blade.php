@@ -88,26 +88,12 @@
                             @enderror
                         </div>
                         <div class="col-lg-6 mt-5">
-                            <label for="s2_desa">Desa :</label>
-                            <input type="text" class="form-control {{ $errors->has('s2_desa') ? 'is-invalid' : '' }}"
-                                id="s2_desa" name="s2_desa" placeholder="Desa"
-                                value="{{ isset($data['s2_desa']) ? $data['s2_desa'] : old('s2_desa') }}" />
-                            @error('s2_desa')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror
-                        </div>
-                        <div class="col-lg-6 mt-5">
                             <label for="s2_kabupaten_id">Kabupaten :</label>
-                            <select class="form-control {{ $errors->has('s2_kabupaten_id') ? 'is-invalid' : '' }}"
-                                id="s2_kabupaten_id" name="s2_kabupaten_id"
-                                value="{{ @old('s2_kabupaten_id') ? @old('s2_kabupaten_id') : (isset($data->s2_kabupaten_id) ? $data->s2_kabupaten_id : @old('s2_kabupaten_id')) }}">
-                                <option value="">-- Pilih Kabupaten --</option>
-                                @foreach ($kabupatens as $kabupaten)
-                                    <option value="{{ $kabupaten->id }}"
-                                        {{ option_selected(@old('s2_kabupaten_id'), $data->s2_kabupaten_id ?? null, $kabupaten->id) }}>
-                                        {{ $kabupaten->nama }}
-                                    </option>
-                                @endforeach
+                            <select
+                                value="{{ isset($data['s2_kabupaten_id']) ? $data['s2_kabupaten_id'] : old('s2_kabupaten_id') }}"
+                                class="form-control select2-get-regencies {{ $errors->has('s2_kabupaten_id') ? 'is-invalid' : '' }}"
+                                name="s2_kabupaten_id" id="s2_kabupaten_id">
+
                             </select>
                             @error('s2_kabupaten_id')
                                 <small class="text-danger"> {{ $message }} </small>
@@ -115,19 +101,21 @@
                         </div>
                         <div class="col-lg-6 mt-5">
                             <label for="s2_kecamatan_id">Kecamatan :</label>
-                            <select class="form-control {{ $errors->has('s2_kecamatan_id') ? 'is-invalid' : '' }}"
-                                id="s2_kecamatan_id" name="s2_kecamatan_id"
-                                value="{{ @old('s2_kecamatan_id') ? @old('s2_kecamatan_id') : (isset($data->s2_kecamatan_id) ? $data->s2_kecamatan_id : @old('s2_kecamatan_id')) }}">
-                                <option value="">-- Pilih Kecamatan --</option>
+                            <select
+                                value="{{ isset($data['s2_kecamatan_id']) ? $data['s2_kecamatan_id'] : old('s2_kecamatan_id') }}"
+                                class="form-control select2-get-districts {{ $errors->has('s2_kecamatan_id') ? 'is-invalid' : '' }}"
+                                name="s2_kecamatan_id" id="s2_kecamatan_id" disabled>
+
                             </select>
                         </div>
                         <div class="col-lg-6 mt-5">
-                            <label for="s2_luas_tanah">Luas Tanah :</label>
-                            <input type="number" min="0"
-                                class="form-control {{ $errors->has('s2_luas_tanah') ? 'is-invalid' : '' }}"
-                                id="s2_luas_tanah" name="s2_luas_tanah" placeholder="Luas Tanah"
-                                value="{{ isset($data['s2_luas_tanah']) ? $data['s2_luas_tanah'] : old('s2_luas_tanah') }}" />
-                            @error('s2_luas_tanah')
+                            <label for="s2_desa">Desa :</label>
+                            <select value="{{ isset($data['s2_desa_id']) ? $data['s2_desa_id'] : old('s2_desa_id') }}"
+                                class="form-control select2-get-villages {{ $errors->has('s2_desa_id') ? 'is-invalid' : '' }}"
+                                name="s2_desa_id" id="s2_desa_id" disabled>
+
+                            </select>
+                            @error('s2_desa')
                                 <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
@@ -151,39 +139,182 @@
     <script type="text/javascript">
         const isUpdate = {{ isset($id) ? 'true' : 'false' }}
 
-        $('#s2_kabupaten_id').on('change', function(e) {
-            const inp = $('#s2_kecamatan_id')
-            inp.prop("disabled", true);
-            $.ajax({
-                url: "{{ route('master.kecamatan.get_data') }}?kabupaten=" + e.target.value,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    inp.empty()
-                    inp.append(new Option('-- Pilih Kecamatan --', ''))
-                    data.forEach(el => inp.append(new Option(el.kecamatan, el.idkecamatan)))
-                    inp.prop("disabled", false);
+        $(document).ready(function() {
+            let regency_id = null
+            let district_id = null
+            // GET KABUPATEN
+            $('.select2-get-regencies').select2({
+                theme: "bootstrap",
+                allowClear: true,
+                placeholder: 'Select Kabupaten',
+                ajax: {
+                    url: '/master/regencies',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'name'
+                        }
+
+                        if (params.term) {
+                            query.where = `province_id=16 and name LIKE '%${params.term}%'`
+                        } else {
+                            query.where = 'province_id=16'
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            });
+
+            $('.select2-get-regencies')
+                .on('select2:clear', () => {
+                    setTimeout(() => {
+                        $('.select2-get-districts').prop("disabled", true);
+                        $('.select2-get-villages').prop("disabled", true);
+                    }, 100)
+                    $('.select2-get-districts').val('');
+                    $('.select2-get-districts').trigger('change');
+                    $('.select2-get-villages').val('');
+                    $('.select2-get-villages').trigger('change');
+                })
+                .on('change', function() {
+                    $('.select2-get-districts').val('');
+                    $('.select2-get-districts').trigger('change');
+                    $('.select2-get-villages').val('');
+                    $('.select2-get-villages').trigger('change');
+                    $('.select2-get-districts').prop("disabled", false);
+                    $('.select2-get-villages').prop("disabled", true);
+                    regency_id = $('.select2-get-regencies').val() * 1
+                })
+
+            // GET KECAMATAN
+            $('.select2-get-districts').select2({
+                theme: "bootstrap",
+                allowClear: true,
+                placeholder: 'Select Kecamatan',
+                ajax: {
+                    url: '/master/districts',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'name'
+                        }
+
+                        if (params.term) {
+                            query.where = `regency_id=${regency_id} and name LIKE '%${params.term}%'`
+                        } else {
+                            query.where = `regency_id=${regency_id}`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            });
+
+            $('.select2-get-districts')
+                .on('select2:clear', () => {
+                    setTimeout(() => {
+                        $('.select2-get-villages').prop("disabled", true);
+                    }, 100)
+                    $('.select2-get-villages').val('');
+                    $('.select2-get-villages').trigger('change');
+                })
+                .on('change', function() {
+                    $('.select2-get-villages').val('');
+                    $('.select2-get-villages').trigger('change');
+                    $('.select2-get-villages').prop("disabled", false);
+                    district_id = $('.select2-get-districts').val() * 1
+                })
+
+            // GET DESA
+            $('.select2-get-villages').select2({
+                theme: "bootstrap",
+                allowClear: true,
+                placeholder: 'Select Desa',
+                ajax: {
+                    url: '/master/villages',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'name'
+                        }
+
+                        if (params.term) {
+                            query.where = `district_id=${district_id} and name LIKE '%${params.term}%'`
+                        } else {
+                            query.where = `district_id=${district_id}`
+                        }
+                        return query;
+                    }
                 }
             });
         });
 
         function kabupatenHelper(value) {
+            const inp1 = $('#s2_kabupaten_id')
+            inp1.prop("disabled", true);
+            $.ajax({
+                url: "/master/regencies?where=id=" + value,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    const kabupaten_id = value;
+                    data.results.forEach((el) => {
+                        if (el.id === kabupaten_id) {
+                            inp1.append(new Option(el.text, el.id, true, true))
+                        } else {
+                            inp1.append(new Option(el.text, el.id))
+                        }
+                    })
+                    inp1.prop("disabled", false);
+
+                    kecamatanHelper(kabupaten_id)
+                }
+            });
+        }
+
+        function kecamatanHelper(value) {
             const inp1 = $('#s2_kecamatan_id')
             inp1.prop("disabled", true);
             $.ajax({
-                url: "{{ route('master.kecamatan.get_data') }}?kabupaten=" + value,
+                url: "/master/districts?where=regency_id=" + value,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     const kecamatan_id =
                         {{ isset($data->s2_kecamatan_id) ? $data->s2_kecamatan_id : @old('s2_kecamatan_id') ?? 'null' }};
-                    inp1.empty()
-                    inp1.append(new Option('-- Pilih Kecamatan --', ''))
-                    data.forEach((el) => {
-                        if (el.idkecamatan === kecamatan_id) {
-                            inp1.append(new Option(el.kecamatan, el.idkecamatan, true, true))
+                    data.results.forEach((el) => {
+                        if (el.id === kecamatan_id) {
+                            inp1.append(new Option(el.text, el.id, true, true))
                         } else {
-                            inp1.append(new Option(el.kecamatan, el.idkecamatan))
+                            inp1.append(new Option(el.text, el.id))
+                        }
+                    })
+                    inp1.prop("disabled", false);
+
+                    const kecValue = $('#s2_kecamatan_id').val();
+                    desaHelper(kecValue)
+                }
+            });
+        }
+
+        function desaHelper(value) {
+            const inp1 = $('#s2_desa_id')
+            inp1.prop("disabled", true);
+            $.ajax({
+                url: "/master/villages?where=district_id=" + value,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    const desa_id =
+                        {{ isset($data->s2_desa_id) ? $data->s2_desa_id : @old('s2_desa_id') ?? 'null' }};
+                    data.results.forEach((el) => {
+                        if (el.id === desa_id) {
+                            inp1.append(new Option(el.text, el.id, true, true))
+                        } else {
+                            inp1.append(new Option(el.text, el.id))
                         }
                     })
                     inp1.prop("disabled", false);
@@ -191,26 +322,9 @@
             });
         }
 
-        $('#s1_produsen_id').select2({
-            theme: "bootstrap",
-            placeholder: 'Pilih Produsen',
-            allowClear: true,
-        })
-
-        $('#s2_kabupaten_id').select2({
-            theme: "bootstrap",
-            placeholder: 'Pilih Produsen',
-            allowClear: true,
-        })
-
-        $('#s2_kecamatan_id').select2({
-            theme: "bootstrap",
-            placeholder: 'Pilih Kecamatan',
-            allowClear: true,
-        })
-
         if (isUpdate) {
-            const kabValue = $('#s2_kabupaten_id').val();
+            const kabValue =
+                {{ isset($data->s2_kabupaten_id) ? $data->s2_kabupaten_id : @old('s2_kabupaten_id') ?? 'null' }};
             kabupatenHelper(kabValue);
         }
     </script>
