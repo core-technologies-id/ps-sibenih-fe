@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('s6_surat_pengantar');
             $table->bigInteger('admin_id');
             $table->string('status')->default('draft');
-            $table->string('nomor_surat');
+            $table->string('s1_nomor_antrian');
             $table->softDeletes();
             $table->timestamps();
         });

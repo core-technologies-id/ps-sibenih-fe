@@ -72,7 +72,7 @@
                             @foreach ($tanamPangan as $item)
                             <tr>
                                 <th>{{ $no++ }}</th>
-                                <td>{{ $item->s1_nomer_antrian }}</td>
+                                <td>{{ $item->s1_nomor_antrian }}</td>
                                 <td>{{ $item->s1_nomor_lapangan }}</td>
                                 <td>{{ $item->pro_nama_pt }}</td>
                                 <td>{{ $item->s1_block }}</td>

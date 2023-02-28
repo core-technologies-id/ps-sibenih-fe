@@ -51,8 +51,32 @@ Route::post('/stokBenih', [\App\Http\Controllers\Sibenih\StokBenihController::cl
 Route::resource('tanampangan', \App\Http\Controllers\Sibenih\TanamPanganController::class)->middleware('auth');
 Route::get('/tanampangan/daftar_permohonan/print/{id}', [\App\Http\Controllers\Sibenih\TanamPanganController::class, 'export'])->name('tanampangan.daftar_permohonan.print')->middleware('auth');
 
+// daftar alamat
+Route::get('/master/kecamatan/get_data', [\App\Http\Controllers\Sibenih\KecamatanController::class, 'get_data'])->name('master.kecamatan.get_data')->middleware('auth');
+Route::resource('daftaralamat', \App\Http\Controllers\Sibenih\DaftarAlamatController::class)->middleware('auth');
+
+// pohon induk
+Route::get('/pohoninduk', [\App\Http\Controllers\Sibenih\PohonIndukController::class, 'index'])->name('pohonInduk');
+
 
 Route::get('/varietas/get_data', [\App\Http\Controllers\Sibenih\VarietasController::class, 'get_data'])->name('varietas.get_data')->middleware('auth');
-Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenController::class, 'get_data'])->name('produsen.get_data');
+Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenControllerBak::class, 'get_data'])->name('produsen.get_data');
 Route::get('/produsen_alamat/get_produsen', [\App\Http\Controllers\Sibenih\ProdusenAlamatController::class, 'get_produsen'])->name('produsen_alamat.get_produsen');
 Route::get('/produsen_alamat/data_alamat', [\App\Http\Controllers\Sibenih\ProdusenAlamatController::class, 'data_alamat'])->name('produsen_alamat.data_alamat');
+
+Route::middleware(['auth:web'])->group(function () {
+    Route::get('/master/provinces', [\App\Http\Controllers\API\ProvincesController::class, 'index']);
+    Route::get('/master/regencies', [\App\Http\Controllers\API\RegenciesController::class, 'index']);
+    Route::get('/master/districts', [\App\Http\Controllers\API\DistrictsController::class, 'index']);
+    Route::get('/master/villages', [\App\Http\Controllers\API\VillagesController::class, 'index']);
+    Route::get('/master/komoditas', [\App\Http\Controllers\API\KomoditasController::class, 'index']);
+    Route::get('/master/varietas', [\App\Http\Controllers\API\VarietasController::class, 'index']);
+    Route::get('/master/produsen', [\App\Http\Controllers\API\ProdusenController::class, 'index']);
+    Route::get('/master/produsen-alamat', [\App\Http\Controllers\API\ProdusenAlamatController::class, 'index']);
+    Route::get('/master/kelas', [\App\Http\Controllers\API\KelasController::class, 'index']);
+});
+
+Route::name('sibenih.')->prefix('sibenih')->middleware(['auth:web', 'role:ALL', 'module:ALL', 'privilege:ALL'])->group(function () {
+    // get data
+    Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenControllerBak::class, 'get_data'])->name('produsen.get_data');
+});
