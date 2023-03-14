@@ -318,6 +318,148 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 mb-3 mt-4">
+                            <h4>Lampiran : </h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row mb-3">
+                                <div class="col-lg-4">
+                                    <label>Tanda Tangan : </label>
+                                    <img class="imgPreview img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_ttd)) src="{{ $data->s6_ttd }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile"
+                                           onchange="tampilImage()" name="s6_ttd">
+                                </div>
+                                {{-- @if (isset($data->s6_ttd))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar TTD</label>
+                                        <img width="100%" src="{{ $data->s6_ttd }}"
+                                            alt="{{ $data->s6_ttd }}">
+                                    </div>
+                                @endif --}}
+                                <div class="col-lg-4">
+                                    <label>Label Benih : </label>
+                                    <img class="imgPreview2 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_label_benih)) src="{{ $data->s6_label_benih }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile2"
+                                           onchange="tampilImage2()" name="s6_label_benih">
+                                </div>
+                                {{-- @if (isset($data->s6_label_benih))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Label Benih</label>
+                                        <img width="100%" src="{{ $data->s6_label_benih }}"
+                                            alt="{{ $data->s6_label_benih }}">
+                                    </div>
+                                @endif --}}
+                                <div class="col-lg-4">
+                                    <label>Lokasi : </label>
+                                    <img class="imgPreview3 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_dena_lokasi)) src="{{ $data->s6_dena_lokasi }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile3"
+                                           onchange="tampilImage3() "name="s6_dena_lokasi">
+                                </div>
+                                {{-- @if (isset($data->s6_dena_lokasi))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Dena Lokasi</label>
+                                        <img width="100%" src="{{ $data->s6_dena_lokasi }}"
+                                            alt="{{ $data->s6_dena_lokasi }}">
+                                    </div>
+                                @endif --}}
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label>Surat Rekomendasi : </label>
+                                    <img class="imgPreview4 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_surat_rekom)) src="{{ $data->s6_surat_rekom }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile4"
+                                           onchange="tampilImage4()" name="s6_surat_rekom">
+                                </div>
+                                {{-- @if (isset($data->s6_surat_rekom))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Surat Rekomendasi</label>
+                                        <img width="100%" src="{{ $data->s6_surat_rekom }}"
+                                            alt="{{ $data->s6_surat_rekom }}">
+                                    </div>
+                                @endif --}}
+                                <div class="col-lg-4">
+                                    <label>Surat Pengantar : </label>
+                                    <img class="imgPreview5 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_surat_pengantar)) src="{{ $data->s6_surat_pengantar }}" @endif />
+                                    <input type="file" class="form-control" id="imageFile5"
+                                           onchange="tampilImage5()" name="s6_surat_pengantar">
+                                </div>
+                                {{-- @if (isset($data->s6_surat_pengantar_file))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Surat Pengantar</label>
+                                        <img width="100%" src="{{ $data->s6_surat_pengantar }}"
+                                            alt="{{ $data->s6_surat_pengantar }}">
+                                    </div>
+                                @endif --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 mb-3 mt-4">
+                            <h4>Keterangan : </h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row mb-3">
+                                <div class="col-lg-6 me-5">
+                                    <label class="form-label">Pemeriksaan Lapangan (Tidak Lulus /
+                                        Lulus)</label>
+                                    <span class="switch">
+                                            <label for="s7_pemeriksaan_lapangan">
+                                                <input type="checkbox" name="s7_pemeriksaan_lapangan"
+                                                       id="s7_pemeriksaan_lapangan" value="1"
+                                                    {{ radio_selected(@old('s7_pemeriksaan_lapangan'), $data->s7_pemeriksaan_lapangan ?? null, '1') }} />
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                </div>
+                                <div class="col-lg-6 me-5">
+                                    <label class="form-label">Disertifikasi (Tidak / Ya)</label>
+                                    <span class="switch">
+                                            <label for="s7_disertifikasi">
+                                                <input type="checkbox" name="s7_disertifikasi"
+                                                       id="s7_disertifikasi" value="1"
+                                                    {{ radio_selected(@old('s7_disertifikasi'), $data->s7_disertifikasi ?? null, '1') }} />
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                </div>
+                            </div>
+                            @if (isset($id))
+                                <div class="row mt-5">
+                                    <div class="col-lg-6 me-5">
+                                        <label for="status">Status:</label>
+                                        <select
+                                            class="form-control form-control {{ $errors->has('status') ? 'is-invalid' : '' }}"
+                                            id="status" name="status"
+                                            value="{{ @old('status') ? @old('status') : (isset($data->status) ? $data->status : @old('status')) }}">
+                                            <option value="draft"
+                                                {{ option_selected(@old('status'), $data->status ?? null, 'draft') }}>
+                                                Draft</option>
+                                            <option value="revision"
+                                                {{ option_selected(@old('status'), $data->status ?? null, 'revision') }}>
+                                                Revision</option>
+                                            <option value="reject"
+                                                {{ option_selected(@old('status'), $data->status ?? null, 'reject') }}>
+                                                Reject</option>
+                                            <option value="verified"
+                                                {{ option_selected(@old('status'), $data->status ?? null, 'verified') }}>
+                                                Verified</option>
+                                            <option value="revision_updated" class="d-none" {{ option_selected(@old('status'), $data->status ?? null, 'revision_updated') }}>
+                                                Revision Updated</option>
+                                        </select>
+                                        @error('status')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">

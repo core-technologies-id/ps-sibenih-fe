@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kabupaten;
 use App\Models\User;
 use App\Models\Produsen;
 use PDF;
@@ -32,7 +33,7 @@ class RegistrasiController extends Controller
         } else {
             $nomer_tiket = $depan . '0001';
         }
-        $kabs = sibenih_mas_kabupaten::all();
+        $kabs = Kabupaten::all();
         return view('pages.registrasi.index', compact('kabs', 'nomer_tiket'));
     }
 
