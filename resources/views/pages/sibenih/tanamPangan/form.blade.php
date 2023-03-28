@@ -237,13 +237,11 @@
                         <div class="col-lg-12">
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s3_produsen_id">Produsen: <span class="text-danger">*</span></label>
-                                    <select class="form-control {{ $errors->has('s3_produsen_id') ? 'is-invalid' : '' }}"
-                                        id="s3_produsen_id" name="s3_produsen_id"
-                                        value="{{ @old('s3_produsen_id') ? @old('s3_produsen_id') : (isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id')) }}">
-
-                                    </select>
-                                    @error('s3_produsen_id')
+                                    <label for="s3_produsen">Produsen: <span class="text-danger">*</span></label>
+                                    <input name="s3_produsen" id="s3_produsen"
+                                           type="text" class="form-control"
+                                           value="{{ isset($data['s3_produsen']) ? $data['s3_produsen'] : old('s3_no_label_sumber') }}" />
+                                    @error('s3_produsen')
                                         <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
