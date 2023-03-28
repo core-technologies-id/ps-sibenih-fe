@@ -222,7 +222,7 @@
                     </tr>
                     <tr>
                         <td>Produsen Benih</td>
-                        <td class="samping">: {{ $data->pro2_nama_pt ?? '-' }}</td>
+                        <td class="samping">: {{ $data->s3_produsen ?? '-' }}</td>
                         <td>No. Kelompok Benih</td>
                         <td class="samping">: {{ $data->s3_no_kel_benih ?? '-' }}</td>
                     </tr>

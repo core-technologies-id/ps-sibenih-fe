@@ -96,7 +96,7 @@ class TanamPanganController extends Controller
             "s2_varietas_id" => "required",
             "s2_jenis_tanaman" => "required",
             "s2_tgl_panen" => "nullable|date|string",
-            "s3_produsen_id" => "required",
+            "s3_produsen" => "required",
             "s3_kelas_benih_id" => "required",
             "s3_no_kel_benih" => "required",
             "s3_no_label_sumber" => "required",
@@ -229,7 +229,7 @@ class TanamPanganController extends Controller
             "s2_varietas_id" => "required",
             "s2_jenis_tanaman" => "required",
             "s2_tgl_panen" => "nullable|date|string",
-            "s3_produsen_id" => "required",
+            "s3_produsen" => "required",
             "s3_kelas_benih_id" => "required",
             "s3_no_kel_benih" => "required",
             "s3_no_label_sumber" => "required",
@@ -294,7 +294,6 @@ class TanamPanganController extends Controller
     public function export(Request $request)
     {
         $query = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-                    ->join('sibenih_produsen as pro2', 'pro2.id', '=', 'sibenih_tanam_pangan.s3_produsen_id')
                     ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
                     ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
                     ->join('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
@@ -304,7 +303,6 @@ class TanamPanganController extends Controller
                     ->select(
                         'sibenih_tanam_pangan.*',
                         'pro.nama_pt as pro_nama_pt',
-                        'pro2.nama_pt as pro2_nama_pt',
                         'pro.nama_pimpinan as pro_nama_pimpinan',
                         'var.nama as var_nama_varietas',
                         'kom.nama as kom_nama_komoditas',
