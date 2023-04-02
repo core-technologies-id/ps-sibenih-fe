@@ -44,76 +44,66 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-lg-6 mt-5">
-                            <label for="nama_pt">Nama Perusahaan:</label>
-                            <select class="form-control form-control {{ $errors->has('nama_pt') ? 'is-invalid' : '' }}"
-                                id="nama_pt" name="nama_pt">
-                                <option value="">-- Pilih Perusahaan --</option>
-                                @foreach ($prods as $prod)
-                                    <option value="{{ $prod->nama_pt }}"> {{ $prod->nama_pt }} </option>
-                                @endforeach
+                            <label for="produsen_id">Produsen: <span
+                                    class="text-danger">*</span></label>
+                            <select
+                                class="form-control {{ $errors->has('produsen_id') ? 'is-invalid' : '' }}"
+                                id="produsen_id" name="produsen_id"
+                                value="{{ @old('produsen_id') ? @old('produsen_id') : (isset($data->produsen_id) ? $data->produsen_id : @old('produsen_id')) }}">
+
                             </select>
-                            @error('nama_pt')
-                                <small class="text-danger"> {{ $message }} </small>
+                            @error('produsen_id')
+                            <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
                         <div class="col-lg-6 mt-5">
-                            <label for="s2_komoditas_id">Komoditas:</label>
-                            <select class="form-control {{ $errors->has('s2_komoditas_id') ? 'is-invalid' : '' }}"
-                                id="s2_komoditas_id" name="s2_komoditas_id">
-                                <option value="">-- Pilih Komoditas --</option>
-                                @foreach ($komoditas as $item)
-                                    <option value="{{ $item->id }}"> {{ $item->nama }} </option>
-                                @endforeach
-                            </select>
-                            @error('s2_komoditas_id')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror
-                        </div>
-                        <div class="col-lg-6 mt-5">
-                            <label for="s2_varietas_id">Varietas:</label>
-                            <select class="form-control {{ $errors->has('s2_varietas_id') ? 'is-invalid' : '' }} varietas"
-                                id="s2_varietas_id" name="s2_varietas_id">
-                                <option value="">-- Pilih Varietas --</option>
+                            <label for="s2_komoditas_id">Komoditas: <span
+                                    class="text-danger">*</span></label>
+                            <select
+                                class="form-control {{ $errors->has('s2_komoditas_id') ? 'is-invalid' : '' }}"
+                                id="s2_komoditas_id" name="s2_komoditas_id"
+                                value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s2_komoditas_id) ? $data->s2_komoditas_id : @old('s2_komoditas_id')) }}">
+
                             </select>
                         </div>
                         <div class="col-lg-6 mt-5">
-                            <label for="kelas_benih">Kelas Benih:</label>
-                            <select class="form-control form-control {{ $errors->has('kelas_benih') ? 'is-invalid' : '' }}"
-                                id="kelas_benih" name="kelas_benih">
-                                <option value="">-- Pilih Kelas Benih --</option>
-                                @foreach ($kelas_benih as $item)
-                                    <option value="{{ $item->nama }}"> {{ $item->nama }} </option>
-                                @endforeach
+                            <label for="s2_varietas_id">Varietas: <span
+                                    class="text-danger">*</span></label>
+                            <select
+                                class="form-control {{ $errors->has('s2_varietas_id') ? 'is-invalid' : '' }} varietas"
+                                id="s2_varietas_id" name="s2_varietas_id"
+                                value="{{ @old('s2_varietas_id') ? @old('s2_varietas_id') : (isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id')) }}"
+                                disabled>
+
                             </select>
-                            @error('kelas_benih')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror
                         </div>
                         <div class="col-lg-6 mt-5">
-                            <label for="alamat_usaha">Alamat Usaha:</label>
-                            <input readonly type="text"
-                                class="form-control {{ $errors->has('alamat_usaha') ? 'is-invalid' : '' }}"
-                                id="alamat_usaha" name="alamat_usaha" placeholder="Alamat usaha" />
-                            @error('alamat_usaha')
-                                <small class="text-danger"> {{ $message }} </small>
+                            <label for="s2_kelas_benih_id">Kelas Benih: <span
+                                    class="text-danger">*</span></label>
+                            <select
+                                class="form-control {{ $errors->has('s2_kelas_benih_id') ? 'is-invalid' : '' }}"
+                                id="s2_kelas_benih_id" name="s2_kelas_benih_id"
+                                value="{{ @old('s2_kelas_benih_id') ? @old('s2_kelas_benih_id') : (isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : @old('s2_kelas_benih_id')) }}">
+
+                            </select>
+                            @error('s2_kelas_benih_id')
+                            <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
-                        <div class="col-lg-6 mt-5">
+                        <div class="col-lg-3 mt-5">
+                            <label for="alamat_lengkap_usaha">Alamat Lengkap Usaha:</label>
+                            <input id="alamat_lengkap_usaha" type="text" class="form-control" placeholder="Alamat lengkap usaha"
+                                   disabled />
+                        </div>
+                        <div class="col-lg-3 mt-5">
                             <label for="tlp">No. Telepon / HP Perusahaan:</label>
-                            <input readonly type="text"
-                                class="form-control {{ $errors->has('tlp') ? 'is-invalid' : '' }}" id="tlp"
-                                name="tlp" placeholder="Nomor telepon / HP perusahaan" />
-                            @error('tlp')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror
+                            <input type="text" class="form-control" id="tlp" name="tlp" placeholder="Nomor telepon / HP perusahaan" disabled />
                         </div>
                         <div class="col-lg-6 mt-5">
                             <label for="kota">Kabupaten/Kota Letak Tanah:</label>
-                            <input readonly type="text"
-                                class="form-control {{ $errors->has('kota') ? 'is-invalid' : '' }}" id="kota"
-                                name="kota" placeholder="Kota / Kabupaten" />
+                            <input disabled type="text" class="form-control" id="kota" name="kota" placeholder="Kota / Kabupaten" />
                             @error('kota')
-                                <small class="text-danger"> {{ $message }} </small>
+                            <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
                     </div>
@@ -231,6 +221,7 @@
     </section>
 @endsection
 @section('script')
+    <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script>
         let nilai1 = 0;
         let nilai2 = 0;
@@ -283,35 +274,139 @@
             $('#sisa_bulan_ini').val(hasil1 - hasil2);
         });
 
-        $('#nama_pt').on('change', function(e) {
+
+        function produsenGetDetail(value) {
             $.ajax({
-                url: "{{ route('produsen.get_data') }}?datatable=false&nama_pt=" + e.target.value,
+                url: "{{ route('sibenih.produsen.get_data') }}?datatable=false&id=" + value,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    if (data.length) {
-                        $('#alamat_usaha').val(data[0].alamat_usaha)
-                        $('#kota').val(data[0].kota)
-                        $('#tlp').val(data[0].hp)
+                    $('#alamat_lengkap_usaha').val(data[0].alamat_usaha);
+                    $('#tlp').val(data[0].hp);
+                    $('#kota').val(data[0].kota);
+                }
+            })
+        }
+
+        $(document).ready(function() {
+            let komoditas_id = null
+            let produsen_id = null
+
+            // GET PRODUSEN
+            $('#produsen_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Produsen',
+                allowClear: true,
+                ajax: {
+                    url: '/master/produsen',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama_pt'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama_pt LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
                     }
                 }
             })
-        });
+            $('#produsen_id').on('change', function() {
+                produsen_id = $('#produsen_id').val() * 1
+                produsenGetDetail(produsen_id)
+            })
 
-        $('#s2_komoditas_id').on('change', function(e) {
-            const inp = $('#s2_varietas_id')
-            inp.prop("disabled", true);
-            $.ajax({
-                url: "{{ route('varietas.get_data') }}?komoditas=" + e.target.value,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    inp.empty()
-                    inp.append(new Option('-- Pilih Varietas --', ''))
-                    data.forEach(el => inp.append(new Option(el.nama, el.id)))
-                    inp.prop("disabled", false);
+            // GET KOMODITAS
+            $('#s2_komoditas_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Komoditas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/komoditas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
                 }
             })
-        });
+            $('#s2_komoditas_id').on('select2:clear', function() {
+                setTimeout(() => {
+                    $('#s2_varietas_id').prop("disabled", true);
+                }, 100)
+                $('#s2_varietas_id').val('');
+                $('#s2_varietas_id').trigger('change');
+            })
+            $('#s2_komoditas_id').on('change', function() {
+                komoditas_id = $('#s2_komoditas_id').val() * 1
+                $('#s2_varietas_id').val('');
+                $('#s2_varietas_id').trigger('change');
+                if (komoditas_id) {
+                    $('#s2_varietas_id').prop("disabled", false);
+                } else {
+                    $('#s2_varietas_id').prop("disabled", true);
+                }
+            })
+
+            // GET VARIETAS
+            $('#s2_varietas_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Varietas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/varietas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where =
+                                `komoditas_id=${komoditas_id} and nama LIKE '%${params.term}%'`
+                        } else {
+                            query.where = `komoditas_id=${komoditas_id}`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+
+            // GET KELAS
+            $('#s2_kelas_benih_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Kelas Benih',
+                allowClear: true,
+                ajax: {
+                    url: '/master/kelas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+        })
     </script>
 @endsection

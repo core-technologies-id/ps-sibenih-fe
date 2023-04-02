@@ -92,16 +92,26 @@
                                             value="{{ isset($data['s1_block']) ? $data['s1_block'] : old('s1_block') }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label for="s1_komoditas_id">Komoditas: <span class="text-danger">*</span></label>
-                                    <select class="form-control {{ $errors->has('s1_komoditas_id') ? 'is-invalid' : '' }}"
+                                <div class="col-12 col-lg-3">
+                                    <label for="s1_komoditas_id">Komoditas: <span
+                                            class="text-danger">*</span></label>
+                                    <select
+                                        class="form-control {{ $errors->has('s1_komoditas_id') ? 'is-invalid' : '' }}"
                                         id="s1_komoditas_id" name="s1_komoditas_id"
                                         value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id')) }}">
 
                                     </select>
-                                    @error('s1_komoditas_id')
-                                        <small class="text-danger"> {{ $message }} </small>
-                                    @enderror
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <label for="s1_varietas_id">Varietas: <span
+                                            class="text-danger">*</span></label>
+                                    <select
+                                        class="form-control {{ $errors->has('s1_varietas_id') ? 'is-invalid' : '' }} varietas"
+                                        id="s1_varietas_id" name="s1_varietas_id"
+                                        value="{{ @old('s1_varietas_id') ? @old('s1_varietas_id') : (isset($data->s1_varietas_id) ? $data->s1_varietas_id : @old('s1_varietas_id')) }}"
+                                        disabled>
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -171,7 +181,7 @@
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label>Luas Pertanaman: <span class="text-danger">*</span></label>
-                                    <input id="s1_luas_tanah" name="s1_luas_tanah" type="number"
+                                    <input id="s1_luas_tanah" name="s1_luas_tanah" type="number" step=".01"
                                         class="form-control {{ $errors->has('s1_luas_tanah') ? 'is-invalid' : '' }}"
                                         value="{{ @old('s1_luas_tanah') ? @old('s1_luas_tanah') : (isset($data->s1_luas_tanah) ? $data->s1_luas_tanah : @old('s1_luas_tanah')) }}" />
                                     @error('s1_luas_tanah')
@@ -200,8 +210,19 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
-                                <div class="col-lg-6">
-                                    <label for="s2_varietas_id">Varietas: <span class="text-danger">*</span></label>
+                                <div class="col-12 col-lg-3">
+                                    <label for="s2_komoditas_id">Komoditas: <span
+                                            class="text-danger">*</span></label>
+                                    <select
+                                        class="form-control {{ $errors->has('s2_komoditas_id') ? 'is-invalid' : '' }}"
+                                        id="s2_komoditas_id" name="s2_komoditas_id"
+                                        value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s2_komoditas_id) ? $data->s2_komoditas_id : @old('s2_komoditas_id')) }}">
+
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <label for="s2_varietas_id">Varietas: <span
+                                            class="text-danger">*</span></label>
                                     <select
                                         class="form-control {{ $errors->has('s2_varietas_id') ? 'is-invalid' : '' }} varietas"
                                         id="s2_varietas_id" name="s2_varietas_id"
@@ -316,13 +337,94 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 mb-3 mt-4">
+                            <h4>Lampiran : </h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row mb-3">
+                                <div class="col-lg-4">
+                                    <label>Tanda Tangan : </label>
+                                    <img class="imgPreview img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_ttd)) src="{{ $data->s6_ttd }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile"
+                                           onchange="tampilImage()" name="s6_ttd">
+                                </div>
+                                {{-- @if (isset($data->s6_ttd))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar TTD</label>
+                                        <img width="100%" src="{{ $data->s6_ttd }}"
+                                            alt="{{ $data->s6_ttd }}">
+                                    </div>
+                                @endif --}}
+                                <div class="col-lg-4">
+                                    <label>Label Benih : </label>
+                                    <img class="imgPreview2 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_label_benih)) src="{{ $data->s6_label_benih }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile2"
+                                           onchange="tampilImage2()" name="s6_label_benih">
+                                </div>
+                                {{-- @if (isset($data->s6_label_benih))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Label Benih</label>
+                                        <img width="100%" src="{{ $data->s6_label_benih }}"
+                                            alt="{{ $data->s6_label_benih }}">
+                                    </div>
+                                @endif --}}
+                                <div class="col-lg-4">
+                                    <label>Lokasi : </label>
+                                    <img class="imgPreview3 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_dena_lokasi)) src="{{ $data->s6_dena_lokasi }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile3"
+                                           onchange="tampilImage3() "name="s6_dena_lokasi">
+                                </div>
+                                {{-- @if (isset($data->s6_dena_lokasi))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Dena Lokasi</label>
+                                        <img width="100%" src="{{ $data->s6_dena_lokasi }}"
+                                            alt="{{ $data->s6_dena_lokasi }}">
+                                    </div>
+                                @endif --}}
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label>Surat Rekomendasi : </label>
+                                    <img class="imgPreview4 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_surat_rekom)) src="{{ $data->s6_surat_rekom }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile4"
+                                           onchange="tampilImage4()" name="s6_surat_rekom">
+                                </div>
+                                {{-- @if (isset($data->s6_surat_rekom))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Surat Rekomendasi</label>
+                                        <img width="100%" src="{{ $data->s6_surat_rekom }}"
+                                            alt="{{ $data->s6_surat_rekom }}">
+                                    </div>
+                                @endif --}}
+                                <div class="col-lg-4">
+                                    <label>Surat Pengantar : </label>
+                                    <img class="imgPreview5 img-fluid col-sm-5 d-block mb-3"
+                                         @if (isset($data->s6_surat_pengantar)) src="{{ $data->s6_surat_pengantar }}" @endif />
+                                    <input type="file" class="form-control" id="imageFile5"
+                                           onchange="tampilImage5()" name="s6_surat_pengantar">
+                                </div>
+                                {{-- @if (isset($data->s6_surat_pengantar_file))
+                                    <div class="col-lg-4 mt-5 d-flex flex-column">
+                                        <label for="image">Gambar Surat Pengantar</label>
+                                        <img width="100%" src="{{ $data->s6_surat_pengantar }}"
+                                            alt="{{ $data->s6_surat_pengantar }}">
+                                    </div>
+                                @endif --}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-lg-4"></div>
                         <div class="col-lg-8 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary me-2">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <a href="{{route('tanampangan.index')}}" class="btn btn-danger me-2">Back</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -335,6 +437,96 @@
     <script>
         const isUpdate = {{ isset($id) ? 'true' : 'false' }};
 
+        function initKomoditas(section, data = { komoditas_id: null, varietas_id: null }) {
+            let komoditas_id = null
+            const selector_komoditas = $(`#${section}_komoditas_id`)
+            const selector_varietas = $(`#${section}_varietas_id`)
+            selector_komoditas.select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Komoditas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/komoditas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+            selector_komoditas.on('select2:clear', function() {
+                setTimeout(() => {
+                    selector_varietas.prop("disabled", true);
+                }, 100)
+                selector_varietas.val('');
+                selector_varietas.trigger('change');
+            })
+            selector_komoditas.on('change', function() {
+                komoditas_id = selector_komoditas.val() * 1
+                selector_varietas.val('');
+                selector_varietas.trigger('change');
+                selector_varietas.prop("disabled", false);
+            })
+
+            selector_varietas.select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Varietas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/varietas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where =
+                                `komoditas_id=${komoditas_id || data.komoditas_id} and nama LIKE '%${params.term}%'`
+                        } else {
+                            query.where = `komoditas_id=${komoditas_id || data.komoditas_id}`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+
+            if (isUpdate) {
+                $.ajax({
+                    url: "/master/komoditas?where=id=" + data.komoditas_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        data.results.forEach((el) => {
+                            selector_komoditas.append(new Option(el.text, el.id, true, true))
+                        })
+                    }
+                });
+
+                $.ajax({
+                    url: "/master/varietas?where=id=" + data.varietas_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        data.results.forEach((el) => {
+                            selector_varietas.append(new Option(el.text, el.id, true, true))
+                        })
+                        selector_varietas.prop("disabled", false);
+                    }
+                });
+            }
+        }
+
         function produsenGetDetail(value) {
             $.ajax({
                 url: "{{ route('sibenih.produsen.get_data') }}?datatable=false&id=" + value,
@@ -345,37 +537,6 @@
                     $('#alamat_lengkap_usaha').val(data[0].alamat_usaha);
                 }
             })
-        }
-
-        function varietasHelper(value) {
-            $.ajax({
-                url: "/master/varietas?where=id=" + value,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    data.results.forEach((el) => {
-                        $('#s2_varietas_id').append(new Option(el.text, el.id, true, true))
-                    })
-                    $('#s2_varietas_id').prop("disabled", false);
-                }
-            });
-        }
-
-        function komoditasHelper(value) {
-            $.ajax({
-                url: "/master/komoditas?where=id=" + value,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    const kabupaten_id = value;
-                    data.results.forEach((el) => {
-                        $('#s1_komoditas_id').append(new Option(el.text, el.id, true, true))
-                    })
-                    const varValue =
-                        {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }};
-                    varietasHelper(varValue)
-                }
-            });
         }
 
         function produsenAlamatHelper(produsenAlamat, produsen_id) {
@@ -443,8 +604,16 @@
                 {{ isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id') ?? 'null' }};
             const produsenAlamat =
                 {{ isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id') ?? 'null' }};
-            const komValue =
+
+            const komValue1 =
                 {{ isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id') ?? 'null' }};
+            const varValue1 = {{ isset($data->s1_varietas_id) ? $data->s1_varietas_id : @old('s1_varietas_id') ?? 'null' }};
+
+
+            const komValue2 =
+                {{ isset($data->s2_komoditas_id) ? $data->s2_komoditas_id : @old('s2_komoditas_id') ?? 'null' }};
+            const varValue2 = {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }};
+
             const kelasBenihValue3 =
                 {{ isset($data->s3_kelas_benih_id) ? $data->s3_kelas_benih_id : @old('s3_kelas_benih_id') ?? 'null' }};
             const kelasBenihValue2 =
@@ -452,7 +621,14 @@
             produsenHelper(produsenValue, 's1_produsen_id')
             produsenHelper(produsenValue3, 's3_produsen_id')
             produsenAlamatHelper(produsenAlamat, produsenValue)
-            komoditasHelper(komValue)
+            initKomoditas('s1', {
+                komoditas_id: komValue1,
+                varietas_id: varValue1
+            })
+            initKomoditas('s2', {
+                komoditas_id: komValue2,
+                varietas_id: varValue2
+            })
             kelasBenihHelper(kelasBenihValue3, 's3_kelas_benih_id')
             kelasBenihHelper(kelasBenihValue2, 's2_kelas_benih_id')
         }
@@ -462,67 +638,12 @@
         }
 
         $(document).ready(function() {
-            let komoditas_id = null
-            let produsen_id = {{ $userId }}
-            // GET KOMODITAS
-            $('#s1_komoditas_id').select2({
-                theme: "bootstrap",
-                placeholder: 'Pilih Komoditas',
-                allowClear: true,
-                ajax: {
-                    url: '/master/komoditas',
-                    data: function(params) {
-                        const query = {
-                            idField: 'id',
-                            displayField: 'nama'
-                        }
+            let produsen_id = {{ $userId }};
 
-                        if (params.term) {
-                            query.where = `nama LIKE '%${params.term}%'`
-                        }
-
-                        // Query parameters will be ?search=[term]&page=[page]
-                        return query;
-                    }
-                }
-            })
-            $('#s1_komoditas_id').on('select2:clear', function() {
-                setTimeout(() => {
-                    $('#s2_varietas_id').prop("disabled", true);
-                }, 100)
-                $('#s2_varietas_id').val('');
-                $('#s2_varietas_id').trigger('change');
-            })
-            $('#s1_komoditas_id').on('change', function() {
-                komoditas_id = $('#s1_komoditas_id').val() * 1
-                $('#s2_varietas_id').prop("disabled", false);
-            })
-
-            // GET VARIETAS
-            $('#s2_varietas_id').select2({
-                theme: "bootstrap",
-                placeholder: 'Pilih Varietas',
-                allowClear: true,
-                ajax: {
-                    url: '/master/varietas',
-                    data: function(params) {
-                        const query = {
-                            idField: 'id',
-                            displayField: 'nama'
-                        }
-
-                        if (params.term) {
-                            query.where =
-                                `komoditas_id=${komoditas_id} and nama LIKE '%${params.term}%'`
-                        } else {
-                            query.where = `komoditas_id=${komoditas_id}`
-                        }
-
-                        // Query parameters will be ?search=[term]&page=[page]
-                        return query;
-                    }
-                }
-            })
+            if (!isUpdate) {
+                initKomoditas('s1')
+                initKomoditas('s2')
+            }
 
             // GET PRODUSEN
             $('#s1_produsen_id').select2({
@@ -621,6 +742,8 @@
             })
             $('#s1_produsen_id').on('change', function() {
                 produsen_id = $('#s1_produsen_id').val() * 1
+                $('#s1_produsen_alamat_id').val('');
+                $('#s1_produsen_alamat_id').trigger('change');
                 $('#s1_produsen_alamat_id').prop("disabled", false);
                 produsenGetDetail(produsen_id)
             })
