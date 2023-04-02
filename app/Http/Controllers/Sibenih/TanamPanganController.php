@@ -91,8 +91,10 @@ class TanamPanganController extends Controller
             "s1_luas_tanah" => 'required',
             "s1_musim_tanam" => "required",
             "s1_komoditas_id" => "required",
+            "s1_varietas_id" => "required",
             "s1_produsen_id" => "required",
             "s1_produsen_alamat_id" => "required",
+            "s2_komoditas_id" => "required",
             "s2_varietas_id" => "required",
             "s2_jenis_tanaman" => "required",
             "s2_tgl_panen" => "nullable|date|string",
@@ -119,23 +121,28 @@ class TanamPanganController extends Controller
         ]);
 
         if ($request->hasfile('s6_ttd')) {
-            $input['s6_ttd'] = null;
+            $fullpath = upload_file('s6_ttd', 'sibenih/tanampangan/s6_ttd');
+            $input['s6_ttd'] = $fullpath;
         }
 
         if ($request->hasfile('s6_label_benih')) {
-            $input['s6_label_benih'] = null;
+            $fullpath = upload_file('s6_label_benih', 'sibenih/tanampangan/s6_label_benih');
+            $input['s6_label_benih'] = $fullpath;
         }
 
         if ($request->hasfile('s6_dena_lokasi')) {
-            $input['s6_dena_lokasi'] = null;
+            $fullpath = upload_file('s6_dena_lokasi', 'sibenih/tanampangan/s6_dena_lokasi');
+            $input['s6_dena_lokasi'] = $fullpath;
         }
 
         if ($request->hasfile('s6_surat_rekom')) {
-            $input['s6_surat_rekom'] = null;
+            $fullpath = upload_file('s6_surat_rekom', 'sibenih/tanampangan/s6_rekomendasi');
+            $input['s6_surat_rekom'] = $fullpath;
         }
 
         if ($request->hasfile('s6_surat_pengantar')) {
-            $input['s6_surat_pengantar'] = null;
+            $fullpath = upload_file('s6_surat_pengantar', 'sibenih/tanampangan/s6_surat_pengantar');
+            $input['s6_surat_pengantar'] = $fullpath;
         }
 
         if ($request->s7_pemeriksaan_lapangan) {
@@ -197,13 +204,8 @@ class TanamPanganController extends Controller
                 ->select('sibenih_tanam_pangan.*', 'pro.alamat_usaha as s1_alamat')
                 ->where('sibenih_tanam_pangan.id', $id)->first();
 
-        return view('pages.sibenih.tanampangan.form', [
-            'kabupatens' => $kabupatens,
-            'varietas' => $varietas,
-            'kelas_benih' => $kelas_benih,
-            'komoditas' => $komoditas,
-            'produsens' => $produsens,
-        ])->withId($id)->withData($data);
+        $userId = \Auth::user()->id;
+        return view('pages.sibenih.tanampangan.form', compact('id', 'userId', 'data'));
     }
 
     /**
@@ -216,7 +218,6 @@ class TanamPanganController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "s1_nomor_antrian" => 'string|max:255|nullable',
             "status" => "string",
             "nomor_antrian" => "string|max:255",
             "s1_nomor_lapangan" => "max:255",
@@ -224,8 +225,10 @@ class TanamPanganController extends Controller
             "s1_block" => "required",
             "s1_musim_tanam" => "required",
             "s1_komoditas_id" => "required",
+            "s1_varietas_id" => "required",
             "s1_produsen_id" => "required",
             "s1_produsen_alamat_id" => "required",
+            "s2_komoditas_id" => "required",
             "s2_varietas_id" => "required",
             "s2_jenis_tanaman" => "required",
             "s2_tgl_panen" => "nullable|date|string",
@@ -244,23 +247,28 @@ class TanamPanganController extends Controller
         ]);
 
         if ($request->hasfile('s6_ttd')) {
-            $input['s6_ttd'] = null;
+            $fullpath = upload_file('s6_ttd', 'sibenih/tanampangan/s6_ttd');
+            $input['s6_ttd'] = $fullpath;
         }
 
         if ($request->hasfile('s6_label_benih')) {
-            $input['s6_label_benih'] = null;
+            $fullpath = upload_file('s6_label_benih', 'sibenih/tanampangan/s6_label_benih');
+            $input['s6_label_benih'] = $fullpath;
         }
 
         if ($request->hasfile('s6_dena_lokasi')) {
-            $input['s6_dena_lokasi'] = null;
+            $fullpath = upload_file('s6_dena_lokasi', 'sibenih/tanampangan/s6_dena_lokasi');
+            $input['s6_dena_lokasi'] = $fullpath;
         }
 
         if ($request->hasfile('s6_surat_rekom')) {
-            $input['s6_surat_rekom'] = null;
+            $fullpath = upload_file('s6_surat_rekom', 'sibenih/tanampangan/s6_rekomendasi');
+            $input['s6_surat_rekom'] = $fullpath;
         }
 
         if ($request->hasfile('s6_surat_pengantar')) {
-            $input['s6_surat_pengantar'] = null;
+            $fullpath = upload_file('s6_surat_pengantar', 'sibenih/tanampangan/s6_surat_pengantar');
+            $input['s6_surat_pengantar'] = $fullpath;
         }
 
         if ($request->s7_pemeriksaan_lapangan) {
@@ -294,17 +302,19 @@ class TanamPanganController extends Controller
     public function export(Request $request)
     {
         $query = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-                    ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
-                    ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
-                    ->join('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
-                    ->join('sibenih_mas_kelas as kelas1', 'kelas1.id', '=', 'sibenih_tanam_pangan.s2_kelas_benih_id')
-                    ->join('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'sibenih_tanam_pangan.s3_kelas_benih_id')
-                    ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
+                    ->leftJoin('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
+                    ->leftJoin('sibenih_mas_varietas as var1', 'var1.id', '=', 'sibenih_tanam_pangan.s1_varietas_id')
+                    ->leftJoin('sibenih_mas_varietas as var2', 'var2.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
+                    ->leftJoin('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
+                    ->leftJoin('sibenih_mas_kelas as kelas1', 'kelas1.id', '=', 'sibenih_tanam_pangan.s2_kelas_benih_id')
+                    ->leftJoin('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'sibenih_tanam_pangan.s3_kelas_benih_id')
+                    ->leftJoin('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
                     ->select(
                         'sibenih_tanam_pangan.*',
                         'pro.nama_pt as pro_nama_pt',
                         'pro.nama_pimpinan as pro_nama_pimpinan',
-                        'var.nama as var_nama_varietas',
+                        'var1.nama as var_nama_varietas1',
+                        'var2.nama as var_nama_varietas2',
                         'kom.nama as kom_nama_komoditas',
                         'kelas1.nama as kelas1_nama_kelas',
                         'kelas2.nama as kelas2_nama_kelas',

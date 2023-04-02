@@ -28,54 +28,48 @@
             <div class="heading-text heading-section text-center">
                 <h2>PENCARIAN PRODUK</h2>
             </div>
-            <form action="{{ route('InfoPerbenihan.KetersediaanBenih.search') }}" class="row" method="post">
-                @csrf
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
-                        <label for="komoditas_value">Komoditas</label>
-                        <select class="form-control" id="komoditas_value" name="komoditas_value">
-                            <option value="">Pilih salah satu</option>
-                            @foreach($komoditas as $item)
-                                <option value="{{ $item->nama }}" @if(isset($c_val) && $c_val['komoditas_value'] === $item->nama) selected @endif>
-                                    {{$item->nama}}
-                                </option>
-                            @endforeach
+                        <label for="komoditas_id">Komoditas: <span
+                                class="text-danger">*</span></label>
+                        <select
+                            class="form-control"
+                            id="komoditas_id" name="komoditas_id"
+                            value="">
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="varietas_value">Varietas</label>
-                        <select class="form-control" id="varietas_value" name="varietas_value">
-                            <option value="">Pilih salah satu</option>
-                            @foreach($varietas as $item)
-                                <option value="{{ $item->nama }}" @if(isset($c_val) && $c_val['varietas_value'] === $item->nama) selected @endif>
-                                    {{$item->nama}}
-                                </option>
-                            @endforeach
+                        <label for="varietas_id">Varietas: <span
+                                class="text-danger">*</span></label>
+                        <select
+                            class="form-control varietas"
+                            id="varietas_id" name="varietas_id"
+                            value=""
+                            disabled>
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="kelas_value">Kelas</label>
-                        <select class="form-control" id="kelas_value" name="kelas_value">
-                            <option value="">Pilih salah satu</option>
-                            @foreach($kelas as $item)
-                                <option value="{{ $item->nama }}" @if(isset($c_val) && $c_val['kelas_value'] === $item->nama) selected @endif>
-                                    {{$item->nama}}
-                                </option>
-                            @endforeach
+                        <label for="kelas_benih_id">Kelas Benih: <span
+                                class="text-danger">*</span></label>
+                        <select
+                            class="form-control"
+                            id="kelas_benih_id" name="kelas_benih_id"
+                            value="">
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="kota_value">Kota/Kabupaten</label>
-                        <select class="form-control" id="kota_value" name="kota_value">
+                        <select class="form-control" id="city" name="city">
                             <option value="">Pilih salah satu</option>
                             @foreach($kabupaten as $item)
-                                <option value="{{ $item->nama }}" @if(isset($c_val) && $c_val['kota_value'] === $item->nama) selected @endif>
+                                <option value="{{ $item->nama }}">
                                     {{$item->nama}}
                                 </option>
                             @endforeach
@@ -83,16 +77,23 @@
                     </div>
                 </div>
                 <div class="col-2" style="margin-top: 27px;">
-                    <button type="submit" class="btn btn-primary btn-md">Cari</button>
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-md"
+                        onclick="onSearch()"
+                    >
+                        Cari
+                    </button>
                 </div>
-            </form>
+            </div>
             <div class="row mt-5 pt-3">
                 <div class="col-12">
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Nama Usaha</th>
+                                <th>Produsen</th>
+                                <th>Lokasi</th>
                                 <th>Tanggal Update</th>
                                 <th>Komoditas</th>
                                 <th>Varietas</th>
@@ -100,29 +101,16 @@
                                 <th>Stok</th>
                             </tr>
                             </thead>
-                            <tbody>
-                                @if(isset($sibenih))
-                                    @if(count($sibenih))
-                                        @foreach($sibenih as $item)
-                                            <tr>
-                                                <td>{{ $item->nama_pt }}</td>
-                                                <td>{{ $item->tgl }}</td>
-                                                <td>{{ $item->komoditas }}</td>
-                                                <td>{{ $item->varietas }}</td>
-                                                <td>{{ $item->kelas_benih }}</td>
-                                                <td>{{ $item->stok_benih }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="6" class="text-center">Tidak ada data ditemukan</td>
-                                        </tr>
-                                    @endif
-                                @else
-                                    <tr>
-                                        <td colspan="6" class="text-center">Filter terlebih dahulu</td>
-                                    </tr>
-                                @endif
+                            <tbody id="list-stokbenih">
+                                <tr class="no-rows">
+                                    <td colspan="7" class="text-center">Tidak ada data ditemukan</td>
+                                </tr>
+                                <tr class="d-none">
+                                    <td colspan="7" class="text-center">-</td>
+                                </tr>
+                                <tr class="is-progress d-none">
+                                    <td colspan="7" class="text-center"><i class="fas fa-spin fa-spinner"></i> Mohon tunggu sebentar... </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -130,4 +118,160 @@
             </div>
         </div>
     </section>
+@endsection
+@section('script')
+    <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
+    <script>
+        let hasInit = false
+        function onSearch() {
+            let komoditas_id = $('#komoditas_id').val() || null
+            let varietas_id = $('#varietas_id').val() || null
+            let kelas_benih_id = $('#kelas_benih_id').val() || null
+            let city = $('#city').val() || null
+            let params = {}
+            if (komoditas_id) {
+                params.komoditas_id = komoditas_id
+            }
+            if (varietas_id) {
+                params.varietas_id = varietas_id
+            }
+            if (kelas_benih_id) {
+                params.kelas_benih_id = kelas_benih_id
+            }
+            if (city) {
+                params.city = city
+            }
+
+            $('.no-rows').addClass('d-none')
+            $('.is-progress').removeClass('d-none')
+            $("table tbody").find('tr[class="avability-row"]').each(function(){
+                $(this).remove()
+            });
+
+            $.ajax({
+                method: 'GET',
+                url: `/sibenih/stokbenih/get_data?` + new URLSearchParams(params),
+                success: function (res) {
+                    $('.is-progress').addClass('d-none')
+                    if (res.data.length) {
+                        $('.no-rows').addClass('d-none')
+                    } else {
+                        $('.no-rows').removeClass('d-none')
+                    }
+                    res.data.forEach((dt) => {
+                        const markup = `<tr class="avability-row">` +
+                            `<td>${dt.produsen}</td>` +
+                            `<td>${dt.kota}</td>` +
+                            `<td>${dt.tgl}</td>` +
+                            `<td>${dt.komoditas}</td>` +
+                            `<td>${dt.varietas}</td>` +
+                            `<td>${dt.kelas}</td>` +
+                            `<td>${dt.jml_stok_benih}</td>` +
+                        `</tr>`
+                        $("#list-stokbenih").append(markup);
+                    })
+                }
+            })
+        }
+
+        $(document).ready(function() {
+            let komoditas_id = null
+
+            // GET KOMODITAS
+            $('#komoditas_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Komoditas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/komoditas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+            $('#komoditas_id').on('select2:clear', function() {
+                setTimeout(() => {
+                    $('#varietas_id').prop("disabled", true);
+                }, 100)
+                $('#varietas_id').val('');
+                $('#varietas_id').trigger('change');
+            })
+            $('#komoditas_id').on('change', function() {
+                komoditas_id = $('#komoditas_id').val() * 1
+                $('#varietas_id').val('');
+                $('#varietas_id').trigger('change');
+                if (komoditas_id) {
+                    $('#varietas_id').prop("disabled", false);
+                } else {
+                    $('#varietas_id').prop("disabled", true);
+                }
+            })
+
+            // GET VARIETAS
+            $('#varietas_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Varietas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/varietas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where =
+                                `komoditas_id=${komoditas_id} and nama LIKE '%${params.term}%'`
+                        } else {
+                            query.where = `komoditas_id=${komoditas_id}`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+
+            // GET KELAS
+            $('#kelas_benih_id').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Kelas Benih',
+                allowClear: true,
+                ajax: {
+                    url: '/master/kelas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+
+            // GET KOTA/KABUPATEN
+            $('#city').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Kota/Kabupaten',
+                allowClear: true,
+            })
+        })
+    </script>
 @endsection

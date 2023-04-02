@@ -143,7 +143,7 @@
                     </tr>
                     <tr>
                         <td>Varietas</td>
-                        <td class="samping">: {{ $data->var_nama_varietas ?? '-' }}</td>
+                        <td class="samping">: {{ $data->var_nama_varietas1 ?? '-' }}</td>
                         <td>Tanggal Tanam</td>
                         <td class="samping">: {{ $data->s2_tgl_tanam ?? '-' }}</td>
                     </tr>
@@ -190,7 +190,7 @@
                         <td>Jenis Tanaman</td>
                         <td class="samping">: {{ $data->s2_jenis_tanaman ?? '-' }}</td>
                         <td>Varietas</td>
-                        <td class="samping">: {{ $data->var_nama_varietas ?? '-' }}</td>
+                        <td class="samping">: {{ $data->var_nama_varietas2 ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Panen</td>
