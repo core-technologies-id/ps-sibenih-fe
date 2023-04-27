@@ -76,7 +76,8 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/master/kelas', [\App\Http\Controllers\API\KelasController::class, 'index']);
 });
 
-Route::name('sibenih.')->prefix('sibenih')->middleware(['auth:web', 'role:ALL', 'module:ALL', 'privilege:ALL'])->group(function () {
+Route::name('sibenih.')->prefix('sibenih')->middleware(['auth:web'])->group(function () {
     // get data
     Route::get('/produsen/get_data', [\App\Http\Controllers\Sibenih\ProdusenControllerBak::class, 'get_data'])->name('produsen.get_data');
+    Route::get('/stokbenih/get_data', [\App\Http\Controllers\Sibenih\StokBenihController::class, 'get_data'])->name('stokbenih.get_data');
 });

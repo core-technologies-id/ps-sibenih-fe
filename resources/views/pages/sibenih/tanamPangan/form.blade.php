@@ -2,6 +2,7 @@
 @section('style')
 @endsection
 <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-switch/bootstrap-switch.css') }}">
+{{-- @dd(now()->year) --}}
 
 @section('content')
     <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
@@ -48,18 +49,18 @@
                             <i class="flaticon2-avatar text-primary"></i>
                         </span>
                         <h3 class="card-label">
-                            Form Permohonan Tanampangan
+                            Form Pemohonan Sertifikasi
                         </h3>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-lg-12 mt-4">
-                            <h4>Input Tanam Pangan : </h4>
+                            <h4>1. Input Tanam Pangan : </h4>
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 d-none">
                                     <label for="s1_nomor_antrian">Nomor Antrian: <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input name="s1_nomor_antrian" id="s1_nomor_antrian" type="text"
@@ -92,16 +93,23 @@
                                             value="{{ isset($data['s1_block']) ? $data['s1_block'] : old('s1_block') }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-3">
                                     <label for="s1_komoditas_id">Komoditas: <span class="text-danger">*</span></label>
                                     <select class="form-control {{ $errors->has('s1_komoditas_id') ? 'is-invalid' : '' }}"
                                         id="s1_komoditas_id" name="s1_komoditas_id"
                                         value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id')) }}">
 
                                     </select>
-                                    @error('s1_komoditas_id')
-                                        <small class="text-danger"> {{ $message }} </small>
-                                    @enderror
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <label for="s1_varietas_id">Varietas: <span class="text-danger">*</span></label>
+                                    <select
+                                        class="form-control {{ $errors->has('s1_varietas_id') ? 'is-invalid' : '' }} varietas"
+                                        id="s1_varietas_id" name="s1_varietas_id"
+                                        value="{{ @old('s1_varietas_id') ? @old('s1_varietas_id') : (isset($data->s1_varietas_id) ? $data->s1_varietas_id : @old('s1_varietas_id')) }}"
+                                        disabled>
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -140,7 +148,7 @@
                                         <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <label for="s1_musim_tanam">Musim Tanam Pangan :</label>
                                     <select class="form-control {{ $errors->has('s1_musim_tanam') ? 'is-invalid' : '' }}"
                                         id="s1_musim_tanam" name="s1_musim_tanam"
@@ -154,6 +162,22 @@
                                             April - September</option>
                                     </select>
                                     @error('s1_musim_tanam')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="kota">Tahun Musim Tanam:</label>
+                                    <select
+                                        class="form-control form-control {{ $errors->has('tahun_musim') ? 'is-invalid' : '' }}"
+                                        id="tahun_musim" name="tahun_musim" value="{{ @old('tahun_musim') }}">
+                                        <option value="">-- Pilih Tahun --</option>
+                                        @for ($i = now()->year; $i < now()->year + 10; $i++)
+                                            <option value="{{ $i }}">
+                                                {{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                    @error('tahun_musim')
                                         <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
@@ -171,7 +195,7 @@
                                 </div>
                                 <div class="col-lg-3 mb-3">
                                     <label>Luas Pertanaman: <span class="text-danger">*</span></label>
-                                    <input id="s1_luas_tanah" name="s1_luas_tanah" type="number"
+                                    <input id="s1_luas_tanah" name="s1_luas_tanah" type="number" step=".01"
                                         class="form-control {{ $errors->has('s1_luas_tanah') ? 'is-invalid' : '' }}"
                                         value="{{ @old('s1_luas_tanah') ? @old('s1_luas_tanah') : (isset($data->s1_luas_tanah) ? $data->s1_luas_tanah : @old('s1_luas_tanah')) }}" />
                                     @error('s1_luas_tanah')
@@ -196,11 +220,19 @@
 
                     <div class="form-group row mb-3">
                         <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Tanaman Sebelumnya : </h4>
+                            <h4>2. Tanaman Sebelumnya : </h4>
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-3">
+                                    <label for="s2_komoditas_id">Komoditas: <span class="text-danger">*</span></label>
+                                    <select class="form-control {{ $errors->has('s2_komoditas_id') ? 'is-invalid' : '' }}"
+                                        id="s2_komoditas_id" name="s2_komoditas_id"
+                                        value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s2_komoditas_id) ? $data->s2_komoditas_id : @old('s2_komoditas_id')) }}">
+
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3">
                                     <label for="s2_varietas_id">Varietas: <span class="text-danger">*</span></label>
                                     <select
                                         class="form-control {{ $errors->has('s2_varietas_id') ? 'is-invalid' : '' }} varietas"
@@ -227,23 +259,57 @@
                                     <input type="date" class="form-control" id="s2_tgl_panen" name="s2_tgl_panen"
                                         value="{{ isset($data['s2_tgl_panen']) ? \Carbon\Carbon::parse($data['s2_tgl_panen'])->format('m/d/Y') : old('s2_tgl_panen') }}" />
                                 </div>
+                                <div class="col-lg-6">
+                                    <label for="kelas_benih">Kelas Benih: <span class="text-danger">*</span></label>
+                                    <select class="form-control {{ $errors->has('kelas_benih') ? 'is-invalid' : '' }}"
+                                        id="kelas_benih" name="kelas_benih" value="{{ @old('kelas_benih') }}">
+                                    </select>
+                                    @error('kelas_benih')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-lg-6">
+                                    <label for="kota">Pemeriksaan Lapangan:</label>
+                                    <select
+                                        class="form-control form-control {{ $errors->has('s7_pemeriksaan_lapangan') ? 'is-invalid' : '' }}"
+                                        id="s7_pemeriksaan_lapangan" name="s7_pemeriksaan_lapangan"
+                                        value="{{ @old('s7_pemeriksaan_lapangan') }}">
+                                        <option value="Lulus">Lulus</option>
+                                        <option value="Tidak Lulus">Tidak Lulus</option>
+                                    </select>
+                                    @error('s7_pemeriksaan_lapangan')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="kota">Disertifikasi:</label>
+                                    <select
+                                        class="form-control form-control {{ $errors->has('s7_disertifikasi') ? 'is-invalid' : '' }}"
+                                        id="s7_disertifikasi" name="s7_disertifikasi"
+                                        value="{{ @old('s7_disertifikasi') }}">
+                                        <option value="Ya">Ya</option>
+                                        <option value="Tidak">Tidak</option>
+                                    </select>
+                                    @error('s7_disertifikasi')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Benih Asal : </h4>
+                            <h4>3. Asal Benih: </h4>
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s3_produsen_id">Produsen: <span class="text-danger">*</span></label>
-                                    <select class="form-control {{ $errors->has('s3_produsen_id') ? 'is-invalid' : '' }}"
-                                        id="s3_produsen_id" name="s3_produsen_id"
-                                        value="{{ @old('s3_produsen_id') ? @old('s3_produsen_id') : (isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id')) }}">
-
-                                    </select>
-                                    @error('s3_produsen_id')
+                                    <label for="s3_produsen">Produsen: <span class="text-danger">*</span></label>
+                                    <input name="s3_produsen" id="s3_produsen" type="text" class="form-control"
+                                        value="{{ isset($data['s3_produsen']) ? $data['s3_produsen'] : old('s3_no_label_sumber') }}" />
+                                    @error('s3_produsen')
                                         <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
@@ -262,7 +328,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
-                                    <label for="s3_no_kel_benih">No Kelas Benih: <span
+                                    <label for="s3_no_kel_benih">No Kelompok Benih: <span
                                             class="text-danger">*</span></label>
                                     <input name="s3_no_kel_benih" id="s3_no_kel_benih" type="text"
                                         class="form-control"
@@ -304,7 +370,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Kelas Benih Yang Dihasilkan : </h4>
+                            <h4>4. Kelas Benih Yang Dihasilkan : </h4>
                         </div>
                         <div class="col-lg-6">
                             <label for="s2_kelas_benih_id">Kelas Benih: <span class="text-danger">*</span></label>
@@ -320,16 +386,16 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Lampiran : </h4>
+                            <h4>5. Lampiran : </h4>
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
                                 <div class="col-lg-4">
                                     <label>Tanda Tangan : </label>
                                     <img class="imgPreview img-fluid col-sm-5 d-block mb-3"
-                                         @if (isset($data->s6_ttd)) src="{{ $data->s6_ttd }}" @endif>
-                                    <input type="file" class="form-control" id="imageFile"
-                                           onchange="tampilImage()" name="s6_ttd">
+                                        @if (isset($data->s6_ttd)) src="{{ $data->s6_ttd }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile" onchange="tampilImage()"
+                                        name="s6_ttd">
                                 </div>
                                 {{-- @if (isset($data->s6_ttd))
                                     <div class="col-lg-4 mt-5 d-flex flex-column">
@@ -341,9 +407,9 @@
                                 <div class="col-lg-4">
                                     <label>Label Benih : </label>
                                     <img class="imgPreview2 img-fluid col-sm-5 d-block mb-3"
-                                         @if (isset($data->s6_label_benih)) src="{{ $data->s6_label_benih }}" @endif>
-                                    <input type="file" class="form-control" id="imageFile2"
-                                           onchange="tampilImage2()" name="s6_label_benih">
+                                        @if (isset($data->s6_label_benih)) src="{{ $data->s6_label_benih }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile2" onchange="tampilImage2()"
+                                        name="s6_label_benih">
                                 </div>
                                 {{-- @if (isset($data->s6_label_benih))
                                     <div class="col-lg-4 mt-5 d-flex flex-column">
@@ -353,11 +419,11 @@
                                     </div>
                                 @endif --}}
                                 <div class="col-lg-4">
-                                    <label>Lokasi : </label>
+                                    <label>Peta Lokasi : </label>
                                     <img class="imgPreview3 img-fluid col-sm-5 d-block mb-3"
-                                         @if (isset($data->s6_dena_lokasi)) src="{{ $data->s6_dena_lokasi }}" @endif>
+                                        @if (isset($data->s6_dena_lokasi)) src="{{ $data->s6_dena_lokasi }}" @endif>
                                     <input type="file" class="form-control" id="imageFile3"
-                                           onchange="tampilImage3() "name="s6_dena_lokasi">
+                                        onchange="tampilImage3() "name="s6_dena_lokasi">
                                 </div>
                                 {{-- @if (isset($data->s6_dena_lokasi))
                                     <div class="col-lg-4 mt-5 d-flex flex-column">
@@ -371,9 +437,9 @@
                                 <div class="col-lg-4">
                                     <label>Surat Rekomendasi : </label>
                                     <img class="imgPreview4 img-fluid col-sm-5 d-block mb-3"
-                                         @if (isset($data->s6_surat_rekom)) src="{{ $data->s6_surat_rekom }}" @endif>
-                                    <input type="file" class="form-control" id="imageFile4"
-                                           onchange="tampilImage4()" name="s6_surat_rekom">
+                                        @if (isset($data->s6_surat_rekom)) src="{{ $data->s6_surat_rekom }}" @endif>
+                                    <input type="file" class="form-control" id="imageFile4" onchange="tampilImage4()"
+                                        name="s6_surat_rekom">
                                 </div>
                                 {{-- @if (isset($data->s6_surat_rekom))
                                     <div class="col-lg-4 mt-5 d-flex flex-column">
@@ -385,9 +451,9 @@
                                 <div class="col-lg-4">
                                     <label>Surat Pengantar : </label>
                                     <img class="imgPreview5 img-fluid col-sm-5 d-block mb-3"
-                                         @if (isset($data->s6_surat_pengantar)) src="{{ $data->s6_surat_pengantar }}" @endif />
-                                    <input type="file" class="form-control" id="imageFile5"
-                                           onchange="tampilImage5()" name="s6_surat_pengantar">
+                                        @if (isset($data->s6_surat_pengantar)) src="{{ $data->s6_surat_pengantar }}" @endif />
+                                    <input type="file" class="form-control" id="imageFile5" onchange="tampilImage5()"
+                                        name="s6_surat_pengantar">
                                 </div>
                                 {{-- @if (isset($data->s6_surat_pengantar_file))
                                     <div class="col-lg-4 mt-5 d-flex flex-column">
@@ -399,74 +465,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-lg-12 mb-3 mt-4">
-                            <h4>Keterangan : </h4>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="row mb-3">
-                                <div class="col-lg-6 me-5">
-                                    <label class="form-label">Pemeriksaan Lapangan (Tidak Lulus /
-                                        Lulus)</label>
-                                    <span class="switch">
-                                            <label for="s7_pemeriksaan_lapangan">
-                                                <input type="checkbox" name="s7_pemeriksaan_lapangan"
-                                                       id="s7_pemeriksaan_lapangan" value="1"
-                                                    {{ radio_selected(@old('s7_pemeriksaan_lapangan'), $data->s7_pemeriksaan_lapangan ?? null, '1') }} />
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                </div>
-                                <div class="col-lg-6 me-5">
-                                    <label class="form-label">Disertifikasi (Tidak / Ya)</label>
-                                    <span class="switch">
-                                            <label for="s7_disertifikasi">
-                                                <input type="checkbox" name="s7_disertifikasi"
-                                                       id="s7_disertifikasi" value="1"
-                                                    {{ radio_selected(@old('s7_disertifikasi'), $data->s7_disertifikasi ?? null, '1') }} />
-                                                <span></span>
-                                            </label>
-                                        </span>
-                                </div>
-                            </div>
-                            @if (isset($id))
-                                <div class="row mt-5">
-                                    <div class="col-lg-6 me-5">
-                                        <label for="status">Status:</label>
-                                        <select
-                                            class="form-control form-control {{ $errors->has('status') ? 'is-invalid' : '' }}"
-                                            id="status" name="status"
-                                            value="{{ @old('status') ? @old('status') : (isset($data->status) ? $data->status : @old('status')) }}">
-                                            <option value="draft"
-                                                {{ option_selected(@old('status'), $data->status ?? null, 'draft') }}>
-                                                Draft</option>
-                                            <option value="revision"
-                                                {{ option_selected(@old('status'), $data->status ?? null, 'revision') }}>
-                                                Revision</option>
-                                            <option value="reject"
-                                                {{ option_selected(@old('status'), $data->status ?? null, 'reject') }}>
-                                                Reject</option>
-                                            <option value="verified"
-                                                {{ option_selected(@old('status'), $data->status ?? null, 'verified') }}>
-                                                Verified</option>
-                                            <option value="revision_updated" class="d-none" {{ option_selected(@old('status'), $data->status ?? null, 'revision_updated') }}>
-                                                Revision Updated</option>
-                                        </select>
-                                        @error('status')
-                                        <small class="text-danger"> {{ $message }} </small>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-lg-4"></div>
                         <div class="col-lg-8 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary me-2">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <a href="{{ route('tanampangan.index') }}" class="btn btn-danger me-2">Back</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -479,6 +484,99 @@
     <script>
         const isUpdate = {{ isset($id) ? 'true' : 'false' }};
 
+        function initKomoditas(section, data = {
+            komoditas_id: null,
+            varietas_id: null
+        }) {
+            let komoditas_id = null
+            const selector_komoditas = $(`#${section}_komoditas_id`)
+            const selector_varietas = $(`#${section}_varietas_id`)
+            selector_komoditas.select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Komoditas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/komoditas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+            selector_komoditas.on('select2:clear', function() {
+                setTimeout(() => {
+                    selector_varietas.prop("disabled", true);
+                }, 100)
+                selector_varietas.val('');
+                selector_varietas.trigger('change');
+            })
+            selector_komoditas.on('change', function() {
+                komoditas_id = selector_komoditas.val() * 1
+                selector_varietas.val('');
+                selector_varietas.trigger('change');
+                selector_varietas.prop("disabled", false);
+            })
+
+            selector_varietas.select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Varietas',
+                allowClear: true,
+                ajax: {
+                    url: '/master/varietas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where =
+                                `komoditas_id=${komoditas_id || data.komoditas_id} and nama LIKE '%${params.term}%'`
+                        } else {
+                            query.where = `komoditas_id=${komoditas_id || data.komoditas_id}`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+
+            if (isUpdate) {
+                $.ajax({
+                    url: "/master/komoditas?where=id=" + data.komoditas_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        data.results.forEach((el) => {
+                            selector_komoditas.append(new Option(el.text, el.id, true, true))
+                        })
+                    }
+                });
+
+                $.ajax({
+                    url: "/master/varietas?where=id=" + data.varietas_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        data.results.forEach((el) => {
+                            selector_varietas.append(new Option(el.text, el.id, true, true))
+                        })
+                        selector_varietas.prop("disabled", false);
+                    }
+                });
+            }
+        }
+
         function produsenGetDetail(value) {
             $.ajax({
                 url: "{{ route('sibenih.produsen.get_data') }}?datatable=false&id=" + value,
@@ -489,37 +587,6 @@
                     $('#alamat_lengkap_usaha').val(data[0].alamat_usaha);
                 }
             })
-        }
-
-        function varietasHelper(value) {
-            $.ajax({
-                url: "/master/varietas?where=id=" + value,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    data.results.forEach((el) => {
-                        $('#s2_varietas_id').append(new Option(el.text, el.id, true, true))
-                    })
-                    $('#s2_varietas_id').prop("disabled", false);
-                }
-            });
-        }
-
-        function komoditasHelper(value) {
-            $.ajax({
-                url: "/master/komoditas?where=id=" + value,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    const kabupaten_id = value;
-                    data.results.forEach((el) => {
-                        $('#s1_komoditas_id').append(new Option(el.text, el.id, true, true))
-                    })
-                    const varValue =
-                        {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }};
-                    varietasHelper(varValue)
-                }
-            });
         }
 
         function produsenAlamatHelper(produsenAlamat, produsen_id) {
@@ -587,8 +654,18 @@
                 {{ isset($data->s3_produsen_id) ? $data->s3_produsen_id : @old('s3_produsen_id') ?? 'null' }};
             const produsenAlamat =
                 {{ isset($data->s1_produsen_alamat_id) ? $data->s1_produsen_alamat_id : @old('s1_produsen_alamat_id') ?? 'null' }};
-            const komValue =
+
+            const komValue1 =
                 {{ isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id') ?? 'null' }};
+            const varValue1 =
+                {{ isset($data->s1_varietas_id) ? $data->s1_varietas_id : @old('s1_varietas_id') ?? 'null' }};
+
+
+            const komValue2 =
+                {{ isset($data->s2_komoditas_id) ? $data->s2_komoditas_id : @old('s2_komoditas_id') ?? 'null' }};
+            const varValue2 =
+                {{ isset($data->s2_varietas_id) ? $data->s2_varietas_id : @old('s2_varietas_id') ?? 'null' }};
+
             const kelasBenihValue3 =
                 {{ isset($data->s3_kelas_benih_id) ? $data->s3_kelas_benih_id : @old('s3_kelas_benih_id') ?? 'null' }};
             const kelasBenihValue2 =
@@ -596,7 +673,14 @@
             produsenHelper(produsenValue, 's1_produsen_id')
             produsenHelper(produsenValue3, 's3_produsen_id')
             produsenAlamatHelper(produsenAlamat, produsenValue)
-            komoditasHelper(komValue)
+            initKomoditas('s1', {
+                komoditas_id: komValue1,
+                varietas_id: varValue1
+            })
+            initKomoditas('s2', {
+                komoditas_id: komValue2,
+                varietas_id: varValue2
+            })
             kelasBenihHelper(kelasBenihValue3, 's3_kelas_benih_id')
             kelasBenihHelper(kelasBenihValue2, 's2_kelas_benih_id')
         }
@@ -606,67 +690,12 @@
         }
 
         $(document).ready(function() {
-            let komoditas_id = null
-            let produsen_id = {{ $userId }}
-            // GET KOMODITAS
-            $('#s1_komoditas_id').select2({
-                theme: "bootstrap",
-                placeholder: 'Pilih Komoditas',
-                allowClear: true,
-                ajax: {
-                    url: '/master/komoditas',
-                    data: function(params) {
-                        const query = {
-                            idField: 'id',
-                            displayField: 'nama'
-                        }
+            let produsen_id = {{ $userId }};
 
-                        if (params.term) {
-                            query.where = `nama LIKE '%${params.term}%'`
-                        }
-
-                        // Query parameters will be ?search=[term]&page=[page]
-                        return query;
-                    }
-                }
-            })
-            $('#s1_komoditas_id').on('select2:clear', function() {
-                setTimeout(() => {
-                    $('#s2_varietas_id').prop("disabled", true);
-                }, 100)
-                $('#s2_varietas_id').val('');
-                $('#s2_varietas_id').trigger('change');
-            })
-            $('#s1_komoditas_id').on('change', function() {
-                komoditas_id = $('#s1_komoditas_id').val() * 1
-                $('#s2_varietas_id').prop("disabled", false);
-            })
-
-            // GET VARIETAS
-            $('#s2_varietas_id').select2({
-                theme: "bootstrap",
-                placeholder: 'Pilih Varietas',
-                allowClear: true,
-                ajax: {
-                    url: '/master/varietas',
-                    data: function(params) {
-                        const query = {
-                            idField: 'id',
-                            displayField: 'nama'
-                        }
-
-                        if (params.term) {
-                            query.where =
-                                `komoditas_id=${komoditas_id} and nama LIKE '%${params.term}%'`
-                        } else {
-                            query.where = `komoditas_id=${komoditas_id}`
-                        }
-
-                        // Query parameters will be ?search=[term]&page=[page]
-                        return query;
-                    }
-                }
-            })
+            if (!isUpdate) {
+                initKomoditas('s1')
+                initKomoditas('s2')
+            }
 
             // GET PRODUSEN
             $('#s1_produsen_id').select2({
@@ -732,6 +761,29 @@
                     }
                 }
             })
+
+            $('#kelas_benih').select2({
+                theme: "bootstrap",
+                placeholder: 'Pilih Kelas Benih',
+                allowClear: true,
+                ajax: {
+                    url: '/master/kelas',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    }
+                }
+            })
+
             $('#s2_kelas_benih_id').select2({
                 theme: "bootstrap",
                 placeholder: 'Pilih Kelas Benih',
@@ -765,6 +817,8 @@
             })
             $('#s1_produsen_id').on('change', function() {
                 produsen_id = $('#s1_produsen_id').val() * 1
+                $('#s1_produsen_alamat_id').val('');
+                $('#s1_produsen_alamat_id').trigger('change');
                 $('#s1_produsen_alamat_id').prop("disabled", false);
                 produsenGetDetail(produsen_id)
             })

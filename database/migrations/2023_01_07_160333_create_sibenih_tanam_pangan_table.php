@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('s2_jenis_tanaman');
             $table->date('s2_tgl_panen');
             $table->bigInteger('s3_produsen_id');
+            $table->bigInteger('kelas_benih');
+            $table->bigInteger('tahun_musim');
             $table->bigInteger('s3_kelas_benih_id');
             $table->string('s3_no_kel_benih');
             $table->string('s3_no_label_sumber');
