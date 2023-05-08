@@ -56,7 +56,7 @@
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-lg-12 mt-4">
-                            <h4>1. Input Tanam Pangan : </h4>
+                            <h4>1. Input Tanaman Pangan : </h4>
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
@@ -551,7 +551,7 @@
                 }
             })
 
-            if (isUpdate) {
+            if (data.komoditas_id) {
                 $.ajax({
                     url: "/master/komoditas?where=id=" + data.komoditas_id,
                     type: 'GET',
@@ -562,7 +562,9 @@
                         })
                     }
                 });
+            }
 
+            if (isUpdate) {
                 $.ajax({
                     url: "/master/varietas?where=id=" + data.varietas_id,
                     type: 'GET',
@@ -693,7 +695,13 @@
             let produsen_id = {{ $userId }};
 
             if (!isUpdate) {
-                initKomoditas('s1')
+                const komValue1 =
+                    {{ @old('s1_komoditas_id') ?? 'null' }}
+
+                initKomoditas('s1', {
+                    komoditas_id: komValue1
+                    // varietas_id: varValue1
+                })
                 initKomoditas('s2')
             }
 
