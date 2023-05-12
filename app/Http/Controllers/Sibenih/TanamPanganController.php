@@ -26,17 +26,17 @@ class TanamPanganController extends Controller
     public function index()
     {
         $tanamPangan = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-        ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
-        ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
-        ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
-        ->select(
-            'sibenih_tanam_pangan.*',
-            'pro.nama_pt as pro_nama_pt',
-            'pro.nama_pimpinan as pro_nama_pimpinan',
-            'var.nama as var_nama_varietas',
-            'prodAlm.s2_luas_tanah as luas_pertanaman',
-            'user.name as admin_name'
-        )
+            ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
+            ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
+            ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
+            ->select(
+                'sibenih_tanam_pangan.*',
+                'pro.nama_pt as pro_nama_pt',
+                'pro.nama_pimpinan as pro_nama_pimpinan',
+                'var.nama as var_nama_varietas',
+                'prodAlm.s2_luas_tanah as luas_pertanaman',
+                'user.name as admin_name'
+            )
             ->where('sibenih_tanam_pangan.s1_produsen_id', \Auth::user()->id)
             ->get();
 
@@ -104,6 +104,8 @@ class TanamPanganController extends Controller
             "s3_no_label_sumber" => "required",
             "s3_jml_benih" => "required",
             "s2_kelas_benih_id" => "required",
+            "kelas_benih" => "required",
+            "tahun_musim" => "required",
             "status" => "string",
         ]);
 
@@ -145,13 +147,13 @@ class TanamPanganController extends Controller
             $input['s6_surat_pengantar'] = $fullpath;
         }
 
-        if ($request->s7_pemeriksaan_lapangan) {
+        if ($request->s7_pemeriksaan_lapangan == "Lulus") {
             $input['s7_pemeriksaan_lapangan'] = true;
         } else {
             $input['s7_pemeriksaan_lapangan'] = false;
         }
 
-        if ($request->s7_disertifikasi) {
+        if ($request->s7_disertifikasi == "Ya") {
             $input['s7_disertifikasi'] = true;
         } else {
             $input['s7_disertifikasi'] = false;
@@ -165,7 +167,7 @@ class TanamPanganController extends Controller
         $input['s2_tgl_vegetatif'] = null;
         $input['s2_tgl_primordia'] = null;
         $input['s2_tgl_masak'] = null;
-        $input['status'] = 'draft';
+        $input['status'] = 'verified';
         $input['admin_id'] = auth()->user()->id;
         // $input['s2_tgl_pendhl'] = new Carbon($input['s2_tgl_pendhl']);
         // $input['s2_tgl_vegetatif'] = new Carbon($input['s2_tgl_vegetatif']);
@@ -201,8 +203,8 @@ class TanamPanganController extends Controller
         $komoditas = Komoditas::all();
         $produsens = Produsen::all();
         $data = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-                ->select('sibenih_tanam_pangan.*', 'pro.alamat_usaha as s1_alamat')
-                ->where('sibenih_tanam_pangan.id', $id)->first();
+            ->select('sibenih_tanam_pangan.*', 'pro.alamat_usaha as s1_alamat')
+            ->where('sibenih_tanam_pangan.id', $id)->first();
 
         $userId = \Auth::user()->id;
         return view('pages.sibenih.tanampangan.form', compact('id', 'userId', 'data'));
@@ -302,24 +304,24 @@ class TanamPanganController extends Controller
     public function export(Request $request)
     {
         $query = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-                    ->leftJoin('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
-                    ->leftJoin('sibenih_mas_varietas as var1', 'var1.id', '=', 'sibenih_tanam_pangan.s1_varietas_id')
-                    ->leftJoin('sibenih_mas_varietas as var2', 'var2.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
-                    ->leftJoin('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
-                    ->leftJoin('sibenih_mas_kelas as kelas1', 'kelas1.id', '=', 'sibenih_tanam_pangan.s2_kelas_benih_id')
-                    ->leftJoin('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'sibenih_tanam_pangan.s3_kelas_benih_id')
-                    ->leftJoin('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
-                    ->select(
-                        'sibenih_tanam_pangan.*',
-                        'pro.nama_pt as pro_nama_pt',
-                        'pro.nama_pimpinan as pro_nama_pimpinan',
-                        'var1.nama as var_nama_varietas1',
-                        'var2.nama as var_nama_varietas2',
-                        'kom.nama as kom_nama_komoditas',
-                        'kelas1.nama as kelas1_nama_kelas',
-                        'kelas2.nama as kelas2_nama_kelas',
-                        'user.name as admin_name'
-                    )->get();
+            ->leftJoin('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
+            ->leftJoin('sibenih_mas_varietas as var1', 'var1.id', '=', 'sibenih_tanam_pangan.s1_varietas_id')
+            ->leftJoin('sibenih_mas_varietas as var2', 'var2.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
+            ->leftJoin('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
+            ->leftJoin('sibenih_mas_kelas as kelas1', 'kelas1.id', '=', 'sibenih_tanam_pangan.s2_kelas_benih_id')
+            ->leftJoin('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'sibenih_tanam_pangan.s3_kelas_benih_id')
+            ->leftJoin('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
+            ->select(
+                'sibenih_tanam_pangan.*',
+                'pro.nama_pt as pro_nama_pt',
+                'pro.nama_pimpinan as pro_nama_pimpinan',
+                'var1.nama as var_nama_varietas1',
+                'var2.nama as var_nama_varietas2',
+                'kom.nama as kom_nama_komoditas',
+                'kelas1.nama as kelas1_nama_kelas',
+                'kelas2.nama as kelas2_nama_kelas',
+                'user.name as admin_name'
+            )->get();
 
 
         $data = $query->where('id', $request->id)->first();
