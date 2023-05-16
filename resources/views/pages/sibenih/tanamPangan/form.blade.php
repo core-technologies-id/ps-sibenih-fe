@@ -114,9 +114,10 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
+                                    <input type="hidden" id="s1_produsen_id_fix" name="s1_produsen_id" value="" />
                                     <label for="s1_produsen_id">Produsen: <span class="text-danger">*</span></label>
                                     <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
-                                        id="s1_produsen_id" name="s1_produsen_id"
+                                        id="s1_produsen_id"
                                         value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}"
                                         disabled>
 
@@ -171,6 +172,14 @@
                                         class="form-control form-control {{ $errors->has('tahun_musim') ? 'is-invalid' : '' }}"
                                         id="tahun_musim" name="tahun_musim" value="{{ @old('tahun_musim') }}">
                                         <option value="">-- Pilih Tahun --</option>
+                                        @php
+                                            $year = now()->year - 10;
+                                        @endphp
+                                        @for ($i = $year; $i < $year + 10; $i++)
+                                            <option value="{{ $i }}">
+                                                {{ $i }}
+                                            </option>
+                                        @endfor
                                         @for ($i = now()->year; $i < now()->year + 10; $i++)
                                             <option value="{{ $i }}">
                                                 {{ $i }}
@@ -483,7 +492,7 @@
     <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script>
         const isUpdate = {{ isset($id) ? 'true' : 'false' }};
-
+        let produsen_alamat_temp = [];
         function initKomoditas(section, data = {
             komoditas_id: null,
             varietas_id: null
@@ -618,7 +627,6 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    const kabupaten_id = value;
                     data.results.forEach((el) => {
                         if (el.id === value) {
                             $('#' + id).append(new Option(el.text, el.id, true, true))
@@ -697,12 +705,42 @@
             if (!isUpdate) {
                 const komValue1 =
                     {{ @old('s1_komoditas_id') ?? 'null' }}
+                const varValue1 =
+                    {{ @old('s1_varietas_id') ?? 'null' }}
+                const komValue2 =
+                    {{ @old('s2_komoditas_id') ?? 'null' }}
+                const varValue2 =
+                    {{ @old('s2_varietas_id') ?? 'null' }}
+
+                const kelasBenihValue1 =
+                    {{ @old('kelas_benih') ?? 'null' }}
+                const kelasBenihValue2 =
+                    {{ @old('s3_kelas_benih_id') ?? 'null' }}
+                const kelasBenihValue3 =
+                    {{ @old('s2_kelas_benih_id') ?? 'null' }}
+                    
+                const produsenValue =
+                    {{ @old('s1_produsen_id') ?? 'null' }}
+                const produsenAlamatValue =
+                    {{ @old('s1_produsen_alamat_id') ?? 'null' }}
+                
+                
 
                 initKomoditas('s1', {
-                    komoditas_id: komValue1
-                    // varietas_id: varValue1
+                    komoditas_id: komValue1,
+                    varietas_id: varValue1
+
                 })
-                initKomoditas('s2')
+                initKomoditas('s2', {
+                    komoditas_id: komValue2,
+                    varietas_id: varValue2
+                })
+
+                kelasBenihHelper(kelasBenihValue1, 'kelas_benih')
+                kelasBenihHelper(kelasBenihValue2, 's3_kelas_benih_id')
+                kelasBenihHelper(kelasBenihValue3, 's2_kelas_benih_id')
+
+                produsenAlamatHelper(produsenAlamatValue, produsenValue)
             }
 
             // GET PRODUSEN
@@ -830,6 +868,7 @@
                 $('#s1_produsen_alamat_id').prop("disabled", false);
                 produsenGetDetail(produsen_id)
             })
+            $('#s1_produsen_id_fix').val(produsen_id)
             produsenHelper(produsen_id, 's1_produsen_id')
 
             // GET PRODUSEN ALAMAT
