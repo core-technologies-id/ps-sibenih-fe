@@ -114,9 +114,10 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
+                                    <input type="hidden" id="s1_produsen_id_fix" name="s1_produsen_id" value="" />
                                     <label for="s1_produsen_id">Produsen: <span class="text-danger">*</span></label>
                                     <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
-                                        id="s1_produsen_id" name="s1_produsen_id"
+                                        id="s1_produsen_id"
                                         value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}"
                                         disabled>
 
@@ -483,7 +484,7 @@
     <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script>
         const isUpdate = {{ isset($id) ? 'true' : 'false' }};
-
+        let produsen_alamat_temp = [];
         function initKomoditas(section, data = {
             komoditas_id: null,
             varietas_id: null
@@ -618,7 +619,6 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    const kabupaten_id = value;
                     data.results.forEach((el) => {
                         if (el.id === value) {
                             $('#' + id).append(new Option(el.text, el.id, true, true))
@@ -830,6 +830,7 @@
                 $('#s1_produsen_alamat_id').prop("disabled", false);
                 produsenGetDetail(produsen_id)
             })
+            $('#s1_produsen_id_fix').val(produsen_id)
             produsenHelper(produsen_id, 's1_produsen_id')
 
             // GET PRODUSEN ALAMAT
