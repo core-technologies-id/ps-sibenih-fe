@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('style')
 @endsection
+{{-- @dd($news) --}}
 @section('content')
     <div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-fade="true">
 
@@ -20,7 +21,8 @@
             </div>
         </div>
 
-        <div class="slide kenburns" data-bg-image="/assets/images/home/main-banner/afif-ramdhasuma-pG-Ajs3q0Co-unsplash.webp">
+        <div class="slide kenburns"
+            data-bg-image="/assets/images/home/main-banner/afif-ramdhasuma-pG-Ajs3q0Co-unsplash.webp">
             <div class="bg-overlay"></div>
             <div class="container">
                 <div class="slide-captions text-center text-light">
@@ -125,71 +127,36 @@
                 <h2>BERITA PERTANIAN SUMSEL</h2>
                 <div class="carousel" data-items="3">
 
-                    <div class="post-item border">
-                        <div class="post-item-wrap">
-                            <div class="post-image">
-                                <a href="#">
-                                    <img alt="" src="/assets/images/blog/b-001.png" style="height: 240px; object-fit: cover">
-                                </a>
-    {{--                                    <span class="post-meta-category"><a href="">Lifestyle</a></span>--}}
-                            </div>
-                            <div class="post-item-description">
-                                <span class="post-meta-date"><i class="fa fa-calendar-o"></i>17 Agustus 2022</span>
-                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Views</a></span>
-                                <h2 style="line-height: 14px; text-decoration: none">
-                                    <a href="#">
-                                        Pengecekan Mutu Benih Untuk Pengembangan Jahe Di Pagar Alam
+                    @foreach ($news as $new)
+                        <div class="post-item border">
+                            <div class="post-item-wrap">
+                                <div class="post-image">
+                                    <a href="/detail-news/{{ $new->id }}">
+                                        @if (isset($new->photo))
+                                            <img src="{{ $new->photo }}" style="height: 240px; object-fit: cover">
+                                        @else
+                                            <img src="https://png.pngtree.com/png-vector/20190115/ourlarge/pngtree-cartoon-character-hand-drawn-farmers-farmer-holding-rice-xiaoman-png-image_348097.jpg"
+                                                style="height: 240px; object-fit: cover">
+                                        @endif
                                     </a>
-                                </h2>
-                                <a href="#" class="item-link">Selengkapnya <i class="icon-chevron-right"></i></a>
+                                </div>
+                                <div class="post-item-description">
+                                    <span class="post-meta-date"><i
+                                            class="fa fa-calendar-o"></i>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $new->created_at)->format('d-m-Y') }}</span>
+                                    <span class="post-meta-comments"><a href=""><i
+                                                class="fa fa-comments-o"></i>{{ $new->views }}
+                                            Views</a></span>
+                                    <h2 style="line-height: 14px; text-decoration: none">
+                                        <a href="/detail-news/{{ $new->id }}">
+                                            {{ $new->title }}
+                                        </a>
+                                    </h2>
+                                    <a href="/detail-news/{{ $new->id }}" class="item-link">Selengkapnya <i
+                                            class="icon-chevron-right"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="post-item border">
-                        <div class="post-item-wrap">
-                            <div class="post-image">
-                                <a href="#">
-                                    <img alt="" src="/assets/images/blog/b-002.png" style="height: 240px; object-fit: cover">
-                                </a>
-    {{--                                    <span class="post-meta-category"><a href="">Science</a></span>--}}
-                            </div>
-                            <div class="post-item-description">
-                                <span class="post-meta-date"><i class="fa fa-calendar-o"></i>17 Agustus 2022</span>
-                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Views</a></span>
-                                <h2 style="line-height: 14px; text-decoration: none">
-                                    <a href="#">
-                                        Panen Bawang Merah Di Sriwijaya Scince Techno Park (Sstp), Bakung Indralaya
-                                    </a>
-                                </h2>
-                                <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="post-item border">
-                        <div class="post-item-wrap">
-                            <div class="post-image">
-                                <a href="#">
-                                    <img alt="" src="/assets/images/blog/b-003.jpeg" style="height: 240px; object-fit: cover">
-                                </a>
-    {{--                                    <span class="post-meta-category"><a href="">Lifestyle</a></span>--}}
-                            </div>
-                            <div class="post-item-description">
-                                <span class="post-meta-date"><i class="fa fa-calendar-o"></i>17 Agustus 2022</span>
-                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Views</a></span>
-                                <h2 style="line-height: 14px; text-decoration: none">
-                                    <a href="#">
-                                        Kegiatan Sertifikasi Perbenihan Di Tengah Pandemi Covid-19 di Sumatra Selatan
-                                    </a>
-                                </h2>
-                                <a href="#" class="item-link">Selengkapnya <i class="icon-chevron-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -206,13 +173,15 @@
                         <div class="post-item-wrap">
                             <div class="post-image">
                                 <a href="#">
-                                    <img alt="" src="/assets/images/blog/c-001.jpeg" style="height: 240px; object-fit: cover">
+                                    <img alt="" src="/assets/images/blog/c-001.jpeg"
+                                        style="height: 240px; object-fit: cover">
                                 </a>
-    {{--                                    <span class="post-meta-category"><a href="">Lifestyle</a></span>--}}
+                                {{--                                    <span class="post-meta-category"><a href="">Lifestyle</a></span> --}}
                             </div>
                             <div class="post-item-description">
                                 <span class="post-meta-date"><i class="fa fa-calendar-o"></i>17 Agustus 2022</span>
-                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Views</a></span>
+                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33
+                                        Views</a></span>
                                 <h2 style="line-height: 14px; text-decoration: none">
                                     <a href="#">
                                         Alsintan Modern, Solusi Terkini Peningkatan Hasil Dan Mutu Panen
@@ -228,13 +197,15 @@
                         <div class="post-item-wrap">
                             <div class="post-image">
                                 <a href="#">
-                                    <img alt="" src="/assets/images/blog/c-002.jpeg" style="height: 240px; object-fit: cover">
+                                    <img alt="" src="/assets/images/blog/c-002.jpeg"
+                                        style="height: 240px; object-fit: cover">
                                 </a>
-    {{--                                    <span class="post-meta-category"><a href="">Science</a></span>--}}
+                                {{--                                    <span class="post-meta-category"><a href="">Science</a></span> --}}
                             </div>
                             <div class="post-item-description">
                                 <span class="post-meta-date"><i class="fa fa-calendar-o"></i>17 Agustus 2022</span>
-                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Views</a></span>
+                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33
+                                        Views</a></span>
                                 <h2 style="line-height: 14px; text-decoration: none">
                                     <a href="#">
                                         Lahat Menjadi Kabupaten Pertama Yang Mengembangkan Perbenihan Kacang Tanah
@@ -250,16 +221,19 @@
                         <div class="post-item-wrap">
                             <div class="post-image">
                                 <a href="#">
-                                    <img alt="" src="/assets/images/blog/c-003.jpeg" style="height: 240px; object-fit: cover">
+                                    <img alt="" src="/assets/images/blog/c-003.jpeg"
+                                        style="height: 240px; object-fit: cover">
                                 </a>
-    {{--                                    <span class="post-meta-category"><a href="">Lifestyle</a></span>--}}
+                                {{--                                    <span class="post-meta-category"><a href="">Lifestyle</a></span> --}}
                             </div>
                             <div class="post-item-description">
                                 <span class="post-meta-date"><i class="fa fa-calendar-o"></i>17 Agustus 2022</span>
-                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Views</a></span>
+                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33
+                                        Views</a></span>
                                 <h2 style="line-height: 14px; text-decoration: none">
                                     <a href="#">
-                                        Direktorat Perbenihan Hortikultura Jajaki Kerjasama Produksi Benih Pisang Dengan Produsen
+                                        Direktorat Perbenihan Hortikultura Jajaki Kerjasama Produksi Benih Pisang Dengan
+                                        Produsen
                                     </a>
                                 </h2>
                                 <a href="#" class="item-link">Selengkapnya <i class="icon-chevron-right"></i></a>
@@ -278,8 +252,8 @@
             <div class="heading-text heading-section">
                 <h2>GALERI FOTO KEGIATAN</h2>
                 <!-- <span class="lead">Lorem ipsum dolor sit amet, coper suscipit lobortis nisl ut aliquip ex ea commodo
-    consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
-    consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
+                                consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+                                consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
             </div>
         </div>
         <div class="portfolio">
@@ -289,7 +263,9 @@
                 <div class="portfolio-item no-overlay ct-photography ct-media ct-branding ct-Media ct-webdesign">
                     <div class="portfolio-item-wrap">
                         <div class="portfolio-slider">
-                            <div class="carousel dots-inside dots-dark arrows-dark" data-items="1" data-loop="true" data-autoplay="true" data-animate-in="fadeIn" data-animate-out="fadeOut" data-autoplay="1500">
+                            <div class="carousel dots-inside dots-dark arrows-dark" data-items="1" data-loop="true"
+                                data-autoplay="true" data-animate-in="fadeIn" data-animate-out="fadeOut"
+                                data-autoplay="1500">
                                 <a href="#"><img src="/assets/images/blog/d-001.jpg" alt=""></a>
                                 <a href="#"><img src="/assets/images/blog/d-003.jpg" alt=""></a>
                             </div>
@@ -304,7 +280,8 @@
                             <a href="#"><img src="/assets/images/blog/d-002.jpg" alt=""></a>
                         </div>
                         <div class="portfolio-description">
-                            <a title="Paper Pouch!" data-lightbox="image" href="/assets/images/blog/d-002.jpg"><i class="icon-maximize"></i></a>
+                            <a title="Paper Pouch!" data-lightbox="image" href="/assets/images/blog/d-002.jpg"><i
+                                    class="icon-maximize"></i></a>
                             <a href="portfolio-page-grid-gallery.html"><i class="icon-link"></i></a>
                         </div>
                     </div>
@@ -332,9 +309,12 @@
                             <a href="#"><img src="/assets/images/blog/d-004.jpg" alt=""></a>
                         </div>
                         <div class="portfolio-description" data-lightbox="gallery">
-                            <a title="Photoshop Mock-up!" data-lightbox="gallery-image" href="/assets/images/blog/d-001"><i class="icon-copy"></i></a>
-                            <a title="Paper Pouch!" data-lightbox="gallery-image" href="/assets/images/blog/d-004" class="hidden"></a>
-                            <a title="Mock-up" data-lightbox="gallery-image" href="/assets/images/blog/d-008" class="hidden"></a>
+                            <a title="Photoshop Mock-up!" data-lightbox="gallery-image"
+                                href="/assets/images/blog/d-001"><i class="icon-copy"></i></a>
+                            <a title="Paper Pouch!" data-lightbox="gallery-image" href="/assets/images/blog/d-004"
+                                class="hidden"></a>
+                            <a title="Mock-up" data-lightbox="gallery-image" href="/assets/images/blog/d-008"
+                                class="hidden"></a>
                             <a href="portfolio-page-grid-gallery.html"><i class="icon-link"></i></a>
                         </div>
                     </div>
@@ -362,17 +342,21 @@
                             <a href="#"><img src="/assets/images/blog/d-006.jpg" alt=""></a>
                         </div>
                         <div class="portfolio-description">
-                            <a title="Paper Pouch!" data-lightbox="iframe" href="https://www.youtube.com/watch?v=k6Kly58LYzY"><i class="icon-play"></i></a>
+                            <a title="Paper Pouch!" data-lightbox="iframe"
+                                href="https://www.youtube.com/watch?v=k6Kly58LYzY"><i class="icon-play"></i></a>
                             <a href="portfolio-page-grid-gallery.html"><i class="icon-link"></i></a>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="portfolio-item no-overlay ct-photography ct-media ct-branding ct-Media ct-marketing ct-webdesign">
+                <div
+                    class="portfolio-item no-overlay ct-photography ct-media ct-branding ct-Media ct-marketing ct-webdesign">
                     <div class="portfolio-item-wrap">
                         <div class="portfolio-slider">
-                            <div class="carousel dots-inside dots-dark arrows-dark" data-items="1" data-loop="true" data-autoplay="true" data-animate-in="fadeIn" data-animate-out="fadeOut" data-autoplay="1500">
+                            <div class="carousel dots-inside dots-dark arrows-dark" data-items="1" data-loop="true"
+                                data-autoplay="true" data-animate-in="fadeIn" data-animate-out="fadeOut"
+                                data-autoplay="1500">
                                 <a href="#"><img src="/assets/images/blog/d-007.jpg" alt=""></a>
                                 <a href="#"><img src="/assets/images/blog/d-002.jpg" alt=""></a>
                             </div>
