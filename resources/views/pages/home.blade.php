@@ -125,6 +125,7 @@
         <div class="container">
             <div class="heading-text heading-section">
                 <h2>BERITA PERTANIAN SUMSEL</h2>
+                <a href="/semua-berita" class="btn btn-primary mb-4">SELENGKAPNYA</a>
                 <div class="carousel" data-items="3">
 
                     @foreach ($news as $new)
@@ -143,16 +144,14 @@
                                 <div class="post-item-description">
                                     <span class="post-meta-date"><i
                                             class="fa fa-calendar-o"></i>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $new->created_at)->format('d-m-Y') }}</span>
-                                    <span class="post-meta-comments"><a href=""><i
-                                                class="fa fa-comments-o"></i>{{ $new->views }}
-                                            Views</a></span>
+                                    <span class="post-meta-comments"><i class="fa fa-comments-o"></i>{{ $new->views }}
+                                        Views</span>
                                     <h2 style="line-height: 14px; text-decoration: none">
                                         <a href="/detail-news/{{ $new->id }}">
                                             {{ $new->title }}
                                         </a>
                                     </h2>
-                                    <a href="/detail-news/{{ $new->id }}" class="item-link">Selengkapnya <i
-                                            class="icon-chevron-right"></i></a>
+                                    <p>{!! \Illuminate\Support\Str::words($new->content, 30, '...') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -252,8 +251,8 @@
             <div class="heading-text heading-section">
                 <h2>GALERI FOTO KEGIATAN</h2>
                 <!-- <span class="lead">Lorem ipsum dolor sit amet, coper suscipit lobortis nisl ut aliquip ex ea commodo
-                                consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
-                                consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
+                                        consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+                                        consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
             </div>
         </div>
         <div class="portfolio">
