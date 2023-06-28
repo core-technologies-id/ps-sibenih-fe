@@ -125,7 +125,6 @@
         <div class="container">
             <div class="heading-text heading-section">
                 <h2>BERITA PERTANIAN SUMSEL</h2>
-                <a href="/semua-berita" class="btn btn-primary mb-4">SELENGKAPNYA</a>
                 <div class="carousel" data-items="3">
 
                     @foreach ($news as $new)
@@ -151,12 +150,15 @@
                                             {{ $new->title }}
                                         </a>
                                     </h2>
-                                    <p>{!! \Illuminate\Support\Str::words($new->content, 30, '...') !!}</p>
+                                    <p>{!! \Illuminate\Support\Str::words($new->content, 15, '...') !!}</p>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
+            </div>
+            <div class="w-100 d-flex justify-content-end mt-5">
+                <a href="/semua-berita" class="btn btn-primary mt-3">SELENGKAPNYA</a>
             </div>
         </div>
 
@@ -251,8 +253,8 @@
             <div class="heading-text heading-section">
                 <h2>GALERI FOTO KEGIATAN</h2>
                 <!-- <span class="lead">Lorem ipsum dolor sit amet, coper suscipit lobortis nisl ut aliquip ex ea commodo
-                                        consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
-                                        consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
+                                                    consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+                                                    consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto.</span> -->
             </div>
         </div>
         <div class="portfolio">
