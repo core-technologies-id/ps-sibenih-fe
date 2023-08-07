@@ -254,16 +254,6 @@
                                     <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
-                                <div class="col-lg-6">
-                                    <label for="s2_jenis_tanaman">Jenis Tanaman: <span
-                                            class="text-danger">*</span></label>
-                                    <input name="s2_jenis_tanaman" id="s2_jenis_tanaman" type="text"
-                                        class="form-control {{ $errors->has('s2_jenis_tanaman') ? 'is-invalid' : '' }}"
-                                        value="{{ isset($data['s2_jenis_tanaman']) ? $data['s2_jenis_tanaman'] : old('s2_jenis_tanaman') }}" />
-                                    @error('s2_jenis_tanaman')
-                                        <small class="text-danger"> {{ $message }} </small>
-                                    @enderror
-                                </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
@@ -272,7 +262,7 @@
                                         value="{{ isset($data['s2_tgl_panen']) ? \Carbon\Carbon::parse($data['s2_tgl_panen'])->format('m/d/Y') : old('s2_tgl_panen') }}" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="kelas_benih">Kelas Benih: <span class="text-danger">*</span></label>
+                                    <label for="kelas_benih">Kelas Benih:</label>
                                     <select class="form-control {{ $errors->has('kelas_benih') ? 'is-invalid' : '' }}"
                                         id="kelas_benih" name="kelas_benih" value="{{ @old('kelas_benih') }}">
                                     </select>
@@ -326,8 +316,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="s3_kelas_benih_id">Kelas Benih Asal: <span
-                                            class="text-danger">*</span></label>
+                                    <label for="s3_kelas_benih_id">Kelas Benih Asal: </label>
                                     <select
                                         class="form-control {{ $errors->has('s3_kelas_benih_id') ? 'is-invalid' : '' }}"
                                         id="s3_kelas_benih_id" name="s3_kelas_benih_id"
@@ -385,7 +374,7 @@
                             <h4>4. Kelas Benih Yang Dihasilkan : </h4>
                         </div>
                         <div class="col-lg-6">
-                            <label for="s2_kelas_benih_id">Kelas Benih: <span class="text-danger">*</span></label>
+                            <label for="s2_kelas_benih_id">Kelas Benih:</label>
                             <select class="form-control {{ $errors->has('s2_kelas_benih_id') ? 'is-invalid' : '' }}"
                                 id="s2_kelas_benih_id" name="s2_kelas_benih_id"
                                 value="{{ @old('s2_kelas_benih_id') ? @old('s2_kelas_benih_id') : (isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : @old('s2_kelas_benih_id')) }}">
