@@ -26,17 +26,17 @@ class TanamPanganController extends Controller
     public function index()
     {
         $tanamPangan = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-        ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
-        ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
-        ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
-        ->select(
-            'sibenih_tanam_pangan.*',
-            'pro.nama_pt as pro_nama_pt',
-            'pro.nama_pimpinan as pro_nama_pimpinan',
-            'var.nama as var_nama_varietas',
-            'prodAlm.s2_luas_tanah as luas_pertanaman',
-            'user.name as admin_name'
-        )
+            ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
+            ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
+            ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
+            ->select(
+                'sibenih_tanam_pangan.*',
+                'pro.nama_pt as pro_nama_pt',
+                'pro.nama_pimpinan as pro_nama_pimpinan',
+                'var.nama as var_nama_varietas',
+                'prodAlm.s2_luas_tanah as luas_pertanaman',
+                'user.name as admin_name'
+            )
             ->where('sibenih_tanam_pangan.s1_produsen_id', \Auth::user()->id)
             ->get();
 
@@ -46,10 +46,25 @@ class TanamPanganController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $userId = \Auth::user()->id;
+
+        return view('pages.sibenih.tanamPangan.form', [
+            'userId' => $userId
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function store(Request $request)
+    {
+        $s1_nomor_antrian = '';
+
         $tanampangan = TanamPangan::all()->count();
         $depan = 'BTP';
 
@@ -62,29 +77,13 @@ class TanamPanganController extends Controller
             } else {
                 $nol = '';
             }
-            $nomer_antrian = $depan . $nol . $number;
+            $s1_nomor_antrian = $depan . $nol . $number;
         } else {
-            $nomer_antrian = $depan . '001';
+            $s1_nomor_antrian = $depan . '001';
         }
 
-        $userId = \Auth::user()->id;
-
-        return view('pages.sibenih.tanamPangan.form', [
-            'nomer_antrian' => $nomer_antrian,
-            'userId' => $userId
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
         $validator = Validator::make($request->all(), [
-            "s1_nomor_antrian" => 'string|max:255|required',
+            // "s1_nomor_antrian" => 'string|max:255|required',
             "s1_nomor_surat" => "string|max:255",
             "s1_nomor_lapangan" => "max:255",
             "s1_block" => "required",
@@ -104,7 +103,30 @@ class TanamPanganController extends Controller
             "s3_no_label_sumber" => "required",
             "s3_jml_benih" => "required",
             "s2_kelas_benih_id" => "required",
+            "kelas_benih" => "required",
+            "tahun_musim" => "required",
             "status" => "string",
+        ], [
+            's1_nomor_surat.max:255'=> 'Nomor surat not more than 255 characters',
+            's1_nomor_lapangan.max:255'=> 'Nomor lapangan not more than 255 characters',
+            'block.required' => 'The block field is required',
+            "s1_luas_tanah.required" => 'The luas tanah field is required',
+            "s1_musim_tanam.required" => "The musim tanam field is required",
+            "s1_komoditas_id.required" => "The komoditas field is required",
+            "s1_varietas_id.required" => "The varietas field is required",
+            "s1_produsen_id.required" => "The produsen field is required",
+            "s1_produsen_alamat_id.required" => "The produsen alamat field is required",
+            "s2_komoditas_id.required" => "The komoditas field is required",
+            "s2_varietas_id.required" => "The varietas field is required",
+            "s2_jenis_tanaman.required" => "The jenis tanaman field is required",
+            "s3_produsen.required" => "The produsen field is required",
+            "s3_kelas_benih_id.required" => "The kelas benih field is required",
+            "s3_no_kel_benih.required" => "The nomor kelompok benih field is required",
+            "s3_no_label_sumber.required" => "The no label sumber field is required",
+            "s3_jml_benih.required" => "The jumlah benih field is required",
+            "s2_kelas_benih_id.required" => "The kelas benih field is required",
+            "kelas_benih.required" => "The kelas benih field is required",
+            "tahun_musim.required" => "The tahun musim field is required",
         ]);
 
         if ($validator->fails()) {
@@ -119,6 +141,7 @@ class TanamPanganController extends Controller
             's6_label_benih', 's6_dena_lokasi', 's6_surat_rekom',
             's6_surat_pengantar', 's1_alamat', 'judul'
         ]);
+        $input['s1_nomor_antrian'] = $s1_nomor_antrian;
 
         if ($request->hasfile('s6_ttd')) {
             $fullpath = upload_file('s6_ttd', 'sibenih/tanampangan/s6_ttd');
@@ -145,13 +168,13 @@ class TanamPanganController extends Controller
             $input['s6_surat_pengantar'] = $fullpath;
         }
 
-        if ($request->s7_pemeriksaan_lapangan) {
+        if ($request->s7_pemeriksaan_lapangan == "Lulus") {
             $input['s7_pemeriksaan_lapangan'] = true;
         } else {
             $input['s7_pemeriksaan_lapangan'] = false;
         }
 
-        if ($request->s7_disertifikasi) {
+        if ($request->s7_disertifikasi == "Ya") {
             $input['s7_disertifikasi'] = true;
         } else {
             $input['s7_disertifikasi'] = false;
@@ -165,7 +188,7 @@ class TanamPanganController extends Controller
         $input['s2_tgl_vegetatif'] = null;
         $input['s2_tgl_primordia'] = null;
         $input['s2_tgl_masak'] = null;
-        $input['status'] = 'draft';
+        $input['status'] = 'verified';
         $input['admin_id'] = auth()->user()->id;
         // $input['s2_tgl_pendhl'] = new Carbon($input['s2_tgl_pendhl']);
         // $input['s2_tgl_vegetatif'] = new Carbon($input['s2_tgl_vegetatif']);
@@ -201,8 +224,8 @@ class TanamPanganController extends Controller
         $komoditas = Komoditas::all();
         $produsens = Produsen::all();
         $data = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-                ->select('sibenih_tanam_pangan.*', 'pro.alamat_usaha as s1_alamat')
-                ->where('sibenih_tanam_pangan.id', $id)->first();
+            ->select('sibenih_tanam_pangan.*', 'pro.alamat_usaha as s1_alamat')
+            ->where('sibenih_tanam_pangan.id', $id)->first();
 
         $userId = \Auth::user()->id;
         return view('pages.sibenih.tanampangan.form', compact('id', 'userId', 'data'));
@@ -302,24 +325,24 @@ class TanamPanganController extends Controller
     public function export(Request $request)
     {
         $query = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
-                    ->leftJoin('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
-                    ->leftJoin('sibenih_mas_varietas as var1', 'var1.id', '=', 'sibenih_tanam_pangan.s1_varietas_id')
-                    ->leftJoin('sibenih_mas_varietas as var2', 'var2.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
-                    ->leftJoin('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
-                    ->leftJoin('sibenih_mas_kelas as kelas1', 'kelas1.id', '=', 'sibenih_tanam_pangan.s2_kelas_benih_id')
-                    ->leftJoin('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'sibenih_tanam_pangan.s3_kelas_benih_id')
-                    ->leftJoin('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
-                    ->select(
-                        'sibenih_tanam_pangan.*',
-                        'pro.nama_pt as pro_nama_pt',
-                        'pro.nama_pimpinan as pro_nama_pimpinan',
-                        'var1.nama as var_nama_varietas1',
-                        'var2.nama as var_nama_varietas2',
-                        'kom.nama as kom_nama_komoditas',
-                        'kelas1.nama as kelas1_nama_kelas',
-                        'kelas2.nama as kelas2_nama_kelas',
-                        'user.name as admin_name'
-                    )->get();
+            ->leftJoin('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
+            ->leftJoin('sibenih_mas_varietas as var1', 'var1.id', '=', 'sibenih_tanam_pangan.s1_varietas_id')
+            ->leftJoin('sibenih_mas_varietas as var2', 'var2.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
+            ->leftJoin('sibenih_mas_komoditas as kom', 'kom.id', '=', 'sibenih_tanam_pangan.s1_komoditas_id')
+            ->leftJoin('sibenih_mas_kelas as kelas1', 'kelas1.id', '=', 'sibenih_tanam_pangan.s2_kelas_benih_id')
+            ->leftJoin('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'sibenih_tanam_pangan.s3_kelas_benih_id')
+            ->leftJoin('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
+            ->select(
+                'sibenih_tanam_pangan.*',
+                'pro.nama_pt as pro_nama_pt',
+                'pro.nama_pimpinan as pro_nama_pimpinan',
+                'var1.nama as var_nama_varietas1',
+                'var2.nama as var_nama_varietas2',
+                'kom.nama as kom_nama_komoditas',
+                'kelas1.nama as kelas1_nama_kelas',
+                'kelas2.nama as kelas2_nama_kelas',
+                'user.name as admin_name'
+            )->get();
 
 
         $data = $query->where('id', $request->id)->first();

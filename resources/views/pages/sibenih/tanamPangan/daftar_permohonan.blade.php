@@ -62,7 +62,7 @@
                                 <th>Nama Pimpinan</th>
                                 <th>Luas Tanah</th>
                                 <th>Varietas</th>
-                                <th>Status</th>
+                                {{-- <th>Status</th> --}}
                                 <th>Tanggal Input</th>
                                 <th>Action</th>
                             </tr>
@@ -79,7 +79,7 @@
                                 <td>{{ $item->pro_nama_pimpinan }}</td>
                                 <td>{{ $item->luas_pertanaman }}</td>
                                 <td>{{ $item->var_nama_varietas }}</td>
-                                <td>
+                                {{-- <td>
                                     @if ($item->status == 'draft')
                                         <span class="badge badge-primary">{{ $item->status }}</span>
                                     @elseif($item->status == 'revision')
@@ -89,7 +89,7 @@
                                     @else
                                         <span class="badge badge-success">{{ $item->status }}</span>
                                     @endif
-                                </td>
+                                </td> --}}
                                 <td>{{ $item->created_at }}</td>
                                 <td>
                                     @if($item->status == 'draft')
