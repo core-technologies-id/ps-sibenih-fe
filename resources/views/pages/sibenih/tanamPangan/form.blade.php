@@ -60,15 +60,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="row mb-3">
-                                <div class="col-lg-6 d-none">
-                                    <label for="s1_nomor_antrian">Nomor Antrian: <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input name="s1_nomor_antrian" id="s1_nomor_antrian" type="text"
-                                            class="form-control"
-                                            value="{{ isset($data['s1_nomor_antrian']) ? $data['s1_nomor_antrian'] : $nomer_antrian }}"
-                                            readonly />
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-3">
                                     <label for="s1_nomor_surat">Nomor Surat: </label>
                                     <div class="input-group">
@@ -100,6 +92,9 @@
                                         value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s1_komoditas_id) ? $data->s1_komoditas_id : @old('s1_komoditas_id')) }}">
 
                                     </select>
+                                    @error('s1_komoditas_id')
+                                    <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
                                 </div>
                                 <div class="col-12 col-lg-3">
                                     <label for="s1_varietas_id">Varietas: <span class="text-danger">*</span></label>
@@ -108,8 +103,10 @@
                                         id="s1_varietas_id" name="s1_varietas_id"
                                         value="{{ @old('s1_varietas_id') ? @old('s1_varietas_id') : (isset($data->s1_varietas_id) ? $data->s1_varietas_id : @old('s1_varietas_id')) }}"
                                         disabled>
-
                                     </select>
+                                    @error('s1_varietas_id')
+                                    <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -169,7 +166,7 @@
                                 <div class="col-lg-3">
                                     <label for="kota">Tahun Musim Tanam:</label>
                                     <select
-                                        class="form-control form-control {{ $errors->has('tahun_musim') ? 'is-invalid' : '' }}"
+                                        class="form-control-sm {{ $errors->has('tahun_musim') ? 'is-invalid' : '' }}"
                                         id="tahun_musim" name="tahun_musim" value="{{ @old('tahun_musim') }}">
                                         <option value="">-- Pilih Tahun --</option>
                                         @php
@@ -240,6 +237,9 @@
                                         value="{{ @old('komoditas') ? @old('komoditas') : (isset($data->s2_komoditas_id) ? $data->s2_komoditas_id : @old('s2_komoditas_id')) }}">
 
                                     </select>
+                                    @error('s2_komoditas_id')
+                                    <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
                                 </div>
                                 <div class="col-12 col-lg-3">
                                     <label for="s2_varietas_id">Varietas: <span class="text-danger">*</span></label>
@@ -250,15 +250,8 @@
                                         disabled>
 
                                     </select>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="s2_jenis_tanaman">Jenis Tanaman: <span
-                                            class="text-danger">*</span></label>
-                                    <input name="s2_jenis_tanaman" id="s2_jenis_tanaman" type="text"
-                                        class="form-control {{ $errors->has('s2_jenis_tanaman') ? 'is-invalid' : '' }}"
-                                        value="{{ isset($data['s2_jenis_tanaman']) ? $data['s2_jenis_tanaman'] : old('s2_jenis_tanaman') }}" />
-                                    @error('s2_jenis_tanaman')
-                                        <small class="text-danger"> {{ $message }} </small>
+                                    @error('s2_varietas_id')
+                                    <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                             </div>
@@ -269,7 +262,7 @@
                                         value="{{ isset($data['s2_tgl_panen']) ? \Carbon\Carbon::parse($data['s2_tgl_panen'])->format('m/d/Y') : old('s2_tgl_panen') }}" />
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="kelas_benih">Kelas Benih: <span class="text-danger">*</span></label>
+                                    <label for="kelas_benih">Kelas Benih:</label>
                                     <select class="form-control {{ $errors->has('kelas_benih') ? 'is-invalid' : '' }}"
                                         id="kelas_benih" name="kelas_benih" value="{{ @old('kelas_benih') }}">
                                     </select>
@@ -323,8 +316,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="s3_kelas_benih_id">Kelas Benih Asal: <span
-                                            class="text-danger">*</span></label>
+                                    <label for="s3_kelas_benih_id">Kelas Benih Asal: </label>
                                     <select
                                         class="form-control {{ $errors->has('s3_kelas_benih_id') ? 'is-invalid' : '' }}"
                                         id="s3_kelas_benih_id" name="s3_kelas_benih_id"
@@ -382,7 +374,7 @@
                             <h4>4. Kelas Benih Yang Dihasilkan : </h4>
                         </div>
                         <div class="col-lg-6">
-                            <label for="s2_kelas_benih_id">Kelas Benih: <span class="text-danger">*</span></label>
+                            <label for="s2_kelas_benih_id">Kelas Benih:</label>
                             <select class="form-control {{ $errors->has('s2_kelas_benih_id') ? 'is-invalid' : '' }}"
                                 id="s2_kelas_benih_id" name="s2_kelas_benih_id"
                                 value="{{ @old('s2_kelas_benih_id') ? @old('s2_kelas_benih_id') : (isset($data->s2_kelas_benih_id) ? $data->s2_kelas_benih_id : @old('s2_kelas_benih_id')) }}">
@@ -491,7 +483,7 @@
 @section('script')
     <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script>
-        const isUpdate = {{ isset($id) ? 'true' : 'false' }};
+        const isUpdate = {{ isset($id) ? 'true' : 'false' }}
         let produsen_alamat_temp = [];
         function initKomoditas(section, data = {
             komoditas_id: null,
@@ -561,6 +553,7 @@
             })
 
             if (data.komoditas_id) {
+                selector_varietas.prop("disabled", false);
                 $.ajax({
                     url: "/master/komoditas?where=id=" + data.komoditas_id,
                     type: 'GET',
@@ -573,7 +566,7 @@
                 });
             }
 
-            if (isUpdate) {
+            if (isUpdate || data.varietas_id) {
                 $.ajax({
                     url: "/master/varietas?where=id=" + data.varietas_id,
                     type: 'GET',
@@ -700,9 +693,10 @@
         }
 
         $(document).ready(function() {
-            let produsen_id = {{ $userId }};
+            let produsen_id = {{ $userId }}
 
             if (!isUpdate) {
+                // ketika data old ada
                 const komValue1 =
                     {{ @old('s1_komoditas_id') ?? 'null' }}
                 const varValue1 =
@@ -718,13 +712,11 @@
                     {{ @old('s3_kelas_benih_id') ?? 'null' }}
                 const kelasBenihValue3 =
                     {{ @old('s2_kelas_benih_id') ?? 'null' }}
-                    
+
                 const produsenValue =
                     {{ @old('s1_produsen_id') ?? 'null' }}
                 const produsenAlamatValue =
                     {{ @old('s1_produsen_alamat_id') ?? 'null' }}
-                
-                
 
                 initKomoditas('s1', {
                     komoditas_id: komValue1,

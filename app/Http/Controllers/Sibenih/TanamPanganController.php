@@ -46,10 +46,25 @@ class TanamPanganController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $userId = \Auth::user()->id;
+
+        return view('pages.sibenih.tanamPangan.form', [
+            'userId' => $userId
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function store(Request $request)
+    {
+        $s1_nomor_antrian = '';
+
         $tanampangan = TanamPangan::all()->count();
         $depan = 'BTP';
 
@@ -62,29 +77,13 @@ class TanamPanganController extends Controller
             } else {
                 $nol = '';
             }
-            $nomer_antrian = $depan . $nol . $number;
+            $s1_nomor_antrian = $depan . $nol . $number;
         } else {
-            $nomer_antrian = $depan . '001';
+            $s1_nomor_antrian = $depan . '001';
         }
 
-        $userId = \Auth::user()->id;
-
-        return view('pages.sibenih.tanamPangan.form', [
-            'nomer_antrian' => $nomer_antrian,
-            'userId' => $userId
-        ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
         $validator = Validator::make($request->all(), [
-            "s1_nomor_antrian" => 'string|max:255|required',
+            // "s1_nomor_antrian" => 'string|max:255|required',
             "s1_nomor_surat" => "string|max:255",
             "s1_nomor_lapangan" => "max:255",
             "s1_block" => "required",
@@ -96,17 +95,34 @@ class TanamPanganController extends Controller
             "s1_produsen_alamat_id" => "required",
             "s2_komoditas_id" => "required",
             "s2_varietas_id" => "required",
-            "s2_jenis_tanaman" => "required",
             "s2_tgl_panen" => "nullable|date|string",
             "s3_produsen" => "required",
-            "s3_kelas_benih_id" => "required",
+            "s3_kelas_benih_id" => "nullable",
             "s3_no_kel_benih" => "required",
             "s3_no_label_sumber" => "required",
             "s3_jml_benih" => "required",
-            "s2_kelas_benih_id" => "required",
+            "s2_kelas_benih_id" => "nullable",
             "kelas_benih" => "required",
             "tahun_musim" => "required",
             "status" => "string",
+        ], [
+            's1_nomor_surat.max:255' => 'Nomor surat not more than 255 characters',
+            's1_nomor_lapangan.max:255' => 'Nomor lapangan not more than 255 characters',
+            'block.required' => 'The block field is required',
+            "s1_luas_tanah.required" => 'The luas tanah field is required',
+            "s1_musim_tanam.required" => "The musim tanam field is required",
+            "s1_komoditas_id.required" => "The komoditas field is required",
+            "s1_varietas_id.required" => "The varietas field is required",
+            "s1_produsen_id.required" => "The produsen field is required",
+            "s1_produsen_alamat_id.required" => "The produsen alamat field is required",
+            "s2_komoditas_id.required" => "The komoditas field is required",
+            "s2_varietas_id.required" => "The varietas field is required",
+            "s3_produsen.required" => "The produsen field is required",
+            "s3_no_kel_benih.required" => "The nomor kelompok benih field is required",
+            "s3_no_label_sumber.required" => "The no label sumber field is required",
+            "s3_jml_benih.required" => "The jumlah benih field is required",
+            "kelas_benih.required" => "The kelas benih field is required",
+            "tahun_musim.required" => "The tahun musim field is required",
         ]);
 
         if ($validator->fails()) {
@@ -121,6 +137,7 @@ class TanamPanganController extends Controller
             's6_label_benih', 's6_dena_lokasi', 's6_surat_rekom',
             's6_surat_pengantar', 's1_alamat', 'judul'
         ]);
+        $input['s1_nomor_antrian'] = $s1_nomor_antrian;
 
         if ($request->hasfile('s6_ttd')) {
             $fullpath = upload_file('s6_ttd', 'sibenih/tanampangan/s6_ttd');
@@ -232,14 +249,13 @@ class TanamPanganController extends Controller
             "s1_produsen_alamat_id" => "required",
             "s2_komoditas_id" => "required",
             "s2_varietas_id" => "required",
-            "s2_jenis_tanaman" => "required",
             "s2_tgl_panen" => "nullable|date|string",
             "s3_produsen" => "required",
-            "s3_kelas_benih_id" => "required",
+            "s3_kelas_benih_id" => "nullable",
             "s3_no_kel_benih" => "required",
             "s3_no_label_sumber" => "required",
             "s3_jml_benih" => "required",
-            "s2_kelas_benih_id" => "required",
+            "s2_kelas_benih_id" => "nullable",
         ]);
 
         $input = Arr::except($request->all(), [

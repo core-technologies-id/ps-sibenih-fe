@@ -54,7 +54,7 @@
                             <i class="flaticon2-avatar text-primary"></i>
                         </span>
                         <h3 class="card-label">
-                            {{ isset($id) ? 'Ubah Data Produsen Alamat ' : 'Input Data Produsen Alamat' }}
+                            {{ isset($id) ? 'Ubah Master Data Alamat ' : 'Input Master Data Alamat' }}
                         </h3>
                     </div>
                 </div>
@@ -62,16 +62,25 @@
                     <div class="row">
                         <div class="col-lg-6 mt-5">
                             <label for="s1_produsen_id">Nama Perusahaan :</label>
-                            <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
-                                id="s1_produsen_id" name="s1_produsen_id"
-                                value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}">
-                                <option value="">-- Pilih Perusahaan --</option>
+                            {{-- <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
+                                id="s1_produsen_id" name="s1_produsen_id">
+
                                 @foreach ($produsens as $produsen)
+                                    @if (auth()->user()->nama_pt == $produsen->nama_pt)
+                                        <option value="{{ $produsen->id }}" selected>
+                                            {{ $produsen->nama_pt }}
+                                        </option>
+                                    @endif
                                     <option value="{{ $produsen->id }}"
                                         {{ option_selected(@old('s1_produsen_id'), $data->s1_produsen_id ?? null, $produsen->id) }}>
                                         {{ $produsen->nama_pt }}
                                     </option>
                                 @endforeach
+                            </select> --}}
+                            <select
+                                value="{{ isset($data['s1_produsen_id']) ? $data['s1_produsen_id'] : old('s1_produsen_id') }}"
+                                class="form-control select2-get-produsen {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
+                                name="s1_produsen_id" id="s1_produsen_id">
                             </select>
                             @error('s1_produsen_id')
                                 <small class="text-danger"> {{ $message }} </small>
@@ -166,6 +175,31 @@
                     }
                 }
             });
+
+            // GET PRODUSEN
+            $('.select2-get-produsen').select2({
+                theme: "bootstrap",
+                allowClear: true,
+                placeholder: 'Select Perusahaan',
+                ajax: {
+                    url: '/master/produsen',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama_pt'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama_pt LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    },
+                }
+            });
+
+            // $('.select2-get-produsen').val('{{ auth()->user()->nama_pt }}').trigger('change');
 
             $('.select2-get-regencies')
                 .on('select2:clear', () => {
