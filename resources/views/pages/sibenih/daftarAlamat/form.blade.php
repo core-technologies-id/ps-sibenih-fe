@@ -7,7 +7,7 @@
     <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
         <div class="container">
             <div class="page-title">
-                <h1>Daftar Alamat</h1>
+                <h1>Master Alamat Produksi</h1>
             </div>
             <div class="breadcrumb">
                 <ul>
@@ -15,7 +15,7 @@
                         <a href="#">Home</a>
                     </li>
                     <li>
-                        <a href="#">Daftar Alamat</a>
+                        <a href="#">Master Alamat Produksi</a>
                     </li>
                     <li class="active">
                         <a href="#">Create</a>

@@ -102,7 +102,7 @@ class TanamPanganController extends Controller
             "s3_no_label_sumber" => "required",
             "s3_jml_benih" => "required",
             "s2_kelas_benih_id" => "nullable",
-            "kelas_benih" => "required",
+            "kelas_benih" => "nullable",
             "tahun_musim" => "required",
             "status" => "string",
         ], [
@@ -121,7 +121,6 @@ class TanamPanganController extends Controller
             "s3_no_kel_benih.required" => "The nomor kelompok benih field is required",
             "s3_no_label_sumber.required" => "The no label sumber field is required",
             "s3_jml_benih.required" => "The jumlah benih field is required",
-            "kelas_benih.required" => "The kelas benih field is required",
             "tahun_musim.required" => "The tahun musim field is required",
         ]);
 
