@@ -85,7 +85,7 @@
                              <li class="dropdown"><a href="#">TANAMPANGAN</a>
                                  <ul class="dropdown-menu">
                                      <li><a href="{{ route('tanampangan.index') }}">DAFTAR PERMOHONAN</a></li>
-                                     <li><a href="{{ route('daftaralamat.index') }}">DAFTAR ALAMAT</a></li>
+                                     <li><a href="{{ route('daftaralamat.index') }}">MASTER ALAMAT PRODUKSI</a></li>
                                      <li><a href="{{ route('tanampangan.create') }}">PERMOHONAN</a></li>
                                  </ul>
                              </li>
