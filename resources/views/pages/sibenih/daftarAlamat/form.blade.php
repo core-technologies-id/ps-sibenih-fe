@@ -62,23 +62,8 @@
                     <div class="row">
                         <div class="col-lg-6 mt-5">
                             <label for="s1_produsen_id">Nama Perusahaan :</label>
-                            {{-- <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
-                                id="s1_produsen_id" name="s1_produsen_id">
-
-                                @foreach ($produsens as $produsen)
-                                    @if (auth()->user()->nama_pt == $produsen->nama_pt)
-                                        <option value="{{ $produsen->id }}" selected>
-                                            {{ $produsen->nama_pt }}
-                                        </option>
-                                    @endif
-                                    <option value="{{ $produsen->id }}"
-                                        {{ option_selected(@old('s1_produsen_id'), $data->s1_produsen_id ?? null, $produsen->id) }}>
-                                        {{ $produsen->nama_pt }}
-                                    </option>
-                                @endforeach
-                            </select> --}}
                             <select
-                                value="{{ isset($data['s1_produsen_id']) ? $data['s1_produsen_id'] : old('s1_produsen_id') }}"
+                                value="{{ isset($data['s1_produsen_id']) ? $data['s1_produsen_id'] : old('s1_produsen_id') ?? $userId }}"
                                 class="form-control select2-get-produsen {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
                                 name="s1_produsen_id" id="s1_produsen_id">
                             </select>
@@ -147,6 +132,7 @@
     <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script type="text/javascript">
         const isUpdate = {{ isset($id) ? 'true' : 'false' }}
+        const userId = {{ isset($data->s1_produsen_id) ? $data->s1_produsen_id : $userId }}
 
         $(document).ready(function() {
             let regency_id = null
@@ -286,6 +272,26 @@
             });
         });
 
+        function companyHelper(value) {
+            const inp1 = $('#s1_produsen_id')
+            inp1.prop("disabled", true);
+            $.ajax({
+                url: "/master/produsen?where=id=" + value,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    data.results.forEach((el) => {
+                        if (el.id === value) {
+                            inp1.append(new Option(el.text, el.id, true, true))
+                        } else {
+                            inp1.append(new Option(el.text, el.id))
+                        }
+                    })
+                    inp1.prop("disabled", false);
+                }
+            });
+        }
+
         function kabupatenHelper(value) {
             const inp1 = $('#s2_kabupaten_id')
             inp1.prop("disabled", true);
@@ -356,10 +362,14 @@
             });
         }
 
+
         if (isUpdate) {
             const kabValue =
-                {{ isset($data->s2_kabupaten_id) ? $data->s2_kabupaten_id : @old('s2_kabupaten_id') ?? 'null' }};
+                {{ isset($data->s2_kabupaten_id) ? $data->s2_kabupaten_id : @old('s2_kabupaten_id') ?? 'null' }}
+            companyHelper(userId)
             kabupatenHelper(kabValue);
+        } else {
+            companyHelper(userId)
         }
     </script>
 @endsection
