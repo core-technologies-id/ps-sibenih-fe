@@ -7,7 +7,7 @@
     <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
         <div class="container">
             <div class="page-title">
-                <h1>Daftar Alamat</h1>
+                <h1>Master Alamat Produksi</h1>
             </div>
             <div class="breadcrumb">
                 <ul>
@@ -15,7 +15,7 @@
                         <a href="#">Home</a>
                     </li>
                     <li>
-                        <a href="#">Daftar Alamat</a>
+                        <a href="#">Master Alamat Produksi</a>
                     </li>
                     <li class="active">
                         <a href="#">Create</a>
@@ -54,7 +54,7 @@
                             <i class="flaticon2-avatar text-primary"></i>
                         </span>
                         <h3 class="card-label">
-                            {{ isset($id) ? 'Ubah Data Produsen Alamat ' : 'Input Data Produsen Alamat' }}
+                            {{ isset($id) ? 'Ubah Master Data Alamat ' : 'Input Master Data Alamat' }}
                         </h3>
                     </div>
                 </div>
@@ -62,16 +62,10 @@
                     <div class="row">
                         <div class="col-lg-6 mt-5">
                             <label for="s1_produsen_id">Nama Perusahaan :</label>
-                            <select class="form-control {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
-                                id="s1_produsen_id" name="s1_produsen_id"
-                                value="{{ @old('s1_produsen_id') ? @old('s1_produsen_id') : (isset($data->s1_produsen_id) ? $data->s1_produsen_id : @old('s1_produsen_id')) }}">
-                                <option value="">-- Pilih Perusahaan --</option>
-                                @foreach ($produsens as $produsen)
-                                    <option value="{{ $produsen->id }}"
-                                        {{ option_selected(@old('s1_produsen_id'), $data->s1_produsen_id ?? null, $produsen->id) }}>
-                                        {{ $produsen->nama_pt }}
-                                    </option>
-                                @endforeach
+                            <select
+                                value="{{ isset($data['s1_produsen_id']) ? $data['s1_produsen_id'] : old('s1_produsen_id') ?? $userId }}"
+                                class="form-control select2-get-produsen {{ $errors->has('s1_produsen_id') ? 'is-invalid' : '' }}"
+                                name="s1_produsen_id" id="s1_produsen_id">
                             </select>
                             @error('s1_produsen_id')
                                 <small class="text-danger"> {{ $message }} </small>
@@ -138,6 +132,7 @@
     <script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
     <script type="text/javascript">
         const isUpdate = {{ isset($id) ? 'true' : 'false' }}
+        const userId = {{ isset($data->s1_produsen_id) ? $data->s1_produsen_id : $userId }}
 
         $(document).ready(function() {
             let regency_id = null
@@ -166,6 +161,31 @@
                     }
                 }
             });
+
+            // GET PRODUSEN
+            $('.select2-get-produsen').select2({
+                theme: "bootstrap",
+                allowClear: true,
+                placeholder: 'Select Perusahaan',
+                ajax: {
+                    url: '/master/produsen',
+                    data: function(params) {
+                        const query = {
+                            idField: 'id',
+                            displayField: 'nama_pt'
+                        }
+
+                        if (params.term) {
+                            query.where = `nama_pt LIKE '%${params.term}%'`
+                        }
+
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    },
+                }
+            });
+
+            // $('.select2-get-produsen').val('{{ auth()->user()->nama_pt }}').trigger('change');
 
             $('.select2-get-regencies')
                 .on('select2:clear', () => {
@@ -252,6 +272,26 @@
             });
         });
 
+        function companyHelper(value) {
+            const inp1 = $('#s1_produsen_id')
+            inp1.prop("disabled", true);
+            $.ajax({
+                url: "/master/produsen?where=id=" + value,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    data.results.forEach((el) => {
+                        if (el.id === value) {
+                            inp1.append(new Option(el.text, el.id, true, true))
+                        } else {
+                            inp1.append(new Option(el.text, el.id))
+                        }
+                    })
+                    inp1.prop("disabled", false);
+                }
+            });
+        }
+
         function kabupatenHelper(value) {
             const inp1 = $('#s2_kabupaten_id')
             inp1.prop("disabled", true);
@@ -322,10 +362,14 @@
             });
         }
 
+
         if (isUpdate) {
             const kabValue =
-                {{ isset($data->s2_kabupaten_id) ? $data->s2_kabupaten_id : @old('s2_kabupaten_id') ?? 'null' }};
+                {{ isset($data->s2_kabupaten_id) ? $data->s2_kabupaten_id : @old('s2_kabupaten_id') ?? 'null' }}
+            companyHelper(userId)
             kabupatenHelper(kabValue);
+        } else {
+            companyHelper(userId)
         }
     </script>
 @endsection
