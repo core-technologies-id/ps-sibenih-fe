@@ -7,6 +7,7 @@ use App\Models\Sibenih\Master\ProdusenAlamat;
 use App\Models\Sibenih\Produsen;
 use App\Models\Sibenih\Master\Kabupaten;
 use App\Models\Sibenih\Master\Kecamatan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Yajra\DataTables\DataTables;
@@ -100,10 +101,8 @@ class DaftarAlamatController extends Controller
      */
     public function create()
     {
-        $produsens = $this->modelProdusen->get();
-        $kecamatans = $this->modelKecamatan->get();
-        $kabupatens = $this->modelKabupaten->get();
-        return view('pages.sibenih.daftarAlamat.form', compact('produsens', 'kecamatans', 'kabupatens'));
+        $userId = Auth::user()->id;
+        return view('pages.sibenih.daftarAlamat.form', compact('userId'));
     }
 
     /**
@@ -158,9 +157,7 @@ class DaftarAlamatController extends Controller
      */
     public function edit($id)
     {
-        $produsens = $this->modelProdusen->get();
-        $kecamatans = $this->modelKecamatan->get();
-        $kabupatens = $this->modelKabupaten->get();
+        $userId = Auth::user()->id;
         $data = $this->mainModel
             ->select(
                 'sibenih_mas_produsen_alamat.*',
@@ -175,7 +172,7 @@ class DaftarAlamatController extends Controller
             ->join('master_villages as desa', 'desa.id', '=', 'sibenih_mas_produsen_alamat.s2_desa_id')
             ->where('sibenih_mas_produsen_alamat.id', $id)->first();
 
-        return view('pages.sibenih.daftarAlamat.form', compact('produsens', 'kecamatans', 'kabupatens'))->withId($id)->withData($data);
+        return view('pages.sibenih.daftarAlamat.form', compact('userId'))->withId($id)->withData($data);
     }
 
     /**

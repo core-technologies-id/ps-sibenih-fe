@@ -23,9 +23,10 @@ class ProdusenController extends Controller
 
         $newResponse = [];
         foreach ($list as $li) {
+            
             $newResponse[] = [
                 'id' => $li->{$idField},
-                'text' => $li->{$displayField}
+                'text' => $li->{$displayField},
             ];
         }
 

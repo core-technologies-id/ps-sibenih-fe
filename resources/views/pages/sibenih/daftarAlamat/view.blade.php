@@ -7,7 +7,7 @@
     <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
         <div class="container">
             <div class="page-title">
-                <h1>Daftar Alamat</h1>
+                <h1>Master Alamat Produksi</h1>
             </div>
             <div class="breadcrumb">
                 <ul>
@@ -15,7 +15,7 @@
                         <a href="#">Home</a>
                     </li>
                     <li class="active">
-                        <a href="#">Daftar Alamat</a>
+                        <a href="#">Master Alamat Produksi</a>
                     </li>
                 </ul>
             </div>
@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row justify-content-between mb-3">
                 <div class="col-lg-6">
-                    <h4>DAFTAR ALAMAT</h4>
+                    <h4>Master Alamat Produksi</h4>
                 </div>
                 <div class="col-md-2">
                     <a href="{{ route('daftaralamat.create') }}" class="btn btn-primary d-block"><i
