@@ -17,6 +17,13 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('r
 Route::get('/detail-news/{id}', [\App\Http\Controllers\HomeController::class, 'detail_news']);
 Route::get('/semua-berita', [\App\Http\Controllers\HomeController::class, 'all_news']);
 
+Route::get('/get_komoditas', [\App\Http\Controllers\HomeController::class, 'get_komoditas']);
+Route::get('/get_kelas_benih', [\App\Http\Controllers\HomeController::class, 'get_kelas_benih']);
+Route::get('/get_varietas', [\App\Http\Controllers\HomeController::class, 'get_varietas']);
+Route::get('/get_kota', [\App\Http\Controllers\HomeController::class, 'get_kota']);
+
+Route::post('/search_produk', [\App\Http\Controllers\HomeController::class, 'search_produk']);
+
 Route::get('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPerbenihan\KetersediaanBenihController::class, 'index'])->name('InfoPerbenihan.KetersediaanBenih');
 Route::post('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPerbenihan\KetersediaanBenihController::class, 'search'])->name('InfoPerbenihan.KetersediaanBenih.search');
 Route::get('/info-perbenihan/laporan-penyaluran-benih', function () {
