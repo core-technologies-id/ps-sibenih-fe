@@ -22,7 +22,7 @@ Route::get('/get_kelas_benih', [\App\Http\Controllers\HomeController::class, 'ge
 Route::get('/get_varietas', [\App\Http\Controllers\HomeController::class, 'get_varietas']);
 Route::get('/get_kota', [\App\Http\Controllers\HomeController::class, 'get_kota']);
 
-Route::post('/search_produk', [\App\Http\Controllers\HomeController::class, 'search_produk']);
+Route::post('/search_stok_benih', [\App\Http\Controllers\HomeController::class, 'search_produk']);
 
 Route::get('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPerbenihan\KetersediaanBenihController::class, 'index'])->name('InfoPerbenihan.KetersediaanBenih');
 Route::post('/info-perbenihan/ketersediaan-benih', [\App\Http\Controllers\InfoPerbenihan\KetersediaanBenihController::class, 'search'])->name('InfoPerbenihan.KetersediaanBenih.search');

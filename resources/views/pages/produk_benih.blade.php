@@ -6,7 +6,7 @@
 <section id="page-title" class="text-light" data-bg-parallax="/assets/images/info-perbenihan/ketersediaan-benih/6.jpg">
     <div class="container">
         <div class="page-title">
-            <h1>Daftar Produk Benih</h1>
+            <h1>Daftar Stok Benih</h1>
         </div>
         <div class="breadcrumb">
             <ul>
@@ -14,7 +14,7 @@
                     <a href="#">Home</a>
                 </li>
                 <li class="active">
-                    <a href="#">Daftar Produk Benih</a>
+                    <a href="#">Daftar Stok Benih</a>
                 </li>
             </ul>
         </div>

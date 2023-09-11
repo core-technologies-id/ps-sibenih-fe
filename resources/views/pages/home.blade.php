@@ -54,7 +54,7 @@
                         <h2>Pencarian Produk</h2>
                         <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
                     </div>
-                        <form action="/search_produk" method="post">
+                        <form action="/search_stok_benih" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-6">
@@ -85,7 +85,9 @@
                                     <label for="tgl_sampai">Tanggal Sampai</label>
                                     <input type="text" class="form-control" id="tgl_sampai" name="tgl_sampai" data-provide="datepicker"/>
                                 </div>
-                                <button type="submit" class="btn btn-success mt-5 px-2">Cari Disini</button>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-success mt-5 px-2 normal-case">Cari Disini</button>
+                                </div>
                             </div>
                         </form>
                 </div>
