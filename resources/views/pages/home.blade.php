@@ -1,5 +1,8 @@
 @extends('layouts.main')
 @section('style')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" integrity="sha512-kq3FES+RuuGoBW3a9R2ELYKRywUEQv0wvPTItv3DSGqjpbNtGWVdvT8qwdKkqvPzT93jp8tSF4+oN4IeTEIlQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 @endsection
 {{-- @dd($news) --}}
 @section('content')
@@ -39,6 +42,58 @@
         </div>
 
     </div>
+
+    <section class="background-grey">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="/assets/images/pertanian.jpeg" class="rounded" width="500" alt="Pertanian">
+                </div>
+                <div class="col-lg-6">
+                    <div class="heading-text heading-section">
+                        <h2>Pencarian Produk</h2>
+                        <!-- <p>Lorem ipsum dolor sit amet, consecte adipiscing elit. Suspendisse condimentum porttitor cursumus.</p> -->
+                    </div>
+                        <form action="/search_stok_benih" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="komoditas">Komoditas</label>
+                                    <select class="form-control form-control" data-width="100%" name="komoditas_id" id="komoditas">
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="kelas_benih">Kelas Benih</label>
+                                    <select class="form-control" data-width="100%" name="kelas_benih_id" id="kelas_benih">
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="varietas">Varietas</label>
+                                    <select class="form-control" data-width="100%" name="varietas_id" id="varietas">
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="kota">Kota</label>
+                                    <select class="form-control" data-width="100%" name="kota" id="kota">
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="tgl_mulai">Tanggal Mulai</label>
+                                    <input type="text" class="form-control" id="tgl_mulai" name="tgl_mulai" data-provide="datepicker"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="tgl_sampai">Tanggal Sampai</label>
+                                    <input type="text" class="form-control" id="tgl_sampai" name="tgl_sampai" data-provide="datepicker"/>
+                                </div>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-success mt-5 px-2 normal-case">Cari Disini</button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="welcome" class="p-b-0">
         <div class="container">
@@ -384,4 +439,109 @@
 
         </div>
     </section>
+@endsection
+@section('script')
+<script src="{{ asset('assets/js/pages/crud/forms/widgets/select2.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src='{{ asset('assets/plugins/datatables/datatables.min.js') }}'></script>
+<script type="text/javascript">
+    $('#komoditas').select2({
+        theme: "bootstrap",
+        placeholder: 'Pilih Komoditas',
+        allowClear: true,
+        ajax: {
+            url: '/get_komoditas',
+            data: function(params) {
+                const query = {
+                    idField: 'id',
+                    displayField: 'nama'
+                }
+
+                if (params.term) {
+                    query.where = `nama LIKE '%${params.term}%'`
+                }
+
+                // Query parameters will be ?search=[term]&page=[page]
+                return query;
+            }
+        }
+    })
+
+    $('#kelas_benih').select2({
+        theme: "bootstrap",
+        placeholder: 'Pilih Kelas Benih',
+        allowClear: true,
+        ajax: {
+            url: '/get_kelas_benih',
+            data: function(params) {
+                const query = {
+                    idField: 'id',
+                    displayField: 'nama'
+                }
+
+                if (params.term) {
+                    query.where = `nama LIKE '%${params.term}%'`
+                }
+
+                // Query parameters will be ?search=[term]&page=[page]
+                return query;
+            }
+        }
+    })
+
+    $('#varietas').select2({
+        theme: "bootstrap",
+        placeholder: 'Pilih Varietas',
+        allowClear: true,
+        ajax: {
+            url: '/get_varietas',
+            data: function(params) {
+                const query = {
+                    idField: 'id',
+                    displayField: 'nama'
+                }
+
+                if (params.term) {
+                    query.where = `nama LIKE '%${params.term}%'`
+                }
+
+                // Query parameters will be ?search=[term]&page=[page]
+                return query;
+            }
+        }
+    })
+
+    $('#kota').select2({
+        theme: "bootstrap",
+        placeholder: 'Pilih Varietas',
+        allowClear: true,
+        ajax: {
+            url: '/get_kota',
+            data: function(params) {
+                const query = {
+                    idField: 'nama',
+                    displayField: 'nama'
+                }
+
+                if (params.term) {
+                    query.where = `nama LIKE '%${params.term}%'`
+                }
+
+                // Query parameters will be ?search=[term]&page=[page]
+                return query;
+            }
+        }
+    })
+
+    $(document).ready(function () {
+        $('#tgl_mulai').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+        $('#tgl_sampai').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+    });
+</script>
 @endsection
