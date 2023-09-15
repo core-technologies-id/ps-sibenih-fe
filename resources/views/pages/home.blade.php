@@ -9,7 +9,7 @@
     <div id="slider" class="inspiro-slider slider-fullscreen dots-creative" data-fade="true">
 
 
-        <div class="slide kenburns" data-bg-image="/assets/images/home/main-banner/ramadhani-rafid-XMSUfFloaHU-unsplash.webp">
+        <div class="slide kenburns" data-bg-image="/assets/images/home/main-banner/sibenih1.webp">
             <div class="bg-overlay"></div>
             <div class="container">
                 <div class="slide-captions text-left text-light">
@@ -25,7 +25,7 @@
         </div>
 
         <div class="slide kenburns"
-            data-bg-image="/assets/images/home/main-banner/afif-ramdhasuma-pG-Ajs3q0Co-unsplash.webp">
+            data-bg-image="/assets/images/home/main-banner/sibenih2.webp">
             <div class="bg-overlay"></div>
             <div class="container">
                 <div class="slide-captions text-center text-light">
@@ -36,6 +36,21 @@
                     </p>
                     <div><a href="#welcome" class="btn btn-light scroll-to">Kontak Kami</a></div>
                     </span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="slide kenburns" data-bg-image="/assets/images/home/main-banner/sibenih3.webp">
+            <div class="bg-overlay"></div>
+            <div class="container">
+                <div class="slide-captions text-right text-light">
+
+                    <h1>Si-Benih</h1>
+                    <p class="text-small">
+                        Sistem Informasi Sarana & Prasarana Perbenihan
+                    </p>
+                    <div><a href="#welcome" class="btn btn-light scroll-to">Kontak Kami</a></div>
 
                 </div>
             </div>
