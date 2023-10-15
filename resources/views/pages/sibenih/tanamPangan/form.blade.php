@@ -170,15 +170,16 @@
                                         id="tahun_musim" name="tahun_musim" value="{{ @old('tahun_musim') }}">
                                         <option value="">-- Pilih Tahun --</option>
                                         @php
+                                            $selectedYear = old('tahun_musim');
                                             $year = now()->year - 10;
                                         @endphp
                                         @for ($i = $year; $i < $year + 10; $i++)
-                                            <option value="{{ $i }}">
+                                            <option value="{{ $i }}" {{ $selectedYear == $i ? 'selected' : '' }}>
                                                 {{ $i }}
                                             </option>
                                         @endfor
                                         @for ($i = now()->year; $i < now()->year + 10; $i++)
-                                            <option value="{{ $i }}">
+                                            <option value="{{ $i }}" {{ $selectedYear == $i ? 'selected' : '' }}>
                                                 {{ $i }}
                                             </option>
                                         @endfor
@@ -278,8 +279,8 @@
                                         class="form-control form-control {{ $errors->has('s7_pemeriksaan_lapangan') ? 'is-invalid' : '' }}"
                                         id="s7_pemeriksaan_lapangan" name="s7_pemeriksaan_lapangan"
                                         value="{{ @old('s7_pemeriksaan_lapangan') }}">
-                                        <option value="Lulus">Lulus</option>
-                                        <option value="Tidak Lulus">Tidak Lulus</option>
+                                        <option value="Lulus" @if(old('s7_pemeriksaan_lapangan') === 'Lulus') selected @endif>Lulus</option>
+                                        <option value="Tidak Lulus" @if(old('s7_pemeriksaan_lapangan') === 'Tidak Lulus') selected @endif>Tidak Lulus</option>
                                     </select>
                                     @error('s7_pemeriksaan_lapangan')
                                         <small class="text-danger"> {{ $message }} </small>
@@ -291,8 +292,8 @@
                                         class="form-control form-control {{ $errors->has('s7_disertifikasi') ? 'is-invalid' : '' }}"
                                         id="s7_disertifikasi" name="s7_disertifikasi"
                                         value="{{ @old('s7_disertifikasi') }}">
-                                        <option value="Ya">Ya</option>
-                                        <option value="Tidak">Tidak</option>
+                                        <option value="Ya" @if(old('s7_disertifikasi') === 'Ya') selected @endif>Ya</option>
+                                        <option value="Tidak" @if(old('s7_disertifikasi') === 'Tidak') selected @endif>Tidak</option>
                                     </select>
                                     @error('s7_disertifikasi')
                                         <small class="text-danger"> {{ $message }} </small>
@@ -310,13 +311,14 @@
                                 <div class="col-lg-6">
                                     <label for="s3_produsen">Produsen: <span class="text-danger">*</span></label>
                                     <input name="s3_produsen" id="s3_produsen" type="text" class="form-control"
-                                        value="{{ isset($data['s3_produsen']) ? $data['s3_produsen'] : old('s3_no_label_sumber') }}" />
+                                        value="{{ isset($data['s3_produsen']) ? $data['s3_produsen'] : old('s3_produsen') }}" />
                                     @error('s3_produsen')
                                         <small class="text-danger"> {{ $message }} </small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="s3_kelas_benih_id">Kelas Benih Asal: </label>
+                                    <label for="s3_kelas_benih_id">Kelas Benih Asal: <span
+                                            class="text-danger">*</span></label>
                                     <select
                                         class="form-control {{ $errors->has('s3_kelas_benih_id') ? 'is-invalid' : '' }}"
                                         id="s3_kelas_benih_id" name="s3_kelas_benih_id"
@@ -339,7 +341,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="s3_no_label_sumber">No. Seri Label Benih: </label>
+                                    <label for="s3_no_label_sumber">No. Seri Label Benih: <span
+                                            class="text-danger">*</span></label>
                                     <input name="s3_no_label_sumber" id="s3_no_label_sumber" type="text"
                                         class="form-control"
                                         value="{{ isset($data['s3_no_label_sumber']) ? $data['s3_no_label_sumber'] : old('s3_no_label_sumber') }}" />
@@ -587,8 +590,10 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    $('#nama_pimpinan').val(data[0].nama_pimpinan);
-                    $('#alamat_lengkap_usaha').val(data[0].alamat_usaha);
+                    if (data.length) {
+                        $('#nama_pimpinan').val(data[0].nama_pimpinan);
+                        $('#alamat_lengkap_usaha').val(data[0].alamat_usaha);
+                    }
                 }
             })
         }
