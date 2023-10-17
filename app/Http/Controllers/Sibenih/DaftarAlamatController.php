@@ -75,20 +75,20 @@ class DaftarAlamatController extends Controller
 
     public function index()
     {
+        $userId = Auth::user()->id;
         $daftarAlamats = ProdusenAlamat::join('master_regencies as kabupaten', 'kabupaten.id', '=', 'sibenih_mas_produsen_alamat.s2_kabupaten_id')
             ->join('master_districts as kecamatan', 'kecamatan.id', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
             ->join('master_villages as desa', 'desa.id', '=', 'sibenih_mas_produsen_alamat.s2_desa_id')
             ->join('sibenih_produsen as produsen', 'produsen.id', '=', 'sibenih_mas_produsen_alamat.s1_produsen_id')
-            ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_mas_produsen_alamat.admin_id')
             ->select(
                 'sibenih_mas_produsen_alamat.*',
                 'produsen.nama_pt as produsen_nama_pt',
-                'user.name as admin_name',
                 'kabupaten.name as kabupaten',
                 'kecamatan.name as kecamatan',
                 'desa.name as desa',
             )->where('s1_produsen_id', auth()->user()->id)
             ->get();
+
         return view('pages.sibenih.daftarAlamat.view', [
             'daftarAlamats' => $daftarAlamats
         ]);

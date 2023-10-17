@@ -60,7 +60,6 @@
                                 <th>Desa</th>
                                 <th>Kecamatan</th>
                                 <th>Kabupaten</th>
-                                <th>Petugas</th>
                                 <th>Tgl Input</th>
                                 <th>Action</th>
                             </tr>
@@ -74,7 +73,6 @@
                                     <td>{{ $item->desa }}</td>
                                     <td>{{ $item->kecamatan }}</td>
                                     <td>{{ $item->kabupaten }}</td>
-                                    <td>{{ isset($item->admin_name) ? $item->admin_name : '-' }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a href="{{ route('daftaralamat.edit', $item->id) }}" class="btn btn-warning"><i
