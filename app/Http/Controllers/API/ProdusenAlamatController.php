@@ -20,6 +20,7 @@ class ProdusenAlamatController extends Controller
             ->join('master_regencies as kabupaten', 'kabupaten.id', '=', 'sibenih_mas_produsen_alamat.s2_kabupaten_id')
             ->join('master_districts as kecamatan', 'kecamatan.id', '=', 'sibenih_mas_produsen_alamat.s2_kecamatan_id')
             ->join('master_villages as desa', 'desa.id', '=', 'sibenih_mas_produsen_alamat.s2_desa_id')
+            ->whereNull('deleted_at')
         ;
 
         $idField = $req->idField ?? 'id';
