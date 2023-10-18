@@ -28,14 +28,14 @@ class TanamPanganController extends Controller
         $tanamPangan = TanamPangan::join('sibenih_produsen as pro', 'pro.id', '=', 'sibenih_tanam_pangan.s1_produsen_id')
             ->join('sibenih_mas_varietas as var', 'var.id', '=', 'sibenih_tanam_pangan.s2_varietas_id')
             ->join('sibenih_mas_produsen_alamat as prodAlm', 'prodAlm.id', '=', 'sibenih_tanam_pangan.s1_produsen_alamat_id')
-            ->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
+            //->join('pentas_sitepat_user as user', 'user.id', '=', 'sibenih_tanam_pangan.admin_id')
             ->select(
                 'sibenih_tanam_pangan.*',
                 'pro.nama_pt as pro_nama_pt',
                 'pro.nama_pimpinan as pro_nama_pimpinan',
                 'var.nama as var_nama_varietas',
                 'prodAlm.s2_luas_tanah as luas_pertanaman',
-                'user.name as admin_name'
+                // 'user.name as admin_name'
             )
             ->where('sibenih_tanam_pangan.s1_produsen_id', \Auth::user()->id)
             ->get();
