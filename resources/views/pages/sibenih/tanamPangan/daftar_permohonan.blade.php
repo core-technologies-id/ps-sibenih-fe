@@ -77,7 +77,7 @@
                                 <td>{{ $item->pro_nama_pt }}</td>
                                 <td>{{ $item->s1_block }}</td>
                                 <td>{{ $item->pro_nama_pimpinan }}</td>
-                                <td>{{ $item->luas_pertanaman }}</td>
+                                <td>{{ $item->s1_luas_tanah }}</td>
                                 <td>{{ $item->var_nama_varietas }}</td>
                                 {{-- <td>
                                     @if ($item->status == 'draft')
