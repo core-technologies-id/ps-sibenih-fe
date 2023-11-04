@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sibenih;
 
+use Illuminate\Support\Facades\DB;
 use PDF;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
@@ -366,5 +367,123 @@ class TanamPanganController extends Controller
     {
         TanamPangan::destroy($id);
         return back()->with('flash_success', 'Data berhasil dihapus!');
+    }
+
+    public function api_get_all(Request $request)
+    {
+        $all =
+            DB::table('sibenih_tanam_pangan as main')
+                ->selectRaw('
+                    main.*,
+                    prod.id as produsen_id,
+                    prod.nama_pimpinan,
+                    prod.alamat_usaha,
+                    prod.nomor_rekomendasi as no_registrasi,
+                    komoditas1.nama as komoditas_pemohon,
+                    komoditas2.nama as komoditas_sebelumnya,
+                    var1.nama as varietas_sertifikasi,
+                    var2.nama as varietas_sebelumnya,
+                    district.name as kecamatan,
+                    regency.name as kabupaten,
+                    province.name as provinsi,
+                    kelas.nama as kelas_benih,
+                    kelas2.nama as kelas_benih_asal,
+                    mas_alamat.s1_alamat_lengkap as alamat_lengkap_produksi
+                ')
+                ->join('sibenih_produsen as prod', 'prod.id', '=', 'main.s1_produsen_id')
+                ->join('sibenih_mas_komoditas as komoditas1', 'komoditas1.id', '=', 'main.s1_komoditas_id')
+                ->join('sibenih_mas_komoditas as komoditas2', 'komoditas2.id', '=', 'main.s2_komoditas_id')
+                ->join('sibenih_mas_varietas as var1', 'var1.id', '=', 'main.s1_varietas_id')
+                ->join('sibenih_mas_varietas as var2', 'var2.id', '=', 'main.s2_varietas_id')
+                ->join('sibenih_mas_produsen_alamat as mas_alamat', 'mas_alamat.s1_produsen_id', '=', 'main.s1_produsen_id')
+                ->join('master_districts as district', 'district.id', '=', 'mas_alamat.s2_kecamatan_id')
+                ->join('master_regencies as regency', 'regency.id', '=', 'mas_alamat.s2_kabupaten_id')
+                ->join('master_provinces as province', 'province.id', '=', 'regency.province_id')
+                ->join('sibenih_mas_kelas as kelas', 'kelas.id', '=', 'main.s2_kelas_benih_id')
+                ->join('sibenih_mas_kelas as kelas2', 'kelas2.id', '=', 'main.s3_kelas_benih_id')
+                ->whereNull('main.deleted_at')
+        ;
+
+        $sortColumn = $request->input('sort_by', 'id');
+        $sortOrder = $request->input('order_by', 'ASC');
+        $all = $all->orderBy($sortColumn, $sortOrder);
+
+        if (isset($request->where)) {
+            $all = $all->whereRaw($request->where);
+        }
+
+        $all = $all->get();
+
+        $perPage = request('per_page', 25);
+        $page = request('page', 1);
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            $all->forPage($page, $perPage),
+            $all->count(),
+            $perPage,
+            $page,
+            ['path' => url('api/tanam-pangan')]
+        );
+
+        $transformedData = $paginator->map(function ($item) {
+            // Ubah format data sesuai kebutuhan
+            return [
+                "PRODUSEN_ID" => $item->produsen_id,
+                "INSTALASI_ID" => null,
+                "NO_REGISTRASI" => $item->no_registrasi,
+                "NOMOR_PEMOHON" => $item->s1_nomor_lapangan,
+                "PARAF_PEMOHON" => null,
+                "KEPADA_PEMOHON" => "Kepala BPSB Sumsel",
+                "DI_INSTALASI_PEMOHON" => "Palembang",
+                "MUSIM_TANAM_PEMOHON" => $item->s1_musim_tanam === 'asep' ? 'April - September' : 'Oktober - Maret',
+                "NOMOR_PERMOHONAN_PEMOHON" => $item->s1_nomor_lapangan,
+                "NAMA_PEMOHON" => $item->nama_pimpinan,
+                "ALAMAT_PEMOHON" => $item->alamat_usaha,
+                "LUAS_PERTANAMAN_SERTIFIKASI" => $item->s1_luas_tanah,
+                "KOMODITAS_PEMOHON" => $item->komoditas_pemohon,
+                "VARIETAS_SERTIFIKASI" => $item->varietas_sertifikasi,
+                "KELAS_BENIH_SERTIFIKASI" => $item->kelas_benih,
+                "TANGGAL_TEBAR_SERTIFIKASI" => $item->s2_tgl_tebar,
+                "TANGGAL_TANAM_SERTIFIKASI" => $item->s2_tgl_tanam,
+                "BLOK_LETAK_TANAH" => $item->s1_block,
+                "KAMPUNG_LETAK_TANAH" => null,
+                "DESA_LETAK_TANAH" => $item->alamat_lengkap_produksi,
+                "KECAMATAN_LETAK_TANAH" => $item->kecamatan,
+                "KABUPATEN_LETAK_TANAH" => $item->kabupaten,
+                "PROVINSI_LETAK_TANAH" => $item->provinsi,
+                "NAMA_DESA_LETAK_TANAH" => null,
+                "NAMA_KECAMATAN_LETAK_TANAH" => null,
+                "NAMA_KABUPATEN_LETAK_TANAH" => null,
+                "NAMA_PROVINSI_LETAK_TANAH" => null,
+                "JENIS_TANAMAN_SEBELUMNYA" => $item->komoditas_sebelumnya,
+                "TANGGAL_PANEN_SEBELUMNYA" => $item->s2_tgl_panen,
+                "PEMERIKSAAN_LAPANGAN_SEBELUMNYA" => $item->s7_pemeriksaan_lapangan ? "Lulus" : "Tidak Lulus",
+                "VARIETAS_SEBELUMNYA" => $item->varietas_sebelumnya,
+                "KELAS_BENIH_SEBELUMNYA" => null,
+                "DISERTIFIKASI_SEBELUMNYA" => $item->s7_disertifikasi ? "Ya" : "Tidak",
+                "PRODUSEN_ASAL_BENIH" => $item->s3_produsen,
+                "SUMBER_NOMOR_KELAS_ASAL_BENIH" => $item->s3_no_kel_benih,
+                "NOMOR_KELOMPOK_ASAL_BENIH" => $item->s3_no_label_sumber,
+                "JUMLAH_ASAL_BENIH" => $item->s3_jml_benih,
+                "CATATAN_LAINLAIN" => null,
+                "DIR_ttd" => $item->s6_ttd,
+                "DIR_label_benih" => $item->s6_label_benih,
+                "DIR_dena_lokasi" => $item->s6_dena_lokasi,
+                "DIR_surat_rekom" => $item->s6_surat_rekom,
+                "DIR_surat_pengantar" => $item->s6_surat_pengantar,
+                "FORMULIR_TINDAKAN" => null,
+                "FORMULIR_UPDATE" => null,
+                "FORMULIR_CREATE" => null,
+                "FORMULIR_STATUS" => null,
+            ];
+        })->values();
+
+        $transformedPaginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            $transformedData,
+            $paginator->total(),
+            $paginator->perPage(),
+            $paginator->currentPage()
+        );
+
+        return response()->json($transformedPaginator);
     }
 }
